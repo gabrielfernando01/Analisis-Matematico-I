@@ -20,25 +20,20 @@ A study companion site for an undergraduate Mathematical Analysis I course. It p
 
 ## Operating Context
 
-Content is authored in Markdown with LaTeX math notation in `secciones_markdown/`. The site is deployed on Vercel's free tier from the `gabrielfernando01/Analisis-Matematico-I` GitHub repository. Two content areas exist: `teoria/` (theory sections) and `ejercicios/` (exercises). Content references images (e.g. `conjunto_cantor.png`, `conv_punt_exp^x.png`) that are not yet present in the repository.
+Content is authored in Markdown with LaTeX math notation in `SECCION_x/teoria/` and `SECCION_x/ejercicios/`. The site is deployed on Vercel's free tier from the `gabrielfernando01/Analisis-Matematico-I` GitHub repository. Content in `SECCION_x/update/` overrides the original files. Content references images (e.g. `conjunto_cantor.png`, `conv_punt_exp^x.png`) that live alongside the `.md` files.
 
 ## Capabilities and Constraints
 
-- Must render LaTeX math notation flawlessly — display math, inline math, aligned environments, matrices, cases, custom commands (`\mathbb`, `\blacksquare`, `\checkmark`, etc.).
+- Must render LaTeX math notation flawlessly — display math, inline math, aligned environments, matrices, cases, custom commands (`\mathbb`, `\blacksquare`, `\checkmark`, `\xleftrightarrow`, etc.).
 - Content is in Spanish. The interface must be in Spanish.
 - Deployed on Vercel free tier; must work as a static or SSR-compatible build.
 - Content will grow: new sections and exercises will be added throughout the semester.
 - No author name, professor name, or "intended audience" labeling should appear anywhere in the UI.
-- Referenced images in the markdown files are not yet in the repository.
+- Referenced images in the markdown files must load from their respective `SECCION_x/` directories.
 
 ## Evidence on Hand
 
-Three markdown files with real course content:
-- `secciones_markdown/teoria/teoria_conjuntos.md` — 632 lines, set theory through Cantor set characterization (Theorems 1.1–1.13).
-- `secciones_markdown/teoria/convergencia_puntual_uniforme.md` — 600 lines, convergence theory (Definitions 2.1–2.11, including Dini and Weierstrass M-test).
-- `secciones_markdown/ejercicios/ejercicios_conjuntos.md` — 1276+ lines, solved exercises for section 1 (Exercises 1.14–1.26+).
-
-No images are present yet despite markdown references to `.png` files.
+Eleven sections planned (SECCION_1 through SECCION_11). Sections 1–7 have content. Sections 8–11 are placeholders that will fill as the course progresses.
 
 ## Product Principles
 
@@ -74,3 +69,14 @@ The toggle button must:
 - Persist the selection in `localStorage` across page navigations
 - Respect `prefers-color-scheme` as the initial default
 - Never display a label text — icon only
+
+## UX Design Direction
+
+> **Estado: NO IMPLEMENTADO.** El diseño actual es genérico (fondo blanco plano, sin carácter visual). El usuario pidió mejorar el diseño alineado a UX. Usar el skill **impeccable** (modo **Read**) para diagnosticar y mejorar.
+
+Directrices del usuario:
+- El diseño NO debe ser un MVP genérico. Debe sentirse premium y cuidado.
+- Usar **impeccable** para critique → luego aplicar las mejoras recomendadas.
+- El modo del sitio es **Read** — "the visitor understands something; structure for comprehension, then make the reading experience worth staying in."
+- La paleta Tokyo Night dark y la paleta cálida light son las dos identidades visuales. No mezclar con otros colores arbitrarios.
+- Tipografía Computer Modern Unicode es inamovible.
