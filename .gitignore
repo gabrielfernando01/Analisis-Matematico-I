@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.impeccable/
+.agent/
+.claude/
+.gemini/
+.hermes/
+.opencode/
+*.local
+.env
+.DS_Store

@@ -1,0 +1,187 @@
+/* ══════════════════════════════════════════
+   MathJax Display Math
+   ══════════════════════════════════════════ */
+
+mjx-container[jax="CHTML"][display="true"] {
+  margin: var(--sp-xl) 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding: var(--sp-xs) 0;
+}
+
+mjx-container[jax="CHTML"]:not([display="true"]) {
+  /* Inline math — no extra margins */
+}
+
+/* ══════════════════════════════════════════
+   Theorem-type Headings
+   ══════════════════════════════════════════ */
+
+.heading-number {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+h2.heading-definition {
+  border-bottom-color: hsl(160, 30%, 75%);
+}
+
+h2.heading-theorem {
+  border-bottom-color: var(--accent);
+}
+
+h2.heading-lemma {
+  border-bottom-color: hsl(42, 30%, 75%);
+}
+
+h2.heading-note {
+  border-bottom-color: var(--border);
+  font-weight: 600;
+}
+
+/* ══════════════════════════════════════════
+   Proof Blocks
+   ══════════════════════════════════════════ */
+
+/* "Demostración" / "Dem." / "Prueba" labels */
+#content-body p > strong:first-child:is(
+  [data-proof],
+  :not([class])
+) {
+  /* Inherited — bold is enough for proof labels */
+}
+
+/* QED symbol alignment */
+.mjx-char.mjx-c25A0 {
+  /* ∎ blacksquare — MathJax renders this */
+}
+
+/* ══════════════════════════════════════════
+   Aligned Environments — ensure vertical
+   alignment is preserved
+   ══════════════════════════════════════════ */
+
+mjx-container[jax="CHTML"] mjx-mtable {
+  margin: var(--sp-sm) 0;
+}
+
+/* ══════════════════════════════════════════
+   Images within content
+   ══════════════════════════════════════════ */
+
+#content-body img {
+  margin: var(--sp-2xl) auto;
+  border-radius: 6px;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--dur-slow) var(--ease-out),
+              opacity var(--dur-slow) var(--ease-out);
+  will-change: transform;
+}
+
+#content-body img.parallax-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#content-body img.parallax-hidden {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* ══════════════════════════════════════════
+   Observation / Note blocks (inferred from
+   markdown "Observación" or "Nota importante")
+   ══════════════════════════════════════════ */
+
+#content-body p:has(> strong:first-child) {
+  /* paragraphs starting with bold text — 
+     used for observations, important notes */
+}
+
+/* ══════════════════════════════════════════
+   Proof Blocks — collapsible (long) & inline (short)
+   ══════════════════════════════════════════ */
+
+/* ─── Collapsible proof wrapper ─── */
+
+.proof-block {
+  margin: var(--sp-xl) 0;
+  max-width: var(--content-max);
+  border-left: 2px solid var(--border);
+  border-radius: 0 4px 4px 0;
+  background: var(--proof-bg);
+}
+
+.proof-block[open] {
+  border-left-color: var(--accent);
+}
+
+/* ─── Summary / Toggle ─── */
+
+.proof-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  padding: var(--sp-sm) var(--sp-md);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  list-style: none;         /* hide default triangle in Firefox */
+  user-select: none;
+  border-radius: 0 4px 4px 0;
+  transition: color var(--dur-fast) ease,
+              background var(--dur-fast) ease;
+}
+
+.proof-summary::-webkit-details-marker { display: none; }  /* Chrome/Safari */
+
+.proof-summary::before {
+  content: '▸';
+  display: inline-block;
+  font-style: normal;
+  font-size: 0.75em;
+  color: var(--accent);
+  transition: transform var(--dur-normal) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.proof-block[open] .proof-summary::before {
+  transform: rotate(90deg);
+}
+
+.proof-summary:hover {
+  color: var(--text);
+  background: var(--accent-light);
+}
+
+/* ─── Proof body ─── */
+
+.proof-inner {
+  padding: var(--sp-xs) var(--sp-lg) var(--sp-md);
+  /* Smooth height animation via grid trick */
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows var(--dur-normal) var(--ease-out);
+}
+
+.proof-block[open] .proof-inner {
+  grid-template-rows: 1fr;
+}
+
+.proof-inner > * {
+  /* Needed for grid height trick to work */
+  min-height: 0;
+}
+
+/* ─── Short / inline proof label ─── */
+
+p.proof-inline > strong:first-child {
+  display: inline-block;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-right: var(--sp-xs);
+}

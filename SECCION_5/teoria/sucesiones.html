@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sucesiones — Análisis Matemático · Cap. 5</title>
+  <meta name="description" content="Teoría de sucesiones en espacios métricos: convergencia, subsucesiones, límites inferior y superior, sucesiones de Cauchy. Análisis Matemático, Capítulo 5.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📕</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath:  [['$','$'],['\\(','\\)']],
+        displayMath: [['$$','$$'],['\\[','\\]']],
+        processEscapes: true,
+        tags: 'ams'
+      },
+      options: {
+        skipHtmlTags: ['script','noscript','style','textarea','pre','code']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* ─── TOKYO NIGHT ─── */
+    :root {
+      --bg0: #1a1b26;
+      --bg1: #16161e;
+      --bg2: #24283b;
+      --bg3: #292e42;
+      --hl:  #283457;
+
+      --fg0: #c0caf5;
+      --fg1: #a9b1d6;
+      --fg2: #565f89;
+      --fg3: #414868;
+
+      --blue:   #7aa2f7;
+      --purple: #bb9af7;
+      --cyan:   #7dcfff;
+      --green:  #9ece6a;
+      --yellow: #e0af68;
+      --red:    #f7768e;
+
+      --border:  #3b4261;
+      --border2: #536c9e;
+      --r:   10px;
+      --rlg: 16px;
+      --sh:  0 4px 24px rgba(0,0,0,.38);
+      --shlg:0 8px 40px rgba(0,0,0,.55);
+      --tr:  .28s cubic-bezier(.4,0,.2,1);
+
+      --nav-h: 52px;  /* topbar height */
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 8px) }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16.5px; line-height: 1.8;
+      color: var(--fg0); background: var(--bg0);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    ::selection { background: var(--hl); color: var(--cyan) }
+    ::-webkit-scrollbar { width: 7px }
+    ::-webkit-scrollbar-track { background: var(--bg1) }
+    ::-webkit-scrollbar-thumb { background: var(--fg3); border-radius: 4px }
+    ::-webkit-scrollbar-thumb:hover { background: var(--fg2) }
+
+    /* ─── PROGRESS BAR ─── */
+    #pbar {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0;
+      background: linear-gradient(90deg, var(--purple), var(--blue), var(--cyan));
+      box-shadow: 0 0 14px var(--blue);
+      z-index: 9999; transition: width 80ms linear;
+    }
+
+    /* ══════════════════════════════════════════════
+       TOP NAV (sticky — stays in document flow)
+       ══════════════════════════════════════════════ */
+    #topnav {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      background: rgba(22, 22, 30, .92);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── inner bar ── */
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      height: var(--nav-h);
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 2.2rem;
+    }
+    .nav-brand {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .nav-cap {
+      font-size: .6rem; text-transform: uppercase; letter-spacing: 3px;
+      font-weight: 700; color: var(--purple);
+    }
+    .nav-name {
+      font-size: .9rem; font-weight: 700; color: var(--fg0);
+      line-height: 1.2;
+    }
+
+    /* hamburger button */
+    #toc-btn {
+      display: flex; align-items: center; gap: .45rem;
+      padding: .38rem .85rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--fg1);
+      font-size: .82rem; font-weight: 600;
+      cursor: pointer;
+      transition: all var(--tr);
+      white-space: nowrap;
+    }
+    #toc-btn .ico { font-size: 1rem; line-height: 1; transition: transform .3s ease }
+    #toc-btn:hover { background: var(--bg2); border-color: var(--blue); color: var(--fg0) }
+    #toc-btn[aria-expanded="true"] { border-color: var(--purple); color: var(--purple) }
+    #toc-btn[aria-expanded="true"] .ico { transform: rotate(90deg) }
+
+    /* ── TOC dropdown panel (in-flow, pushes content) ── */
+    #toc-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .38s cubic-bezier(.4,0,.2,1);
+      border-top: 0px solid transparent;
+    }
+    #toc-panel.open {
+      max-height: 520px;          /* enough for all links */
+      border-top: 1px solid var(--border);
+    }
+
+    .toc-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 1rem 2.2rem 1.4rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: .2rem .8rem;
+    }
+    .toc-inner a {
+      display: flex; align-items: center; gap: .45rem;
+      padding: .38rem .6rem; border-radius: 6px;
+      font-size: .8rem; font-weight: 500;
+      color: var(--fg2); text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all var(--tr);
+      white-space: nowrap;
+    }
+    .toc-inner a:hover { color: var(--fg0); background: var(--bg2) }
+    .toc-inner a.active {
+      color: var(--blue); background: var(--hl);
+      border-left-color: var(--blue);
+    }
+    .toc-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    }
+    .d-intro  { background: var(--green)  }
+    .d-def    { background: var(--blue)   }
+    .d-lem    { background: var(--purple) }
+    .d-note   { background: var(--yellow) }
+
+    /* ── mobile: single column toc ── */
+    @media (max-width: 620px) {
+      .toc-inner { grid-template-columns: 1fr 1fr }
+    }
+    @media (max-width: 400px) {
+      .toc-inner { grid-template-columns: 1fr }
+    }
+
+    /* ══════════════════════════════════════════════
+       MAIN CONTENT  (full width, centered)
+       ══════════════════════════════════════════════ */
+    main {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 2.5rem 7rem;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      text-align: center;
+      padding: 3rem 0 3.5rem;   /* controlled, no excess */
+      position: relative;
+    }
+    .hero::after {
+      content: ''; display: block;
+      width: 90px; height: 3px; margin: 1.5rem auto 0;
+      background: linear-gradient(90deg, var(--purple), var(--blue));
+      border-radius: 2px;
+    }
+    .hero h1 {
+      font-size: 3rem; font-weight: 800; letter-spacing: -1.5px;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--blue) 50%, var(--cyan) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero .sub {
+      margin-top: .45rem;
+      font-size: .98rem; color: var(--fg2); font-weight: 400;
+    }
+
+    /* ─── SECTION ─── */
+    .sec { margin-bottom: 4.2rem }
+    .sec-head {
+      display: flex; align-items: center; gap: .7rem;
+      margin-bottom: 1.8rem; flex-wrap: wrap;
+    }
+    .sec-badge {
+      font-size: .67rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.8px; padding: .28rem .75rem; border-radius: 20px;
+      white-space: nowrap;
+    }
+    .b-intro  { background: rgba(158,206,106,.13); color: var(--green)  }
+    .b-def    { background: rgba(122,162,247,.13); color: var(--blue)   }
+    .b-lem    { background: rgba(187,154,247,.13); color: var(--purple) }
+    .b-note   { background: rgba(224,175,104,.13); color: var(--yellow) }
+    .sec-title { font-size: 1.5rem; font-weight: 700; color: var(--fg0) }
+
+    /* ─── DIVIDER ─── */
+    .div {
+      border: none; height: 1px; margin: 3rem 0;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    /* ─── CARDS ─── */
+    .card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--rlg); padding: 1.6rem 1.9rem;
+      margin-bottom: 1.5rem; position: relative; overflow: hidden;
+      transition: border-color var(--tr), box-shadow var(--tr), transform var(--tr);
+    }
+    .card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%; border-radius: 4px 0 0 4px;
+    }
+    .card:hover { border-color: var(--border2); box-shadow: var(--sh); transform: translateY(-1px) }
+    .c-def::before     { background: var(--blue)   }
+    .c-lem::before     { background: var(--purple) }
+    .c-note::before    { background: var(--yellow) }
+    .c-example::before { background: var(--green)  }
+
+    .card-tag {
+      font-size: .64rem; text-transform: uppercase; letter-spacing: 2.2px;
+      font-weight: 700; margin-bottom: .72rem; display: block;
+    }
+    .t-def   { color: var(--blue)   }
+    .t-lem   { color: var(--purple) }
+    .t-note  { color: var(--yellow) }
+    .t-ex    { color: var(--green)  }
+    .t-proof { color: var(--cyan)   }
+
+    /* ─── VISIBLE PROOF ─── */
+    .proof {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-left: 4px solid var(--cyan);
+      border-radius: var(--r); padding: 1.3rem 1.6rem; margin: 1.3rem 0;
+    }
+    .proof-tag {
+      font-size: .64rem; text-transform: uppercase; letter-spacing: 2.2px;
+      font-weight: 700; color: var(--cyan); margin-bottom: .85rem; display: block;
+    }
+
+    /* ─── COLLAPSIBLE PROOF ─── */
+    details.col {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-left: 4px solid var(--purple);
+      border-radius: var(--r); margin: 1.3rem 0; overflow: hidden;
+      transition: border-color var(--tr);
+    }
+    details.col[open] { border-color: var(--border2); border-left-color: var(--cyan) }
+    details.col > summary {
+      display: flex; align-items: center; gap: .55rem;
+      padding: .9rem 1.35rem; cursor: pointer;
+      font-size: .88rem; font-weight: 600; color: var(--fg1);
+      background: rgba(187,154,247,.04);
+      transition: all var(--tr); list-style: none; user-select: none;
+    }
+    details.col > summary::-webkit-details-marker { display: none }
+    details.col > summary::before {
+      content: '▶'; font-size: .58rem; color: var(--purple);
+      transition: transform .3s ease; display: inline-block;
+    }
+    details.col[open] > summary::before { transform: rotate(90deg); color: var(--cyan) }
+    details.col > summary:hover { background: rgba(122,162,247,.07); color: var(--fg0) }
+    .ph { margin-left: auto; font-size: .67rem; font-weight: 400; color: var(--fg3); font-style: italic }
+    details.col[open] .ph { display: none }
+    .proof-body {
+      padding: 1.35rem 1.6rem; border-top: 1px solid var(--border);
+      animation: fadeIn .35s ease;
+    }
+
+    /* ─── TYPOGRAPHY ─── */
+    h2 { font-size: 1.4rem; font-weight: 700; color: var(--fg0); margin: 1.5rem 0 .85rem }
+    h3 { font-size: 1.08rem; font-weight: 600; color: var(--fg1); margin: 1.2rem 0 .65rem }
+    p  { margin-bottom: .88rem; color: var(--fg1) }
+    strong { color: var(--fg0); font-weight: 600 }
+    em { color: var(--yellow); font-style: italic }
+    u  { text-decoration-color: var(--blue); text-underline-offset: 3px }
+    ol, ul { margin: .4rem 0 .9rem 1.5rem; color: var(--fg1) }
+    li { margin-bottom: .52rem }
+    li::marker { color: var(--blue) }
+
+    /* ─── IMAGES ─── */
+    .img-wrap { text-align: center; margin: 1.8rem 0 }
+    .img-wrap img {
+      max-width: 100%; height: auto;
+      border-radius: var(--r); border: 1px solid var(--border);
+      box-shadow: var(--sh); transition: transform var(--tr), box-shadow var(--tr);
+    }
+    .img-wrap img:hover { transform: scale(1.025); box-shadow: var(--shlg) }
+
+    /* ─── MATH ─── */
+    mjx-container[display="true"] {
+      overflow-x: auto; overflow-y: hidden;
+      margin: 1.15rem 0 !important; padding: .15rem 0;
+    }
+
+    /* ─── BACK-TO-TOP ─── */
+    #btt {
+      position: fixed; bottom: 2rem; right: 2rem;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      color: #fff; border: none; cursor: pointer; font-size: 1.15rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(122,162,247,.3);
+      opacity: 0; transform: translateY(16px);
+      transition: all var(--tr); z-index: 200;
+    }
+    #btt.on { opacity: 1; transform: translateY(0) }
+    #btt:hover { transform: translateY(-3px) scale(1.1); box-shadow: 0 8px 28px rgba(122,162,247,.45) }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center; padding: 2.5rem 0;
+      border-top: 1px solid var(--border); margin-top: 5rem;
+      color: var(--fg3); font-size: .8rem;
+    }
+    footer p + p { margin-top: .3rem }
+
+    /* ─── REVEAL ─── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease }
+    .reveal.in { opacity: 1; transform: translateY(0) }
+
+    @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 700px) {
+      main { padding: 0 1.3rem 5rem }
+      .nav-bar { padding: 0 1.2rem }
+      .toc-inner { padding: .8rem 1.2rem 1.2rem }
+      .hero h1 { font-size: 2.2rem }
+    }
+    @media (max-width: 420px) {
+      body { font-size: 15.5px }
+      .card { padding: 1.2rem 1.1rem }
+      .sec-title { font-size: 1.2rem }
+    }
+  </style>
+</head>
+<body>
+
+<div id="pbar"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     TOP NAV — sticky, expands downward (in-flow)
+     ══════════════════════════════════════════════════════════ -->
+<div id="topnav">
+  <div class="nav-bar">
+    <div class="nav-brand">
+      <span class="nav-cap">Capítulo 5</span>
+      <span class="nav-name">Sucesiones</span>
+    </div>
+    <button id="toc-btn" aria-expanded="false" aria-controls="toc-panel">
+      <span class="ico">☰</span> Índice
+    </button>
+  </div>
+
+  <!-- TOC panel — collapses/expands in normal document flow -->
+  <div id="toc-panel" role="navigation" aria-label="Tabla de contenido">
+    <div class="toc-inner">
+      <a href="#s1"><span class="toc-dot d-intro"></span>5.1 Introducción</a>
+      <a href="#s2"><span class="toc-dot d-def"></span>5.2 Definición</a>
+      <a href="#s3"><span class="toc-dot d-def"></span>5.3 Convergencia</a>
+      <a href="#s4"><span class="toc-dot d-note"></span>5.4 Límites en EVN</a>
+      <a href="#s5"><span class="toc-dot d-def"></span>5.5 Subsucesiones</a>
+      <a href="#s6"><span class="toc-dot d-lem"></span>5.6 Lema</a>
+      <a href="#s7"><span class="toc-dot d-lem"></span>5.7 Lema</a>
+      <a href="#sc"><span class="toc-dot d-note"></span>Colas de sucesiones</a>
+      <a href="#s8"><span class="toc-dot d-def"></span>5.8 Lím inf y sup</a>
+      <a href="#s9"><span class="toc-dot d-lem"></span>5.9 Lema</a>
+      <a href="#s10"><span class="toc-dot d-def"></span>5.10 Sucesiones de Cauchy</a>
+      <a href="#s11"><span class="toc-dot d-lem"></span>5.11 Lema</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MAIN CONTENT
+     ══════════════════════════════════════════════════════════ -->
+<main>
+
+  <header class="hero">
+    <h1>Sucesiones</h1>
+    <p class="sub">Análisis Matemático &mdash; Capítulo 5</p>
+  </header>
+
+  <!-- ══ 5.1 INTRODUCCIÓN ══════════════════════════════════════════ -->
+  <section class="sec reveal" id="s1">
+    <div class="sec-head">
+      <span class="sec-badge b-intro">5.1</span>
+      <span class="sec-title">Introducción</span>
+    </div>
+
+    <p>Una sucesión de números reales es simplemente una función
+    $x\colon \mathbb{N} \longrightarrow \mathbb{R}$,
+    pero en vez de usar una notación de función se usa la notación
+    $(x_n)_{n=1}^\infty$, como si fuese un vector infinito
+    (de ahí la notación $\mathbb{R}^{\mathbb{N}}$ para el conjunto
+    de todas las sucesiones de números reales).</p>
+
+    <h3>Ejemplos</h3>
+
+    <div class="card c-example">
+      <span class="card-tag t-ex">Sucesiones aritméticas</span>
+      <p>Son sucesiones donde la diferencia de elementos consecutivos es
+      siempre una constante (digamos $p$), es decir,
+      $x_{n+1}-x_n=p$, para toda $n \geq 1$:</p>
+      \[ x_1,\quad x_2=x_1+p,\quad x_3=x_1+2p,\quad\ldots,\quad
+         x_n = x_1+(n-1)p. \]
+    </div>
+
+    <div class="card c-example">
+      <span class="card-tag t-ex">Sucesiones geométricas</span>
+      <p>Son sucesiones para las cuales existe una constante $r\in\mathbb{R}$
+      tal que $x_{n+1}/x_n=r$ para toda $n \geq 1$:</p>
+      \[ x_1,\quad x_2=x_1 r,\quad x_3=x_1 r^2,\quad\ldots,\quad
+         x_n=x_1 r^{n-1}. \]
+    </div>
+
+    <h3>Convergencia</h3>
+
+    <div class="card c-def">
+      <span class="card-tag t-def">Definición informal</span>
+      \[(x_n)_{n=1}^\infty \longrightarrow x\]
+      \[\forall\,\varepsilon > 0\;\;\exists\, N\in\mathbb{N}\;\text{ tal que }\;
+        |x_n - x| < \varepsilon,\;\;\forall\,n\geq N.\]
+    </div>
+
+    <div class="img-wrap">
+      <img src="vecindad.png"
+           alt="Vecindad ε de x: los términos de la sucesión eventualmente quedan en (x−ε, x+ε)"
+           width="650">
+    </div>
+
+    <p>Ya que el valor absoluto induce la distancia usual en los reales,
+    podemos generalizar reemplazando $|x_n-x|$ por $d(x_n,x)$, donde $d$
+    es una métrica y los $x_n$, $x$ son puntos de un espacio métrico $(X,d)$.</p>
+
+    <h3>Propiedades algebraicas de los límites en $\mathbb{R}$</h3>
+    <p>Sean $(x_n)_{n=1}^{\infty}$, $(y_n)_{n=1}^{\infty}$ sucesiones
+    <u>convergentes</u> de números reales. Entonces:</p>
+    <ol>
+      <li><strong>Linealidad:</strong> para $\alpha\in\mathbb{R}$,
+        \[\lim_{n\to\infty}(\alpha x_n + y_n)
+          = \alpha\lim_{n\to\infty}x_n + \lim_{n\to\infty}y_n.\]
+      </li>
+      <li><strong>Producto:</strong>
+        \[\lim_{n\to\infty}(x_n y_n)
+          = \lim_{n\to\infty}x_n\cdot\lim_{n\to\infty}y_n.\]
+      </li>
+      <li>Si $\lim_{n\to\infty}y_n\neq 0$:
+        \[\lim_{n\to\infty}\!\left(\frac{x_n}{y_n}\right)
+          = \frac{\displaystyle\lim_{n\to\infty}x_n}
+                 {\displaystyle\lim_{n\to\infty}y_n}.\]
+      </li>
+      <li>Si $m\leq x_n\leq M$ para todo $n\in\mathbb{N}$, entonces
+        \[m\leq\lim_{n\to\infty}x_n\leq M.\]
+      </li>
+      <li><strong>Ley del Sándwich.</strong> Si
+        $x_n\leq z_n\leq y_n$ para todo $n$ y
+        $(x_n),(y_n)\xrightarrow{n\to\infty}L$, entonces
+        $z_n\xrightarrow{\;n\to\infty\;}L.$
+      </li>
+    </ol>
+
+    <h3>Ejemplos de sucesiones convergentes</h3>
+
+    <div class="card c-lem">
+      <span class="card-tag t-lem">Teorema &mdash; Convergencia monótona creciente</span>
+      <p>Sea $(x_n)_{n=1}^{\infty}$ monótona creciente y acotada superiormente
+      ($x_n\leq M$). Entonces</p>
+      \[\lim_{n\to\infty}x_n = \sup_{n\in\mathbb{N}}\{x_n\}.\]
+    </div>
+
+    <details class="col">
+      <summary>Demostración <span class="ph">▸ click para desplegar</span></summary>
+      <div class="proof-body">
+        <p><em>Existencia del supremo.</em>
+        $A=\{x_n:n\in\mathbb{N}\}$ es no vacío y acotado por $M$.
+        Por el axioma del supremo existe
+        $L:=\sup A = \sup_{n\in\mathbb{N}}\{x_n\}.$</p>
+
+        <p><strong>p.d.</strong>
+        $\forall\,\varepsilon > 0\;\;\exists\,N\in\mathbb{N}$ tal que
+        $\forall\,n\geq N\;\implies\;|x_n-L|<\varepsilon.$</p>
+
+        <p>Sea $\varepsilon > 0$. Como $L$ es cota superior: $x_n\leq L\implies x_n-L\leq 0.$</p>
+
+        <p>Como $L$ es la <em>mínima</em> cota superior, $L-\varepsilon$ <strong>no</strong>
+        es cota superior, luego $\exists\,N$ tal que $L-\varepsilon < x_N.$
+        Por monotonía, $\forall\,n\geq N$:</p>
+        \[L-\varepsilon < x_N \leq x_n.\]
+        \[\begin{array}{rl}
+          \implies & L-\varepsilon < x_n \leq L < L+\varepsilon, \\[4pt]
+          \implies & -\varepsilon < x_n-L \leq 0 < \varepsilon, \\[4pt]
+          \implies & |x_n-L| < \varepsilon.
+        \end{array}\]
+        \[\lim_{n\to\infty}x_n = L = \sup_{n\in\mathbb{N}}\{x_n\}.\quad\blacksquare\]
+      </div>
+    </details>
+
+    <hr class="div">
+
+    <div class="card c-lem">
+      <span class="card-tag t-lem">Teorema &mdash; Convergencia monótona decreciente</span>
+      <p>Sea $(x_n)_{n=1}^{\infty}$ monótona decreciente y acotada inferiormente
+      ($x_n\geq M$). Entonces</p>
+      \[\lim_{n\to\infty}x_n = \inf_{n\in\mathbb{N}}\{x_n\}.\]
+    </div>
+
+    <details class="col">
+      <summary>Demostración <span class="ph">▸ click para desplegar</span></summary>
+      <div class="proof-body">
+        <p><em>Existencia del ínfimo.</em>
+        $A=\{x_n:n\in\mathbb{N}\}$ es no vacío y acotado por $M$.
+        Por el axioma del supremo existe
+        $L:=\inf A = \inf_{n\in\mathbb{N}}\{x_n\}.$</p>
+
+        <p><strong>p.d.</strong>
+        $\forall\,\varepsilon>0\;\;\exists\,N\in\mathbb{N}$ tal que
+        $\forall\,n\geq N\;\implies\;|x_n-L|<\varepsilon.$</p>
+
+        <p>Sea $\varepsilon>0$. Como $L$ es cota inferior: $L\leq x_n\implies 0\leq x_n-L.$</p>
+
+        <p>Como $L$ es la <em>máxima</em> cota inferior, $L+\varepsilon$ <strong>no</strong>
+        es cota inferior, luego $\exists\,N$ tal que $x_N < L+\varepsilon.$
+        Por monotonía, $\forall\,n\geq N$:</p>
+        \[x_n\leq x_N < L+\varepsilon.\]
+        \[\begin{array}{rl}
+          \implies & L-\varepsilon < L \leq x_n < L+\varepsilon, \\[4pt]
+          \implies & -\varepsilon < 0 \leq x_n-L < \varepsilon, \\[4pt]
+          \implies & |x_n-L| < \varepsilon.
+        \end{array}\]
+        \[\lim_{n\to\infty}x_n = L = \inf_{n\in\mathbb{N}}\{x_n\}.\quad\blacksquare\]
+      </div>
+    </details>
+
+    <hr class="div">
+
+    <div class="card c-lem">
+      <span class="card-tag t-lem">Proposición</span>
+      \[\lim_{n\to\infty}\sqrt[n]{n} = 1.\]
+    </div>
+
+    <div class="proof">
+      <span class="proof-tag">Demostración</span>
+      <p>Como $\sqrt[n]{n}\geq 1$ escribimos
+      $\sqrt[n]{n}=1+x_n$ con $x_n\geq 0.$</p>
+
+      <div class="img-wrap">
+        <img src="sucesion_raiz_n_esima.png"
+             alt="Gráfica de √[n]{n} convergiendo a 1" width="420">
+      </div>
+
+      <p><strong>p.d.</strong> $\lim_{n\to\infty}x_n=0$.
+      Por el binomio de Newton:</p>
+      \[\begin{aligned}
+        n = (1+x_n)^n
+          &= \sum_{k=0}^n \underbrace{\binom{n}{k}x_n^k}_{\geq\,0}
+           \;\geq\; \binom{n}{2}x_n^2
+           = \frac{n(n-1)}{2}\,x_n^2, \\[8pt]
+        \implies\quad 1
+          &\geq \frac{n-1}{2}\,x_n^2
+            \qquad\text{(dividiendo entre }n\text{)}, \\[6pt]
+        \implies\quad 0
+          &\leq x_n \leq \sqrt{\tfrac{2}{n-1}},\quad n\geq 2.
+      \end{aligned}\]
+      <p>Como $\sqrt{\tfrac{2}{n-1}}\to 0$,
+      por la <strong>ley del sándwich</strong> $\lim x_n=0$. Por lo tanto:</p>
+      \[\lim_{n\to\infty}\sqrt[n]{n}=\lim_{n\to\infty}(1+x_n)=1.\quad\blacksquare\]
+    </div>
+  </section>
+
+  <hr class="div">
+
+  <!-- ══ 5.2 DEFINICIÓN ════════════════════════════════════════════ -->
+  <section class="sec reveal" id="s2">
+    <div class="sec-head">
+      <span class="sec-badge b-def">5.2 · Definición</span>
+      <span class="sec-title">Sucesiones</span>
+    </div>
+
+    <div class="card c-def">
+      <span class="card-tag t-def">Definición</span>
+      <p>Sea $X\neq\emptyset$ un conjunto. Una <strong>sucesión</strong> en $X$
+      es una función</p>
+      \[x\colon\;\mathbb{N}\longrightarrow X,\qquad n\longmapsto x_n.\]
+      <p>Se usa la notación $(x_n)_{n\in\mathbb{N}}$ ó $(x_n)_{n\geq 1}$.</p>
+    </div>
+
+    <h3>Ejemplos</h3>
+    <ol>
+      <li>En $\mathbb{R}^3$:
+        \[x_n = \left(\cos(n\pi),\;\frac{1}{n^2},\;\sqrt[n]{2}\right),\quad n=1,2,\ldots\]
+      </li>
+      <li>En $\ell_\infty$:
+        \[\begin{aligned}
+          X &= \ell_\infty \\
+            &= \bigl\{(x_n)_{n=1}^\infty \;:\; x_n\in\mathbb{R},\;
+               \sup_{n\in\mathbb{N}}|x_n| < +\infty\bigr\}
+               \quad\text{(sucesiones acotadas).}
+        \end{aligned}\]
+      </li>
+      <li>Vectores canónicos en $\ell_\infty$:
+        \[\left.\begin{aligned}
+          e_1 &= (1,0,0,\ldots)\\
+          e_2 &= (0,1,0,\ldots)\\
+              &\;\vdots\\
+          e_n &= (0,\ldots,\underbrace{1}_{\text{lugar }n},\ldots)
+        \end{aligned}\right\}
+        \quad\therefore\;(e_n)_{n=1}^\infty\text{ sucesión en }\ell_\infty.\]
+      </li>
+      <li>En $C([0,1])$:
+        \[f_n(x) = \frac{x^n}{1+x^n},\quad n=1,2,\ldots\]
+      </li>
+    </ol>
+  </section>
+
+  <hr class="div">
+
+  <!-- ══ 5.3 CONVERGENCIA ══════════════════════════════════════════ -->
+  <section class="sec reveal" id="s3">
+    <div class="sec-head">
+      <span class="sec-badge b-def">5.3 · Definición</span>
+      <span class="sec-title">Sucesiones convergentes</span>
+    </div>
+
+    <div class="card c-def">
+      <span class="card-tag t-def">Definición</span>
+      <p>Sea $(X,d)$ un espacio métrico y $(x_n)_{n\in\mathbb{N}}$ una
+      sucesión en $X$. Decimos que la sucesión es
+      <strong>convergente en $X$</strong> si existe $x\in X$ tal que</p>
+      \[\forall\,\varepsilon > 0\;\;\exists\,N\in\mathbb{N}\;\text{ tal que }\;
+        \forall\,n\geq N,\;\; d(x_n,x) < \varepsilon.\]
+      <p>Escribimos $\lim_{n\to\infty}x_n=x.$</p>
+    </div>
+
+    <p>Geométricamente, $\varepsilon$ es el radio de una bola y la métrica $d$
+    determina la forma de la vecindad centrada en $x$.</p>
+
+    <div class="img-wrap">
+      <img src="(a_n).png"
+           alt="Sucesión convergente: términos entrando en la bola B(x,ε)" width="550">
+    </div>
+
+    <div class="card c-note">
+      <span class="card-tag t-note">Notas</span>
+      <ol>
+        <li>La $N$ depende generalmente de $\varepsilon$; se puede denotar $N(\varepsilon)$.</li>
+        <li>Se puede cambiar $d(x_n,x)<\varepsilon$ por $d(x_n,x)\leq\varepsilon$
+        (reemplazar $\varepsilon$ por $\varepsilon/2$).</li>
+        <li>A partir de cierto instante $N$, la distancia al límite puede hacerse
+        tan pequeña como se quiera.</li>
+        <li>$\lim_{n\to\infty}x_n=x$ en $X$
+        $\;\Leftrightarrow\;$
+        $\lim_{n\to\infty}d(x_n,x)=0$ en $\mathbb{R}$.</li>
+      </ol>
+    </div>
+  </section>
+
+  <hr class="div">
+
+  <!-- ══ 5.4 EVN ═══════════════════════════════════════════════════ -->
+  <section class="sec reveal" id="s4">
+    <div class="sec-head">
+      <span class="sec-badge b-note">5.4 · Nota</span>
+      <span class="sec-title">Límites en espacios vectoriales normados</span>
+    </div>
+
+    <p>Dado un espacio vectorial normado $(V,\|\cdot\|)$, la norma induce una
+    métrica $d(v,w)=\|v-w\|$. La definición de $\lim_{n\to\infty}v_n=v$ se escribe:</p>
+    \[\forall\,\varepsilon > 0\;\;\exists\,N\in\mathbb{N}\;\text{ tal que }\;
+      \forall\,n\geq N\;\implies\;\|v_n-v\| < \varepsilon.\]
+
+    <p>Equivalentemente:</p>
+    \[\Bigl(\lim_{n\to\infty}v_n=v\;\text{ en }V\Bigr)
+      \;\Longleftrightarrow\;
+      \Bigl(\lim_{n\to\infty}\|v_n-v\|=0\;\text{ en }\mathbb{R}\Bigr).\]
+
+    <div class="card c-note">
+      <span class="card-tag t-note">Comparación</span>
+      <ul>
+        <li>$\displaystyle\lim_{n\to\infty}x_n=x$ en $(X,d)$
+        $\;\iff\;$
+        $\bigl[\forall\,\varepsilon>0\;\exists\,N\;:\;
+        n\geq N\implies d(x_n,x)<\varepsilon\bigr]$</li>
+        <li>$\displaystyle\lim_{n\to\infty}v_n=v$ en $(V,\|\cdot\|)$
+        $\;\iff\;$
+        $\bigl[\forall\,\varepsilon>0\;\exists\,N\;:\;
+        n\geq N\implies\|v_n-v\|<\varepsilon\bigr]$</li>
+      </ul>
+    </div>
+
+    <div class="card c-example">
+      <span class="card-tag t-ex">Ejemplo concreto — $\mathbb{R}^2$</span>
+      <p>$V=\mathbb{R}^2$ con la norma euclidiana. Sea $v_n=(a_n,b_n)$.</p>
+      \[\begin{aligned}
+        v_n &\;\longmapsto\; v=(a,b) \\[.7em]
+        \sqrt{(a_n-a)^2+(b_n-b)^2} &\;\longmapsto\; 0.
+      \end{aligned}\]
+    </div>
+  </section>
+
+  <hr class="div">
+
+  <!-- ══ 5.5 SUBSUCESIONES ══════════════════════════════════════════ -->
+  <section class="sec reveal" id="s5">
+    <div class="sec-head">
+      <span class="sec-badge b-def">5.5 · Definición</span>
+      <span class="sec-title">Subsucesiones</span>
+    </div>
+
+    <div class="card c-def">
+      <span class="card-tag t-def">Definición</span>
+      <p>Sea $(x_n)_{n=1}^{\infty}$ una sucesión en $X$.
+      Una <strong>subsucesión</strong> de $(x_n)_{n=1}^\infty$ es una
+      función de la forma $x\circ\varphi$, donde</p>
+      \[\varphi\colon\;\mathbb{N}\longrightarrow\mathbb{N}
+        \;\text{ es estrictamente creciente.}\]
+    </div>
+
+    <div class="img-wrap">
+      <img src="subsucesiones_(1).png"
+           alt="Diagrama de la composición x ∘ φ: ℕ → ℕ → X" width="550">
+    </div>
+
+    <p><strong>Notación.</strong>
+    Se escribe $\varphi(k)=n_k$ y la subsucesión se denota $(x_{n_k})_{k=1}^\infty$.
+    Entonces $(x\circ\varphi)(k)=x_{n_k}.$</p>
+
+    <h3>Ejemplos básicos</h3>
+    <ul>
+      <li>$\varphi(k)=k$ produce la propia sucesión.</li>
+      <li>$(x_{2k})_{k\in\mathbb{N}}$: índices pares, $\varphi(k)=2k$.</li>
+      <li>$(x_{2k+1})_{k\in\mathbb{N}}$: índices impares, $\varphi(k)=2k+1$.</li>
+    </ul>
+
+    <div class="card c-example">
+      <span class="card-tag t-ex">Ejemplo concreto</span>
+      <p>$x_n=\tfrac{1}{n}$, $\varphi(k)=2k$. Término general: $x_{2k}=\tfrac{1}{2k}$.</p>
+      \[\begin{aligned}
+        1 &\;\overset{\varphi}{\longmapsto}\; 2 \;\overset{x}{\longmapsto}\; \tfrac{1}{2} \\[4pt]
+        2 &\;\overset{\varphi}{\longmapsto}\; 4 \;\overset{x}{\longmapsto}\; \tfrac{1}{4} \\[4pt]
+        3 &\;\overset{\varphi}{\longmapsto}\; 6 \;\overset{x}{\longmapsto}\; \tfrac{1}{6} \\[4pt]
+        4 &\;\overset{\varphi}{\longmapsto}\; 8 \;\overset{x}{\longmapsto}\; \tfrac{1}{8}
+      \end{aligned}\]
+      \[(x_{n_k})_{k=1}^{\infty}
+        =\Bigl(\tfrac{1}{2},\tfrac{1}{4},\tfrac{1}{6},\tfrac{1}{8},\dots\Bigr).\]
+    </div>
+
+    <div class="card c-note">
+      <span class="card-tag t-note">Observación — Subsucesión de subsucesión</span>
+      <p>Si $\varphi,\psi\colon\mathbb{N}\to\mathbb{N}$ son estrictamente crecientes,
+      entonces $\varphi\circ\psi$ también lo es y
+      $(x_{(\varphi\circ\psi)(s)})_{s=1}^{\infty}$
+      es subsucesión de $(x_n)_{n=1}^{\infty}$.</p>
+    </div>
+
+    <div class="proof">
+      <span class="proof-tag">Razón</span>
+      <p>Si $s < t$, entonces $\psi(s) < \psi(t)$ y, como $\varphi$ es creciente,
+      $\varphi(\psi(s)) < \varphi(\psi(t)).$
+      En notación de funciones: $z=x\circ(\varphi\circ\psi).\;\blacksquare$</p>
+    </div>
+  </section>
+
+  <hr class="div">
+
+  <!-- ══ 5.6 LEMA ══════════════════════════════════════════════════ -->
+  <section class="sec reveal" id="s6">
+    <div class="sec-head">
+      <span class="sec-badge b-lem">5.6 · Lema</span>
+      <span class="sec-title">Subsucesiones de sucesiones convergentes</span>
+    </div>
+
+    <div class="card c-lem">
+      <span class="card-tag t-lem">Lema 5.6</span>
+      <p>Sea $(X,d)$ espacio métrico, $(x_n)_{n\in\mathbb{N}}$ sucesión en $X$, $x\in X$.</p>
+      \[\Bigl(\lim_{n\to\infty}x_n=x\Bigr)
+        \;\Longrightarrow\;
+        \Bigl(\lim_{k\to\infty}x_{n_k}=x\Bigr)
+        \quad\forall\,(x_{n_k})\text{ subsucesión.}\]
+    </div>
+
+    <details class="col">
+      <summary>Demostración <span class="ph">▸ click para desplegar</span></summary>
+      <div class="proof-body">
+        <p>Sea $(x_{n_k})$ subsucesión de $(x_n)$ y $\varepsilon>0$.
+        <strong>p.d.</strong> $\exists\,k_0$ tal que $k\geq k_0\implies d(x_{n_k},x)<\varepsilon.$</p>
+
+        <p>Por hipótesis $\exists\,N$ tal que $n\geq N\implies d(x_n,x)<\varepsilon.$
+        Como $\varphi$ (con $\varphi(k)=n_k$) es creciente,
+        $\exists\,\ell$ con $\varphi(\ell)>N$.</p>
+
+        <div class="img-wrap">
+          <img src="5_6_Lema.png" alt="Diagrama φ: ℕ → ℕ mostrando φ(ℓ) > N" width="550">
+        </div>
+
+        <p>Sea $k_0=\min\{\ell:\varphi(\ell)>N\}$.
+        Para $k\geq k_0$:</p>
+        \[\begin{aligned}
+          N &< \varphi(k_0) \leq \varphi(k) = n_k,
+        \end{aligned}\]
+        \[\implies d(x_{n_k},x) < \varepsilon.\quad\blacksquare\]
+      </div>
+    </details>
+  </section>
+
+  <hr class="div">
+
+  <!-- ══ 5.7 LEMA ══════════════════════════════════════════════════ -->
+  <section class="sec reveal" id="s7">
+    <div class="sec-head">
+      <span class="sec-badge b-lem">5.7 · Lema</span>
+      <span class="sec-title">Criterio por sub-subsucesiones</span>
+    </div>
+
+    <div class="card c-lem">
+      <span class="card-tag t-lem">Lema 5.7</span>
+      \[\Bigl[\,\forall\,(x_{n_k})\;\;\exists\,(x_{n_{k_m}})\;:\;
+        x_{n_{k_m}}\xrightarrow{m\to\infty}x\,\Bigr]
+        \;\implies\;
+        x_n\xrightarrow{n\to\infty}x.\]
+    </div>
+
+    <details class="col">
+      <summary>Demostración (por contradicción) <span class="ph">▸ click para desplegar</span></summary>
+      <div class="proof-body">
+        <p>Supongamos $x_n\not\to x$. Entonces
+        $\exists\,\varepsilon>0$ tal que $\forall\,N\;\;\exists\,n\geq N$ con
+        $d(x_n,x)\geq\varepsilon.$</p>
+
+        <h3>Paso 1 &mdash; Índices malos</h3>
+        <p>$A=\{n\in\mathbb{N}:d(x_n,x)\geq\varepsilon\}$ es infinito
+        (si fuera finito, $N>\max A$ daría contradicción).</p>
+
+        <h3>Paso 2 &mdash; Subsucesión alejada</h3>
+        <p>Como $A\subseteq\mathbb{N}$ es infinito, podemos enumerarlo
+        en orden creciente:</p>
+        \[A = \{n_1 < n_2 < \cdots\}.\]
+        <p>Esto define una subsucesión $(x_{n_k})_{k\in\mathbb{N}}$ tal que
+        $d(x_{n_k},x)\geq\varepsilon$ para todo $k\in\mathbb{N}.$</p>
+
+        <h3>Paso 3 &mdash; Contradicción</h3>
+        <p>Por hipótesis, a $(x_{n_k})_{k\in\mathbb{N}}$ se le puede
+        extraer una subsucesión $(x_{n_{k_m}})_{m\in\mathbb{N}}\to x$,
+        luego existe $M$ tal que
+        $d(x_{n_{k_m}},x)&lt;\varepsilon$ para todo $m\geq M$.
+        Pero <em>todos</em> los términos de $(x_{n_k})$ cumplen
+        $d(x_{n_k},x)\geq\varepsilon$, en particular los de la
+        sub-subsucesión. <strong>Contradicción.</strong></p>
+        \[\therefore\quad x_n\longrightarrow x.\quad\blacksquare\]
+      </div>
+    </details>
+  </section>
+
+  <hr class="div">
+
+  <!-- ══ COLAS ═════════════════════════════════════════════════════ -->
+  <section class="sec reveal" id="sc">
+    <div class="sec-head">
+      <span class="sec-badge b-note">Desarrollo</span>
+      <span class="sec-title">Colas de sucesiones acotadas</span>
+    </div>
+
+    <p>Sea $(x_n)_{n\in\mathbb{N}}$ acotada: $|x_n|\leq M\;\forall\,n$.
+    Para cada $n$ definimos la cola</p>
+    \[A_n = \{x_k : k\geq n\}.\]
+    <p>Las colas satisfacen $A_{n+1}\subseteq A_n$, son acotadas y no vacías.</p>
+
+    <details class="col">
+      <summary>Construcción de $\alpha_n$, $\beta_n$ y sus límites <span class="ph">▸ click para desplegar</span></summary>
+      <div class="proof-body">
+        <p>Definimos:</p>
+        \[\alpha_n:=\inf_{k\geq n}\{x_k\},\qquad
+          \beta_n:=\sup_{k\geq n}\{x_k\}.\]
+        <p>Se tiene $-M\leq\alpha_n\leq\beta_n\leq M$, así que ambas sucesiones son acotadas.
+        Además, como $A_{n+1}\subseteq A_n$:</p>
+        \[\alpha_n\leq\alpha_{n+1} \quad(\text{creciente}),\qquad
+          \beta_{n+1}\leq\beta_n \quad(\text{decreciente}).\]
+        <p>Por el teorema de convergencia monótona:</p>
+        \[\begin{aligned}
+          \lim_{n\to\infty}\alpha_n
+            &= \sup_{n\geq 1}\Bigl\{\inf_{k\geq n}\{x_k\}\Bigr\}, \\[6pt]
+          \lim_{n\to\infty}\beta_n
+            &= \inf_{n\geq 1}\Bigl\{\sup_{k\geq n}\{x_k\}\Bigr\}.
+        \end{aligned}\]
+      </div>
+    </details>
+  </section>
+
+  <hr class="div">
+
+  <!-- ══ 5.8 LIMINF Y LIMSUP ═══════════════════════════════════════ -->
+  <section class="sec reveal" id="s8">
+    <div class="sec-head">
+      <span class="sec-badge b-def">5.8 · Definición</span>
+      <span class="sec-title">Límites inferior y superior</span>
+    </div>
+
+    <div class="card c-def">
+      <span class="card-tag t-def">Definición</span>
+      <p>Dada una sucesión acotada $(x_n)_{n\in\mathbb{N}}$:</p>
+      \[\liminf_{n\to\infty}x_n
+        = \sup_{n\geq 1}\Bigl\{\inf_{k\geq n}\{x_k\}\Bigr\},\]
+      \[\limsup_{n\to\infty}x_n
+        = \inf_{n\geq 1}\Bigl\{\sup_{k\geq n}\{x_k\}\Bigr\}.\]
+    </div>
+
+    <div class="card c-note">
+      <span class="card-tag t-note">Observación</span>
+      <p>Para toda sucesión acotada:
+      $\displaystyle\liminf_{n\to\infty}x_n\leq\limsup_{n\to\infty}x_n.$
+      (Ambos existen en $\mathbb{R}$ aunque la sucesión no converja.)</p>
+    </div>
+
+    <div class="proof">
+      <span class="proof-tag">Razón</span>
+      <p>$\alpha_n\leq\beta_n$ para todo $n\implies$
+      $\lim\alpha_n\leq\lim\beta_n\implies$
+      $\liminf x_n\leq\limsup x_n.\;\blacksquare$</p>
+    </div>
+
+    <h3>Ejemplo — $x_n=(-1)^n$</h3>
+
+    <div class="card c-example">
+      <span class="card-tag t-ex">Cálculo de lím inf y lím sup</span>
+      \[x_n=\begin{cases}-1 & n\text{ impar}\\1 & n\text{ par}\end{cases}\]
+
+      <h3>Límite inferior</h3>
+      \[\inf_{k\geq n}\{x_k\}=\inf\{-1,1\}=-1\quad\forall\,n.\]
+      \[\implies\sup_{n\geq 1}\Bigl\{\inf_{k\geq n}\{x_k\}\Bigr\}=-1.\]
+      \[\boxed{\liminf_{n\to\infty}x_n = -1}\]
+
+      <h3>Límite superior</h3>
+      \[\sup_{k\geq n}\{x_k\}=\sup\{-1,1\}=1\quad\forall\,n.\]
+      \[\implies\inf_{n\geq 1}\Bigl\{\sup_{k\geq n}\{x_k\}\Bigr\}=1.\]
+      \[\boxed{\limsup_{n\to\infty}x_n = 1}\]
+    </div>
+  </section>
+
+  <hr class="div">
+
+  <!-- ══ 5.9 LEMA ══════════════════════════════════════════════════ -->
+  <section class="sec reveal" id="s9">
+    <div class="sec-head">
+      <span class="sec-badge b-lem">5.9 · Lema</span>
+      <span class="sec-title">Criterio: lím inf = lím sup</span>
+    </div>
+
+    <div class="card c-lem">
+      <span class="card-tag t-lem">Lema 5.9</span>
+      <p>Sea $(x_n)_{n=1}^{\infty}$ acotada. Entonces
+      $(x_n)$ es convergente si y sólo si</p>
+      \[\liminf_{n\to\infty}x_n = \limsup_{n\to\infty}x_n.\]
+      <p>En cuyo caso los tres valores coinciden.</p>
+    </div>
+
+    <details class="col">
+      <summary>Demostración <span class="ph">▸ click para desplegar</span></summary>
+      <div class="proof-body">
+        <p>Recordamos que $\lim\alpha_n=\liminf x_n$ y $\lim\beta_n=\limsup x_n$.</p>
+
+        <h3>$(\Rightarrow)$ Ida</h3>
+        <p>Supongamos $x_n\to L$. Sea $\varepsilon>0$. Existe $N$ tal que
+        $\forall\,n\geq N$:</p>
+        \[|x_n-L| < \tfrac{\varepsilon}{2}
+          \;\implies\;
+          L-\tfrac{\varepsilon}{2} < x_n < L+\tfrac{\varepsilon}{2}.\quad(1)\]
+
+        <p>Sea $n\geq N$. Para todo $k\geq n\geq N$ se aplica (1):</p>
+        \[L-\tfrac{\varepsilon}{2}
+          \leq \alpha_n \leq \beta_n
+          \leq L+\tfrac{\varepsilon}{2}.\]
+        \[\implies |\alpha_n-L|<\varepsilon,\quad|\beta_n-L|<\varepsilon
+          \quad\forall\,n\geq N.\]
+        \[\therefore\;\lim\alpha_n=L=\lim\beta_n
+          \;\implies\;\liminf x_n=L=\limsup x_n.\]
+
+        <h3>$(\Leftarrow)$ Regreso</h3>
+        <p>Supongamos $L:=\liminf x_n=\limsup x_n$. Entonces $\alpha_n\to L$ y
+        $\beta_n\to L$. Para todo $n$: $\alpha_n\leq x_n\leq\beta_n.$
+        Por la <strong>ley del sándwich</strong>: $\lim x_n=L.$</p>
+        \[\therefore\quad
+          \liminf x_n = \limsup x_n = \lim x_n.\quad\blacksquare\]
+      </div>
+    </details>
+  </section>
+
+  <hr class="div">
+
+  <!-- Def acotados -->
+  <section class="sec reveal">
+    <div class="card c-def">
+      <span class="card-tag t-def">Definición — Conjuntos acotados en $(X,d)$</span>
+      <p>Sea $(X,d)$ espacio métrico y $A\subseteq X$. Se dice que
+      <strong>$A$ es acotado</strong> si existen $r>0$ y $x_0\in X$ tales que
+      $A\subseteq B_r(x_0)$, es decir, $d(x_0,a)\leq r$ para todo $a\in A$.</p>
+    </div>
+  </section>
+
+  <hr class="div">
+
+  <!-- ══ 5.10 CAUCHY ═══════════════════════════════════════════════ -->
+  <section class="sec reveal" id="s10">
+    <div class="sec-head">
+      <span class="sec-badge b-def">5.10 · Definición</span>
+      <span class="sec-title">Sucesiones de Cauchy</span>
+    </div>
+
+    <div class="card c-def">
+      <span class="card-tag t-def">Definición</span>
+      <p>Sea $(X,d)$ espacio métrico. La sucesión $(x_n)_{n\in\mathbb{N}}$
+      se llama <strong>de Cauchy</strong> si</p>
+      \[\lim_{n,m\to\infty}d(x_n,x_m)=0,\]
+      \[\text{es decir:}\quad
+        \forall\,\varepsilon>0\;\;\exists\,N\in\mathbb{N}\;\text{ tal que }\;
+        \forall\,n,m\geq N\;\implies\;d(x_n,x_m)<\varepsilon.\]
+    </div>
+  </section>
+
+  <hr class="div">
+
+  <!-- ══ 5.11 LEMA ══════════════════════════════════════════════════ -->
+  <section class="sec reveal" id="s11">
+    <div class="sec-head">
+      <span class="sec-badge b-lem">5.11 · Lema</span>
+      <span class="sec-title">Cauchy con subsucesión convergente</span>
+    </div>
+
+    <div class="card c-lem">
+      <span class="card-tag t-lem">Lema 5.11</span>
+      <p>Sea $(X,d)$ espacio métrico y $(x_n)_{n\in\mathbb{N}}$ una sucesión
+      de Cauchy en $X$. Si $(x_n)$ admite una subsucesión convergente en $X$,
+      entonces $(x_n)$ es convergente.</p>
+    </div>
+
+    <div class="proof">
+      <span class="proof-tag">Demostración</span>
+      <p>Sea $(x_{n_k})$ la subsucesión con $\lim_{k\to\infty}x_{n_k}=x\in X.$
+      Sea $\varepsilon>0.$</p>
+
+      <p>Como $x_{n_k}\to x$: $\exists\,k_0$ tal que
+      $k\geq k_0\implies d(x_{n_k},x)<\tfrac{\varepsilon}{2}.$</p>
+
+      <p>Como $(x_n)$ es Cauchy: $\exists\,N$ tal que
+      $n,m>N\implies d(x_n,x_m)<\tfrac{\varepsilon}{2}.$</p>
+
+      <p>Sea $k_1=\max\{k_0,N+1\}$. Como $n_{k_1}>N$,
+      para todo $n>N$:</p>
+      \[\begin{aligned}
+        d(x_n,x)
+          &\leq d(x_n,x_{n_{k_1}}) + d(x_{n_{k_1}},x) \\[4pt]
+          &< \tfrac{\varepsilon}{2} + \tfrac{\varepsilon}{2} = \varepsilon.
+      \end{aligned}\]
+      \[\therefore\quad x_n\to x.\quad\blacksquare\]
+    </div>
+  </section>
+
+  <footer>
+    <p>Análisis Matemático &mdash; Sucesiones &middot; Capítulo 5</p>
+    <p>Fco. Javier Torres &middot; Facultad de Ciencias</p>
+  </footer>
+
+</main>
+
+<button id="btt" aria-label="Volver arriba">↑</button>
+
+<!-- ══ SCRIPTS ═══════════════════════════════════════════════════ -->
+<script>
+(function () {
+  /* progress bar */
+  const pbar = document.getElementById('pbar');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    pbar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  }, { passive: true });
+
+  /* back-to-top */
+  const btt = document.getElementById('btt');
+  window.addEventListener('scroll', () => {
+    btt.classList.toggle('on', window.scrollY > 420);
+  }, { passive: true });
+  btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  /* ── hamburger TOC ── */
+  const btn   = document.getElementById('toc-btn');
+  const panel = document.getElementById('toc-panel');
+
+  btn.addEventListener('click', () => {
+    const open = panel.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+  });
+
+  /* close TOC when a link is clicked */
+  panel.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      panel.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* close TOC on scroll (after 60px) */
+  let tocClosed = false;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60 && panel.classList.contains('open')) {
+      panel.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  }, { passive: true });
+
+  /* active TOC link on scroll */
+  const sections = document.querySelectorAll('section[id]');
+  const links    = document.querySelectorAll('#toc-panel a');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      links.forEach(l => l.classList.remove('active'));
+      const lnk = document.querySelector(`#toc-panel a[href="#${e.target.id}"]`);
+      if (lnk) lnk.classList.add('active');
+    });
+  }, { rootMargin: '-15% 0px -60% 0px', threshold: 0 });
+  sections.forEach(s => obs.observe(s));
+
+  /* scroll reveal */
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target) }
+    });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+  /* re-typeset MathJax inside details on open */
+  document.querySelectorAll('details').forEach(d => {
+    d.addEventListener('toggle', () => {
+      if (d.open && window.MathJax && MathJax.typesetPromise)
+        MathJax.typesetPromise([d]).catch(() => {});
+    });
+  });
+})();
+</script>
+</body>
+</html>

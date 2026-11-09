@@ -1,0 +1,199 @@
+/* ══════════════════════════════════════════
+   Breakpoints
+   ══════════════════════════════════════════
+   Mobile:  < 768px
+   Tablet:  768px–1024px
+   Desktop: > 1024px
+   ══════════════════════════════════════════ */
+
+/* ─── Tablet ─── */
+
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-w: 220px;
+    --fs-base: 1.05rem;
+  }
+
+  #section-content {
+    padding: var(--sp-xl) var(--sp-xl) var(--sp-3xl);
+  }
+
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.4rem; }
+}
+
+/* ─── Mobile ─── */
+
+@media (max-width: 768px) {
+  :root {
+    --fs-base: 1rem;
+    --header-h: 50px;
+  }
+
+  /* Home page */
+  #site-header {
+    padding: var(--sp-2xl) var(--sp-md) var(--sp-xl);
+  }
+
+  #index-content {
+    padding: 0 var(--sp-md) var(--sp-2xl);
+  }
+
+  .section-entry {
+    grid-template-columns: auto 1fr;
+    gap: var(--sp-xs) var(--sp-sm);
+    padding: var(--sp-md);
+  }
+
+  .section-badges {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .section-number {
+    font-size: 1.15rem;
+  }
+
+  .section-title {
+    font-size: 1.05rem;
+  }
+
+  /* Section page — sidebar hidden by default */
+  #section-layout {
+    grid-template-columns: 1fr;
+  }
+
+  #sidebar {
+    position: fixed;
+    top: calc(var(--header-h) + var(--progress-h));
+    left: 0;
+    width: 280px;
+    height: calc(100vh - var(--header-h) - var(--progress-h));
+    background: var(--bg-elevated);
+    box-shadow: 4px 0 20px hsla(42, 20%, 20%, 0.1);
+    transform: translateX(-100%);
+    transition: transform var(--dur-normal) var(--ease-out);
+    z-index: 90;
+    padding: var(--sp-lg) var(--sp-md);
+    border-right: 1px solid var(--border);
+  }
+
+  #sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  #sidebar-toggle {
+    display: flex;
+  }
+
+  #sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    top: calc(var(--header-h) + var(--progress-h));
+    background: hsla(42, 20%, 10%, 0.3);
+    z-index: 80;
+  }
+
+  #sidebar-overlay.visible {
+    display: block;
+  }
+
+  /* Content */
+  #section-content {
+    padding: var(--sp-lg) var(--sp-md) var(--sp-2xl);
+  }
+
+  #content-tabs {
+    gap: var(--sp-lg);
+  }
+
+  #top-nav {
+    padding: 0 var(--sp-md);
+  }
+
+  #nav-title {
+    font-size: 0.85rem;
+  }
+
+  /* Footer nav stacks on very small screens */
+  #section-footer-nav {
+    flex-direction: column;
+    gap: var(--sp-sm);
+    align-items: stretch;
+    text-align: center;
+  }
+
+  /* Headings */
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.3rem; margin-top: var(--sp-2xl); }
+  h3 { font-size: 1.15rem; }
+
+  /* Math overflow — scrollable on mobile */
+  mjx-container[jax="CHTML"][display="true"] {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    padding: var(--sp-xs) 0;
+  }
+
+  /* Images full width */
+  #content-body img {
+    margin: var(--sp-xl) calc(-1 * var(--sp-md));
+    width: calc(100% + 2 * var(--sp-md));
+    max-width: none;
+    border-radius: 0;
+  }
+}
+
+/* ─── Very small screens ─── */
+
+@media (max-width: 400px) {
+  :root {
+    --fs-base: 0.95rem;
+  }
+
+  .section-number {
+    font-size: 1rem;
+  }
+
+  .badge {
+    font-size: 0.65rem;
+  }
+}
+
+/* ─── Large desktop ─── */
+
+@media (min-width: 1400px) {
+  :root {
+    --content-max: 72ch;
+    --sidebar-w: 280px;
+  }
+}
+
+/* ─── Print ─── */
+
+@media print {
+  #section-header,
+  #sidebar,
+  #content-tabs,
+  #section-footer-nav,
+  #progress-bar {
+    display: none !important;
+  }
+
+  #section-layout {
+    grid-template-columns: 1fr;
+  }
+
+  #section-content {
+    padding: 0;
+  }
+
+  body {
+    font-size: 11pt;
+    color: #000;
+    background: #fff;
+  }
+}

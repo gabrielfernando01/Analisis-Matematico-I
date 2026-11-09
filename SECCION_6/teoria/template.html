@@ -1,0 +1,2576 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topología en Espacios Métricos | Análisis Matemático</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="__IMG_FAVICON__">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300..800;1,300..800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+  <style>
+    /* ==========================================================================
+       CSS Custom Properties (Theme Design System)
+       ========================================================================== */
+    :root {
+      --bg-body: #faf8f5;
+      --bg-card: #ffffff;
+      --bg-card-subtle: #f6f3ed;
+      --bg-header: rgba(250, 248, 245, 0.94);
+      --bg-sidebar: #f5f1ea;
+      --bg-sidebar-hover: #ebe5db;
+      --bg-active-link: #e2dbce;
+      
+      --text-main: #1c222b;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
+      --text-quote: #2c3e50;
+      
+      --border-color: #e5ded3;
+      --border-subtle: #ede6dc;
+      --border-accent: #2563eb;
+      
+      /* Semantic academic colors */
+      --color-def: #0d9488;
+      --color-def-bg: rgba(13, 148, 136, 0.05);
+      --color-def-border: #14b8a6;
+      
+      --color-thm: #1e40af;
+      --color-thm-bg: rgba(30, 64, 175, 0.05);
+      --color-thm-border: #3b82f6;
+      
+      --color-lem: #b45309;
+      --color-lem-bg: rgba(180, 83, 9, 0.05);
+      --color-lem-border: #f59e0b;
+      
+      --color-prop: #5b21b6;
+      --color-prop-bg: rgba(91, 33, 182, 0.05);
+      --color-prop-border: #8b5cf6;
+      
+      --color-example: #334155;
+      --color-example-bg: rgba(51, 65, 85, 0.04);
+      --color-example-border: #64748b;
+      
+      --proof-border: #3b82f6;
+      --proof-bg: #fcfbf9;
+      --proof-header: #1e3a8a;
+      
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.07);
+      --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.09);
+      --shadow-hover: 0 16px 36px rgba(0, 0, 0, 0.12);
+      
+      --sidebar-width: 330px;
+      --topbar-height: 60px;
+    }
+
+    [data-theme="dark"] {
+      --bg-body: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-subtle: #1c222b;
+      --bg-header: rgba(13, 17, 23, 0.94);
+      --bg-sidebar: #13171e;
+      --bg-sidebar-hover: #1b212c;
+      --bg-active-link: #242c3a;
+      
+      --text-main: #e6edf3;
+      --text-secondary: #9da9bb;
+      --text-muted: #6e7681;
+      --text-quote: #cbd5e1;
+      
+      --border-color: #30363d;
+      --border-subtle: #21262d;
+      --border-accent: #38bdf8;
+      
+      --color-def: #2dd4bf;
+      --color-def-bg: rgba(45, 212, 191, 0.07);
+      --color-def-border: #14b8a6;
+      
+      --color-thm: #60a5fa;
+      --color-thm-bg: rgba(96, 165, 250, 0.07);
+      --color-thm-border: #3b82f6;
+      
+      --color-lem: #fbbf24;
+      --color-lem-bg: rgba(251, 191, 36, 0.07);
+      --color-lem-border: #d97706;
+      
+      --color-prop: #a78bfa;
+      --color-prop-bg: rgba(167, 139, 250, 0.07);
+      --color-prop-border: #8b5cf6;
+      
+      --color-example: #94a3b8;
+      --color-example-bg: rgba(148, 163, 184, 0.06);
+      --color-example-border: #475569;
+      
+      --proof-border: #60a5fa;
+      --proof-bg: #141922;
+      --proof-header: #93c5fd;
+      
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.5);
+      --shadow-hover: 0 16px 36px rgba(0, 0, 0, 0.6);
+    }
+
+    /* ==========================================================================
+       Reset & Base Styles
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Crimson Pro', Georgia, 'Times New Roman', serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.76;
+      font-size: 1.18rem;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Reading Progress Bar */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3.5px;
+      background: linear-gradient(90deg, #1e40af, #0d9488, #b45309);
+      z-index: 1001;
+      transition: width 0.1s ease-out;
+    }
+
+    /* ==========================================================================
+       Top Navigation Bar
+       ========================================================================== */
+    .top-header {
+      position: sticky;
+      top: 0;
+      height: var(--topbar-height);
+      background-color: var(--bg-header);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hamburger-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .hamburger-btn:hover {
+      background-color: var(--bg-card-subtle);
+      border-color: var(--text-muted);
+      transform: scale(1.04);
+    }
+
+    .doc-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .doc-course {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    .doc-title-nav {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 50vw;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-action {
+      font-family: 'Inter', sans-serif;
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 0.45rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background-color: var(--bg-card-subtle);
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       Sidebar / Table of Contents (Off-canvas Drawer)
+       ========================================================================== */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+    }
+
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .sidebar-drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .sidebar-drawer.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--bg-sidebar);
+    }
+
+    .sidebar-header h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .sidebar-close-btn {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .sidebar-close-btn:hover {
+      color: var(--text-main);
+      background-color: var(--bg-sidebar-hover);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 0.75rem;
+      list-style: none;
+    }
+
+    .nav-item {
+      margin-bottom: 0.25rem;
+    }
+
+    .nav-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.6rem 0.85rem;
+      border-radius: 6px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      line-height: 1.35;
+    }
+
+    .nav-link:hover {
+      background-color: var(--bg-sidebar-hover);
+      color: var(--text-main);
+    }
+
+    .nav-link.active {
+      background-color: var(--bg-active-link);
+      color: var(--text-main);
+      font-weight: 600;
+      border-left: 3px solid var(--color-thm);
+    }
+
+    .nav-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      min-width: 38px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .badge-intro { background: rgba(100, 116, 139, 0.15); color: var(--text-secondary); }
+    .badge-def { background: var(--color-def-bg); color: var(--color-def); border: 1px solid var(--color-def-border); }
+    .badge-thm { background: var(--color-thm-bg); color: var(--color-thm); border: 1px solid var(--color-thm-border); }
+    .badge-lem { background: var(--color-lem-bg); color: var(--color-lem); border: 1px solid var(--color-lem-border); }
+    .badge-prop { background: var(--color-prop-bg); color: var(--color-prop); border: 1px solid var(--color-prop-border); }
+
+    /* ==========================================================================
+       Main Document Content Container
+       ========================================================================== */
+    .main-wrapper {
+      flex: 1;
+      width: 100%;
+      max-width: 890px;
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+      transition: max-width 0.3s ease;
+    }
+
+    /* Title Block */
+    .doc-hero {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 2px solid var(--border-color);
+      position: relative;
+    }
+
+    .doc-hero::after {
+      content: "§ § §";
+      position: absolute;
+      bottom: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--bg-body);
+      padding: 0 1rem;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+    }
+
+    .doc-hero .institution {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .doc-hero h1 {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 2.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      line-height: 1.22;
+      margin-bottom: 1rem;
+    }
+
+    .doc-hero .doc-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    /* ==========================================================================
+       Mathematical Academic Environments (Cards)
+       ========================================================================== */
+    .section-block {
+      margin-bottom: 4rem;
+      scroll-margin-top: calc(var(--topbar-height) + 1.5rem);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-header h2 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .section-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Academic Cards */
+    .math-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.75rem 2rem;
+      margin: 1.75rem 0;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .math-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--text-muted);
+    }
+
+    .card-def {
+      border-left: 5px solid var(--color-def-border);
+      background: linear-gradient(to right, var(--color-def-bg), var(--bg-card) 12%);
+    }
+
+    .card-thm {
+      border-left: 5px solid var(--color-thm-border);
+      background: linear-gradient(to right, var(--color-thm-bg), var(--bg-card) 12%);
+    }
+
+    .card-lem {
+      border-left: 5px solid var(--color-lem-border);
+      background: linear-gradient(to right, var(--color-lem-bg), var(--bg-card) 12%);
+    }
+
+    .card-prop {
+      border-left: 5px solid var(--color-prop-border);
+      background: linear-gradient(to right, var(--color-prop-bg), var(--bg-card) 12%);
+    }
+
+    .card-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .label-def { color: var(--color-def); }
+    .label-thm { color: var(--color-thm); }
+    .label-lem { color: var(--color-lem); }
+    .label-prop { color: var(--color-prop); }
+
+    /* ==========================================================================
+       Mathematical Proofs (Demostraciones)
+       ========================================================================== */
+    /* Short Proofs: Visible */
+    .proof-short {
+      background-color: var(--proof-bg);
+      border-left: 3.5px solid var(--proof-border);
+      border-radius: 0 8px 8px 0;
+      padding: 1.25rem 1.6rem;
+      margin: 1.5rem 0 2rem;
+      position: relative;
+    }
+
+    .proof-short .proof-title {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.12rem;
+      color: var(--proof-header);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .proof-short .proof-title::before {
+      content: "▪";
+      font-style: normal;
+      font-size: 1rem;
+    }
+
+    /* Long Proofs: Collapsible */
+    .proof-collapsible {
+      background-color: var(--proof-bg);
+      border: 1px solid var(--border-color);
+      border-left: 3.5px solid var(--proof-border);
+      border-radius: 8px;
+      margin: 1.5rem 0 2rem;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .proof-collapsible[open] {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .proof-summary {
+      padding: 0.9rem 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      background-color: var(--bg-card-subtle);
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+    }
+
+    .proof-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .proof-summary:hover {
+      background-color: var(--bg-sidebar-hover);
+    }
+
+    .summary-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .summary-title {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--proof-header);
+    }
+
+    .summary-tag {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      background-color: rgba(59, 130, 246, 0.12);
+      color: var(--proof-border);
+    }
+
+    .summary-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: transform 0.25s ease;
+    }
+
+    .proof-collapsible[open] .summary-icon {
+      transform: rotate(180deg);
+    }
+
+    .proof-content {
+      padding: 1.5rem 1.6rem;
+      border-top: 1px solid var(--border-subtle);
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Vertical & Stepped Alignment in Proofs */
+    .proof-step {
+      margin: 0.85rem 0;
+    }
+
+    .proof-inclusion {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 1.1rem 0 0.4rem;
+      display: inline-block;
+      font-size: 1.05rem;
+    }
+
+    .qed {
+      float: right;
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      line-height: 1;
+      margin-top: 0.5rem;
+    }
+
+    /* ==========================================================================
+       Images & Dynamic Hover Effect
+       ========================================================================== */
+    .math-figure {
+      margin: 2.25rem auto;
+      text-align: center;
+      display: block;
+    }
+
+    .math-img-wrapper {
+      display: inline-block;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      background-color: #ffffff;
+      padding: 10px;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: zoom-in;
+    }
+
+    .math-img-wrapper:hover {
+      transform: scale(1.025) translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .math-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      transition: filter 0.3s ease;
+    }
+
+    .figure-caption {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+      font-style: italic;
+    }
+
+    /* ==========================================================================
+       Examples, Notes and Observations
+       ========================================================================== */
+    .note-box {
+      background-color: var(--color-example-bg);
+      border-left: 3.5px solid var(--color-example-border);
+      border-radius: 0 6px 6px 0;
+      padding: 1rem 1.4rem;
+      margin: 1.5rem 0;
+      font-size: 1.12rem;
+    }
+
+    .note-box strong {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .example-block {
+      margin: 1.5rem 0;
+      padding-left: 1rem;
+      border-left: 2px solid var(--border-color);
+    }
+
+    .example-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .box-highlight {
+      background-color: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.25rem 0;
+      text-align: center;
+    }
+
+    /* Lists styling */
+    ol.math-list, ul.math-list {
+      padding-left: 1.75rem;
+      margin: 1rem 0;
+    }
+
+    ol.math-list li, ul.math-list li {
+      margin-bottom: 0.75rem;
+    }
+
+    /* KaTeX overrides & formula presentation */
+    .katex-display {
+      margin: 1.25em 0 !important;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.4em 0;
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: zoom-out;
+    }
+
+    .lightbox-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 88vh;
+      border-radius: 8px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      background: #ffffff;
+      padding: 12px;
+      transform: scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .lightbox-modal.active .lightbox-img {
+      transform: scale(1);
+    }
+
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+      z-index: 900;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-thm);
+    }
+
+    /* Footer */
+    .doc-footer {
+      margin-top: 5rem;
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main-wrapper {
+        padding: 2rem 1.25rem 4rem;
+      }
+      .doc-hero h1 {
+        font-size: 2.15rem;
+      }
+      .math-card {
+        padding: 1.25rem 1.4rem;
+      }
+      .doc-title-nav {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Reading Progress Bar -->
+  <div id="progress-bar"></div>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-header">
+    <div class="header-left">
+      <button class="hamburger-btn" id="sidebar-toggle" title="Abrir índice de contenidos" aria-label="Abrir menú">
+        ☰
+      </button>
+      <div class="doc-meta">
+        <span class="doc-course">Análisis Matemático · 2027-1</span>
+        <span class="doc-title-nav">6. Topología en Espacios Métricos</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn-action" id="toggle-all-proofs" title="Alternar visibilidad de todas las demostraciones">
+        <span id="proofs-toggle-text">Desplegar demostraciones</span>
+      </button>
+      <button class="btn-action" id="theme-toggle" title="Cambiar tema día/noche" aria-label="Cambiar tema">
+        <span id="theme-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar Overlay & Drawer -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <aside class="sidebar-drawer" id="sidebar-drawer">
+    <div class="sidebar-header">
+      <h3>Índice de Contenidos</h3>
+      <button class="sidebar-close-btn" id="sidebar-close" aria-label="Cerrar índice">&times;</button>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="nav-item">
+        <a href="#sec-6-1" class="nav-link">
+          <span class="nav-badge badge-intro">6.1</span>
+          <span>Introducción</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-2" class="nav-link">
+          <span class="nav-badge badge-def">6.2</span>
+          <span>Definición (Bolas abiertas)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-3" class="nav-link">
+          <span class="nav-badge badge-def">6.3</span>
+          <span>Definición (Conjuntos abiertos)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-4" class="nav-link">
+          <span class="nav-badge badge-lem">6.4</span>
+          <span>Lema (Bolas son abiertas)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-5" class="nav-link">
+          <span class="nav-badge badge-prop">6.5</span>
+          <span>Proposición (Unión e intersección)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-6" class="nav-link">
+          <span class="nav-badge badge-def">6.6</span>
+          <span>Definición (Conjuntos cerrados)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-7" class="nav-link">
+          <span class="nav-badge badge-prop">6.7</span>
+          <span>Proposición (Familias de cerrados)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-8" class="nav-link">
+          <span class="nav-badge badge-def">6.8</span>
+          <span>Definición (Tipos de puntos)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-9" class="nav-link">
+          <span class="nav-badge badge-thm">6.9</span>
+          <span>Teorema (Abierto e interior)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-10" class="nav-link">
+          <span class="nav-badge badge-thm">6.10</span>
+          <span>Teorema (Cerrado y acumulación)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-13" class="nav-link">
+          <span class="nav-badge badge-def">6.13</span>
+          <span>Definición (Interior y cerradura)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-14" class="nav-link">
+          <span class="nav-badge badge-lem">6.14</span>
+          <span>Lema (Propiedades de cerradura)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-15" class="nav-link">
+          <span class="nav-badge badge-lem">6.15</span>
+          <span>Lema (Cerradura y sucesiones)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-11" class="nav-link">
+          <span class="nav-badge badge-lem">6.11</span>
+          <span>Lema (Métricas equivalentes)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-12" class="nav-link">
+          <span class="nav-badge badge-def">6.12</span>
+          <span>Definición (Métricas producto)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-16" class="nav-link">
+          <span class="nav-badge badge-lem">6.16</span>
+          <span>Lema (Diámetro de cerradura)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#sec-6-17" class="nav-link">
+          <span class="nav-badge badge-lem">6.17</span>
+          <span>Lema (Distancia a un subconjunto)</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-wrapper">
+
+    <!-- Hero / Title -->
+    <header class="doc-hero">
+      <div class="institution">Facultad de Ciencias · Universidad Nacional Autónoma de México</div>
+      <h1>Topología en Espacios Métricos</h1>
+      <div class="doc-subtitle">Notas de Clase de Análisis Matemático · Profesor Francisco Javier Torres</div>
+    </header>
+
+    <!-- SECTION 6.1 -->
+    <section class="section-block" id="sec-6-1">
+      <div class="section-header">
+        <span class="section-num">6.1</span>
+        <h2>Introducción</h2>
+      </div>
+      <p>
+        La topología se refiere a la parte de las matemáticas que estudia la expansión del concepto de continuidad más allá de los espacios \(\mathbb{R}^n\) o los espacios métricos. La idea principal detrás de dicha generalización es que existen ciertos subconjuntos con características especiales que permiten definir los conceptos de continuidad. A estos subconjuntos especiales se les llama <em>subconjuntos abiertos</em> e intuitivamente son los que "miden" la cercanía entre puntos de un espacio dado.
+      </p>
+      <p>
+        En esta sección se introducen los conceptos de conjuntos abiertos y cerrados en espacios métricos, se ven sus propiedades básicas así como algunos ejemplos concretos en los espacios \(\mathbb{R}^n\) y \(\mathcal{B}(X),\) el espacio de funciones acotadas.
+      </p>
+    </section>
+
+    <!-- SECTION 6.2 -->
+    <section class="section-block" id="sec-6-2">
+      <div class="section-header">
+        <span class="section-num">6.2</span>
+        <h2>Definición</h2>
+      </div>
+
+      <div class="math-card card-def">
+        <div class="card-label label-def">Definición 6.2 · Bola Abierta</div>
+        <p>
+          Sea \((X,d)\) un espacio métrico. Una <strong>bola abierta</strong> de radio \(r > 0\) y centrada en \(x_0 \in X\) se define como el conjunto
+        </p>
+        \[
+          B_r(x_0)=\{x \in X: d(x,x_0) < r\}
+        \]
+        <p>
+          Si el espacio métrico proviene de un espacio vectorial normado \((V, \|\cdot\|)\), las bolas son
+        </p>
+        \[
+          B_r(x_0)=\{x \in V:\;\|x-x_0\|<r\}
+        \]
+        <p>
+          Gracias a la estructura de espacio vectorial, podemos expresar:
+        </p>
+        \[
+        \begin{aligned}
+        B_r(x_0) &= x_0+B_r(0)  \\
+        &= \{x_0 + w \; : \; w \in B_r(0)\}
+        \end{aligned}
+        \]
+      </div>
+
+      <figure class="math-figure">
+        <div class="math-img-wrapper" style="max-width: 550px;">
+          <img class="math-img" src="__IMG_B_R_ESP_NORMADO__" alt="Bola abierta en un espacio vectorial normado" />
+        </div>
+        <figcaption class="figure-caption">Figura 6.2.1: Traslación de la bola abierta en un espacio vectorial normado.</figcaption>
+      </figure>
+
+      <!-- Short Proof Def 6.2 -->
+      <div class="proof-short">
+        <div class="proof-title">Demostración (\(B_r(x_0) = x_0 + B_r(0)\))</div>
+        
+        <div class="proof-step">
+          <div class="proof-inclusion">\(\mathbf{\subseteq \big)}\)</div>
+          <p>
+            Sea \(v \in B_r(x_0)\) y sea \(w = v - x_0\). Entonces
+          </p>
+          \[
+            \|w\| = \|v - x_0\| < r \;\implies\; w \in B_r(0)
+          \]
+          <p>
+            y además \(v = x_0 + w\). Por tanto, \(v \in x_0 + B_r(0)\).
+          </p>
+        </div>
+
+        <div class="proof-step">
+          <div class="proof-inclusion">\(\mathbf{\supseteq \big)}\)</div>
+          <p>
+            Sea \(v = x_0 + w\) con \(w \in B_r(0)\). Entonces
+          </p>
+          \[
+            \|v - x_0\| = \|w\| < r
+          \]
+          <p>
+            es decir, \(v \in B_r(x_0)\). <span class="qed">\(\blacksquare\)</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="note-box">
+        <strong>Observación:</strong> En espacios vectoriales normados, las bolas abiertas están completamente determinadas por las bolas abiertas con centro en \(0\).
+      </div>
+
+      <p>
+        La forma de la bola depende del espacio métrico, como se ve en los siguientes ejemplos:
+      </p>
+
+      <div class="example-block">
+        <div class="example-title">1. La métrica discreta</div>
+        <p>
+          Recordamos que, para un conjunto cualquiera \(X \neq \emptyset\), la métrica discreta en \(X\) se define por
+        </p>
+        \[
+        d(x,y)=
+        \begin{cases}
+        0, & x=y,\\
+        1, & x\ne y.
+        \end{cases}
+        \]
+        <ul class="math-list">
+          <li>Para \(r \in (0,1]\):
+            \[ B_r(x_0)=\{x_0\} \]
+          </li>
+          <li>Para \(r \in (1,\infty)\):
+            \[ B_r(x_0)=X \]
+          </li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="example-title">2. La familia de normas-\(p\)</div>
+        <p>
+          En el espacio vectorial normado \((\mathbb{R}^n, \|\cdot\|_p)\), con \(p \in [1,\infty]\), la forma de la bola depende del parámetro \(p\). La siguiente figura muestra algunas bolas en \(\mathbb{R}^2\), centradas en el origen.
+        </p>
+        <figure class="math-figure">
+          <div class="math-img-wrapper" style="max-width: 480px;">
+            <img class="math-img" src="__IMG_NORMA_P__" alt="Bolas en R^2 con normas p" />
+          </div>
+          <figcaption class="figure-caption">Figura 6.2.2: Geometría de las bolas unitarias en \(\mathbb{R}^2\) para diversas normas-\(p\).</figcaption>
+        </figure>
+      </div>
+
+      <div class="example-block">
+        <div class="example-title">3. La norma uniforme o infinito</div>
+        <p>
+          Sea \(X \neq \emptyset\) un conjunto cualquiera y considera el espacio vectorial normado de las funciones con valores reales, acotadas en \(X\) y con la norma uniforme (o norma infinito), denotado \((\mathcal{B}(X), \|\cdot\|_\infty)\).
+        </p>
+        <p>
+          Dibujar bolas abiertas en \((\mathcal{B}(X), \|\cdot\|_\infty)\) no es tan directo, pero tenemos cierta ayuda visual. En este caso una bola abierta es
+        </p>
+        \[
+          B_r(f_0)=\{f \in \mathcal{B}(X) : \|f-f_0\|_\infty < r\}
+        \]
+        <p>
+          donde \(f, f_0\) son funciones acotadas sobre \(X\) con valores reales. En el análisis de los límites en la norma uniforme notamos que la expresión \(\|f-f_0\|_\infty < r\) implica
+        </p>
+        \[
+          |f(x)-f_0(x)| < r, \quad \text{para toda } x \in X
+        \]
+        <p>
+          En términos de las gráficas de \(f\) y \(f_0\) quiere decir que la gráfica de \(f\) está encerrada en una franja de radio \(r>0\) centrada en \(f_0\). Por lo tanto podemos "dibujar" las bolas \(B_r(f_0)\) como:
+        </p>
+
+        <figure class="math-figure">
+          <div class="math-img-wrapper" style="max-width: 550px;">
+            <img class="math-img" src="__IMG_NORMA_UNIFORME__" alt="Franja de la norma uniforme" />
+          </div>
+          <figcaption class="figure-caption">Figura 6.2.3: Franja de radio \(r\) alrededor de \(f_0\) en la norma uniforme.</figcaption>
+        </figure>
+
+        <p>
+          En \(\left(C[a,b],\|\cdot\|\right)\), con norma uniforme:
+        </p>
+        \[
+          \|f\|_{[a,b]}=\sup_{t \in [a,b]}\{|f(t)|\}
+        \]
+        \[
+          B_r(f_0)=\{f\;:\;\|f-f_0\|_{[a,b]}<r\}
+        \]
+        \[
+          \|f-f_0\|_{[a,b]}=\max_{t \in [a,b]}\{|f(t)-f_0(t)|\}<r \iff f_0(t)-r<f(t)<f_0(t)+r
+        \]
+      </div>
+    </section>
+
+    <!-- SECTION 6.3 -->
+    <section class="section-block" id="sec-6-3">
+      <div class="section-header">
+        <span class="section-num">6.3</span>
+        <h2>Definición</h2>
+      </div>
+
+      <div class="math-card card-def">
+        <div class="card-label label-def">Definición 6.3 · Conjunto Abierto</div>
+        <p>
+          Sea \((X,d)\) un espacio métrico. Un subconjunto \(U \subseteq X\) es <strong>abierto</strong> si
+        </p>
+        \[
+          \forall \; p \in U \; \exists \; r>0\;\text{tal que}\;B_r(p) \subseteq U
+        \]
+      </div>
+
+      <figure class="math-figure">
+        <div class="math-img-wrapper" style="max-width: 550px;">
+          <img class="math-img" src="__IMG_ABIERTO__" alt="Conjunto abierto en espacio métrico" />
+        </div>
+        <figcaption class="figure-caption">Figura 6.3.1: Cada punto \(p \in U\) posee una bola centrada en él contenida en \(U\).</figcaption>
+      </figure>
+
+      <div class="note-box">
+        <strong>Notas:</strong>
+        <ol class="math-list">
+          <li>Dado \(x \in U\) el radio \(r\) que cumple \(B_r(x) \subseteq U\) usualmente depende de \(x\).</li>
+          <li>El cuantificador «\(\forall\)» es importante. Si existe algún punto \(x \in U\) para el cual no se pueda encontrar \(r>0\) que satisfaga \(B_r(x) \subseteq U,\;\) entonces el conjunto no es abierto.</li>
+        </ol>
+      </div>
+
+      <div class="example-block">
+        <p>
+          - En \((\mathbb{R},|\cdot|),\;(a,b)\) son subconjuntos abiertos:
+        </p>
+        \[
+          \forall \; x \in (a,b), \; \text{si tomamos,} \; r = \min\{x-a,b-x\}\; \implies \; B_r(x) \subseteq (a,b)
+        \]
+        <figure class="math-figure">
+          <div class="math-img-wrapper" style="max-width: 550px;">
+            <img class="math-img" src="__IMG_INTERVALO__" alt="Intervalo abierto (a,b)" />
+          </div>
+          <figcaption class="figure-caption">Figura 6.3.2: El intervalo \((a,b)\) es abierto en \(\mathbb{R}\).</figcaption>
+        </figure>
+      </div>
+
+      <div class="example-block">
+        <p>
+          - El intervalo \((a,b]\) <strong>no es abierto</strong> ya que, para el elemento \(b \in (a,b]\), siempre se tiene que, sin importar que radio \(r > 0\) que se tome:
+        </p>
+        \[
+          \left(B_r(b) \cap (a,b]^c\right) \neq \emptyset
+        \]
+        \[
+          \implies \, \forall \; r > 0, \; B_r(b) \nsubseteq (a,b]
+        \]
+        <figure class="math-figure">
+          <div class="math-img-wrapper" style="max-width: 550px;">
+            <img class="math-img" src="__IMG_NO_CONTENIDO__" alt="Intervalo no abierto por el extremo b" />
+          </div>
+          <figcaption class="figure-caption">Figura 6.3.3: Para \(b \in (a,b]\), ninguna bola centrada en \(b\) queda contenida en el intervalo.</figcaption>
+        </figure>
+      </div>
+
+      <div class="note-box">
+        <p>
+          - \(\emptyset \; \land \; X\) son abiertos. Para cualquier otro conjunto la métrica \(d\) «decide» si es abierto o no.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION 6.4 -->
+    <section class="section-block" id="sec-6-4">
+      <div class="section-header">
+        <span class="section-num">6.4</span>
+        <h2>Lema</h2>
+      </div>
+
+      <div class="math-card card-lem">
+        <div class="card-label label-lem">Lema 6.4 · Las bolas abiertas son abiertas</div>
+        <p>
+          Sea \((X,d)\) un espacio métrico, \(x_0 \in X\) y \(r>0\):
+        </p>
+        \[
+          \implies \; \forall \; B_r(x_0) \text{ es un subconjunto abierto de } X
+        \]
+        <p>
+          <em>i.e.</em>, tiene que cumplir la Definición 6.3.
+        </p>
+      </div>
+
+      <figure class="math-figure">
+        <div class="math-img-wrapper" style="max-width: 550px;">
+          <img class="math-img" src="__IMG_B_R_ES_ABIERTO__" alt="Demostración de que B_r(x_0) es abierto" />
+        </div>
+        <figcaption class="figure-caption">Figura 6.4.1: Para cualquier \(x \in B_r(x_0)\), tomamos \(s = r - d(x,x_0) > 0\).</figcaption>
+      </figure>
+
+      <!-- Short Proof Lema 6.4 -->
+      <div class="proof-short">
+        <div class="proof-title">Demostración</div>
+        <p>Sea \(x \in B_r(x_0)\)</p>
+        <p>\(\text{p.d.} \; \exists \; s > 0 \; \text{tal que} \; B_s(x) \subseteq B_r(x_0)\)</p>
+        <p>Sea \(s:=r-d(x,x_0)\)</p>
+        \[
+        \begin{aligned}
+        x \in B_r(x_0) &\implies d(x,x_0)<r \\
+        &\implies 0<r-d(x,x_0) = s
+        \end{aligned}
+        \]
+        <p>\(\text{p.d.} \; B_s(x) \subseteq B_r(x_0)\)</p>
+        <p>Sea \(y \in B_s(x)\)</p>
+        \[
+        \begin{aligned}
+        \implies \; d(y,x) &< s \\
+        &= r - d(x,x_0)
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+            \implies \; d(y,x_0) &\leq d(y,x) + d(x,x_0) \\
+            &< s + d(x,x_0) \\
+            &= \big(r - d(x,x_0)\big) + d(x,x_0) \\
+            &= r
+        \end{aligned}
+        \]
+        \[
+          \therefore \; y \in B_r(x_0) \; \blacksquare .
+        \]
+      </div>
+    </section>
+
+    <!-- SECTION 6.5 -->
+    <section class="section-block" id="sec-6-5">
+      <div class="section-header">
+        <span class="section-num">6.5</span>
+        <h2>Proposición</h2>
+      </div>
+
+      <div class="math-card card-prop">
+        <div class="card-label label-prop">Proposición 6.5 · Propiedades de los Abiertos</div>
+        <p>Sea \((X,d)\) un espacio métrico:</p>
+      </div>
+
+      <!-- Part 1 -->
+      <div class="example-block">
+        <p>
+          <strong>1.</strong> Sea \(\big\{U_i\big\}_{i \in I}\) una colección arbitraria de conjuntos abiertos (es decir, la cardinalidad de \(I\) es arbitraria).
+        </p>
+        \[
+          \implies \bigcup_{i \in I}U_i\;\text{es un subconjunto abierto.}
+        \]
+
+        <!-- Short Proof Prop 6.5.1 -->
+        <div class="proof-short">
+          <div class="proof-title">Demostración</div>
+          \[
+          \begin{aligned}
+          x \in \bigcup_{i \in I}U_i \; &\implies \; \exists \; j \in I \; \text{tal que} \; x \in U_j \\
+          &\implies \exists \; r > 0 \; \text{tal que} \; B_r(x) \subseteq U_j
+          \end{aligned}
+          \]
+          \[
+            \therefore \; B_r(x) \subseteq U_j \subseteq \bigcup_{i \in I}U_i
+          \]
+          <p>
+            Por lo tanto, \(\bigcup_{i \in I}U_i\) es abierto. <span class="qed">\(\blacksquare\)</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Part 2 -->
+      <div class="example-block">
+        <p>
+          <strong>2.</strong> Sea \(\{U_i\}_{i=1}^n\) una colección finita de subconjuntos abiertos.
+        </p>
+        \[
+          \implies \bigcap_{i=1}^n U_i \; \text{es abierto.}
+        \]
+
+        <!-- Short Proof Prop 6.5.2 -->
+        <div class="proof-short">
+          <div class="proof-title">Demostración</div>
+          \[
+          \begin{aligned}
+          x \in \bigcap_{i=1}^n U_i &\implies \; x \in U_i, \;\; \forall \; i=1,2,\ldots,n \\
+          &\implies \; \exists \; r_i>0 \; \text{tal que} \; B_{r_i}(x) \subseteq U_i, \;\; \forall \; i=1,2,\ldots,n
+          \end{aligned}
+          \]
+          <p>
+            Sea \(r:=\min\{r_1,\ldots,r_n\}>0\). Entonces, para todo \(i=1,2,\ldots,n\),
+          </p>
+          \[
+            B_r(x) \subseteq B_{r_i}(x) \subseteq U_i
+          \]
+          \[
+            \therefore \; B_r(x) \subseteq \bigcap_{i=1}^n U_i
+          \]
+          <p>
+            Por lo tanto, \(\bigcap_{i=1}^n U_i\) es abierto. <span class="qed">\(\blacksquare\)</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Part 3 -->
+      <div class="example-block">
+        <p>
+          <strong>3.</strong> Da un ejemplo de \(\left\{U_i\right\}_{i=1}^{\infty}\) de abiertos, con \(\;\bigcap_{i=1}^{\infty}U_i\;\) no abierto.
+        </p>
+
+        <!-- Long Proof Prop 6.5.3: Collapsible -->
+        <details class="proof-collapsible">
+          <summary class="proof-summary">
+            <div class="summary-left">
+              <span class="summary-title">Demostración (Contraejemplo)</span>
+              <span class="summary-tag">Larga · Desplegar</span>
+            </div>
+            <div class="summary-icon">▾</div>
+          </summary>
+          <div class="proof-content">
+            <p>
+              Sean \(a<b\) y \(U_i=\left(a-\frac{1}{i},\,b+\frac{1}{i}\right)\) para \(i\in\mathbb{N}\). Cada \(U_i\) es un intervalo abierto, por lo tanto abierto en \(\mathbb{R}\).
+            </p>
+            <p>
+              Denotemos la intersección por \(V=\bigcap_{i=1}^{\infty}U_i\). Como \(a-\frac{1}{i}<a<b+\frac{1}{i}\) para todo \(i\), se tiene \(a\in V\). De hecho, \(V=[a,b]\).
+            </p>
+            <p>
+              Sea \(r>0\). Por la propiedad arquimediana existe \(i_0\in\mathbb{N}\) con \(\frac{1}{i_0}<\frac{r}{2}\). Entonces
+            </p>
+            \[
+              a-\frac{r}{2}<a-\frac{1}{i_0},
+            \]
+            <p>
+              así que \(a-\frac{r}{2}\notin U_{i_0}\). Como \(V\subseteq U_{i_0}\), se sigue que \(a-\frac{r}{2}\notin V\). Pero \(a-\frac{r}{2}\in B_r(a)\).
+            </p>
+            <p>
+              Luego, ninguna bola \(B_r(a)\) está contenida en \(V\), es decir, \(V\) no es abierto. <span class="qed">\(\blacksquare\)</span>
+            </p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- SECTION 6.6 -->
+    <section class="section-block" id="sec-6-6">
+      <div class="section-header">
+        <span class="section-num">6.6</span>
+        <h2>Definición</h2>
+      </div>
+
+      <div class="math-card card-def">
+        <div class="card-label label-def">Definición 6.6 · Conjunto Cerrado</div>
+        <p>Sea \((X,d)\) un espacio métrico.</p>
+        \[
+        F \subseteq X \; \text{es cerrado, si} \\[0.5em]
+        F^c = X \setminus F \; \text{es abierto}.
+        \]
+      </div>
+
+      <div class="example-block">
+        <div class="example-title">Ejemplo</div>
+        <p>
+          En \((\mathbb{R}, |\cdot|)\), el intervalo \([a,b]\) es un subconjunto cerrado ya que su complemento:
+        </p>
+        \[
+          [a,b]^c = \underbrace{\underbrace{(-\infty, a)}_{\text{abierto}} \cup \underbrace{(b, \infty)}_{\text{abierto}}}_{\text{abierto}}
+        \]
+        <p>
+          Su complemento es abierto al ser la unión de abiertos:
+        </p>
+        \[
+          (-\infty, a) \cup (b, \infty) = \bigcup_{i=1}^{\infty} (a-i, a) \cup \bigcup_{j=1}^{\infty} (b, b+j)
+        \]
+      </div>
+
+      <div class="example-block">
+        <div class="example-title">Ejemplo</div>
+        <p>
+          \(\mathbb{N} \subseteq \mathbb{R}\) es cerrado, ya que:
+        </p>
+        \[
+          \mathbb{N}^c = \underbrace{\underbrace{(-\infty, 0)}_{\text{abierto}} \cup \underbrace{\bigcup_{i=0}^{\infty}(i, i+1)}_{\text{abierto}}}_{\text{abierto}}
+        \]
+      </div>
+
+      <div class="note-box">
+        <strong>Notas:</strong>
+        <ul class="math-list">
+          <li>\(\emptyset \; \land \; X\) son cerrados y abiertos en \((X,d)\).</li>
+          <li>no abierto \(\;\not\Rightarrow\; collapse\) cerrado.</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="example-title">Ejemplo</div>
+        <p>
+          \((a,b] \subseteq \mathbb{R}\) no es abierto y tampoco es cerrado:
+        </p>
+        \[
+          (a,b]^c = \underbrace{(-\infty,a] \; \cup (b,\infty)}_{\text{no es abierto por el punto 'a'}}
+        \]
+      </div>
+    </section>
+
+    <!-- SECTION 6.7 -->
+    <section class="section-block" id="sec-6-7">
+      <div class="section-header">
+        <span class="section-num">6.7</span>
+        <h2>Proposición</h2>
+      </div>
+
+      <div class="math-card card-prop">
+        <div class="card-label label-prop">Proposición 6.7 · Familias de Cerrados</div>
+        <p>Sea \((X,d)\) un espacio métrico.</p>
+      </div>
+
+      <!-- Part 1 -->
+      <div class="example-block">
+        <p>
+          <strong>1.</strong> \(\{F_i\}_{i \in I}\) familia arbitraria de cerrados \(\implies \; \bigcap_{i \in I}F_i\;\) es cerrado.
+        </p>
+
+        <!-- Long Proof Prop 6.7.1: Collapsible -->
+        <details class="proof-collapsible">
+          <summary class="proof-summary">
+            <div class="summary-left">
+              <span class="summary-title">Demostración</span>
+              <span class="summary-tag">Larga · Desplegar</span>
+            </div>
+            <div class="summary-icon">▾</div>
+          </summary>
+          <div class="proof-content">
+            <p>Por las leyes de De Morgan,</p>
+            \[
+            \begin{aligned}
+            \left(\bigcap_{i \in I}F_i\right)^c &= \left(F_1 \cap F_2 \cap \ldots\right)^c \\
+            &= F_1^c \cup F_2^c \cup \ldots \\
+            &= \bigcup_{i \in I}F_i^c
+            \end{aligned}
+            \]
+            \[
+            \begin{aligned}
+            F_i \; \text{es cerrado}\; &\implies \; F_i^c \; \text{es abierto}, \;\; \forall \; i \in I \\
+            &\implies \; \bigcup_{i \in I}F_i^c \; \text{es abierto} \qquad \left(\left\{U_i\right\}_{i \in I} \; \text{abiertos} \; \implies \; \bigcup_{i \in I}U_i \; \text{es abierto}\right) \\
+            &\overset{\text{Morgan}}{\implies} \; \left(\bigcap_{i \in I}F_i\right)^c \; \text{es abierto} \\
+            &\overset{\text{def}}{\implies} \; \bigcap_{i \in I}F_i \; \text{es cerrado} \quad \blacksquare
+            \end{aligned}
+            \]
+          </div>
+        </details>
+      </div>
+
+      <!-- Part 2 -->
+      <div class="example-block">
+        <p>
+          <strong>2.</strong> \(\{F_i\}_{i=1}^n\;\) familia finita de cerrados \(\;\implies\;\bigcup_{i=1}^n F_i\;\) es cerrado.
+        </p>
+
+        <!-- Long Proof Prop 6.7.2: Collapsible -->
+        <details class="proof-collapsible">
+          <summary class="proof-summary">
+            <div class="summary-left">
+              <span class="summary-title">Demostración</span>
+              <span class="summary-tag">Larga · Desplegar</span>
+            </div>
+            <div class="summary-icon">▾</div>
+          </summary>
+          <div class="proof-content">
+            <p>Por las leyes de De Morgan,</p>
+            \[
+              \left(\bigcup_{i=1}^n F_i\right)^c = \bigcap_{i=1}^n F_i^c
+            \]
+            \[
+              F_i \; \text{es cerrado} \; \implies \; F_i^c \; \text{es abierto}, \;\; \forall \; i=1,2,\ldots,n
+            \]
+            <div class="box-highlight">
+              <strong>Propiedad anterior:</strong><br>
+              \(\left\{U_i\right\}_{i=1}^n \; \text{son abiertos} \; \implies \; \bigcap_{i=1}^n U_i \; \text{es abierto}\)
+            </div>
+            \[
+            \begin{aligned}
+            \{F_i^c\}_{i=1}^n \; \text{son abiertos} &\implies \; \bigcap_{i=1}^nF_i^c \; \text{es abierto} \\
+            &\overset{\text{Morgan}}{\implies} \; \left(\bigcup_{i=1}^n F_i\right)^c \; \text{es abierto} \\
+            &\overset{\text{def}}{\implies} \; \bigcup_{i=1}^n F_i \; \text{es cerrado} \quad \blacksquare
+            \end{aligned}
+            \]
+          </div>
+        </details>
+      </div>
+
+      <!-- Part 3 -->
+      <div class="example-block">
+        <p>
+          <strong>3.</strong> Da un ejemplo de \(\{F_i\}_{i=1}^{\infty}\) familia cerrada con \(\bigcup_{i=1}^{\infty}F_i\;\) no cerrada.
+        </p>
+        \[
+          F_n = \left(-\infty, -\frac{1}{n}\right] \; \longrightarrow \; \text{cerrado}
+        \]
+        \[
+          \bigcup_{i=1}^{\infty}F_n=(-\infty,0) \; \text{no es cerrado}
+        \]
+        <p>Ya que:</p>
+        \[
+          (-\infty, 0)^c = [0,\infty) \: \text{no es abierto por '0'}
+        \]
+      </div>
+    </section>
+
+    <!-- SECTION 6.8 -->
+    <section class="section-block" id="sec-6-8">
+      <div class="section-header">
+        <span class="section-num">6.8</span>
+        <h2>Definición</h2>
+      </div>
+
+      <div class="math-card card-def">
+        <div class="card-label label-def">Definición 6.8 · Clasificación de Puntos Topológicos</div>
+        <p>Sea \((X,d)\) un espacio métrico y \(A \subseteq X\).</p>
+        
+        <ol class="math-list">
+          <li>
+            <strong>Punto interior:</strong> \(x \in X\;\) es <strong>punto interior</strong> de \(A\) si
+            \[
+              \exists \; r>0 \:\; \text{tal que} \; B_r(x) \subseteq A
+            \]
+            <div class="example-block">
+              <em>Ejemplo:</em> \(\forall \; x \in B_r(x_0) \; \text{es punto interior de} \; B_r(x_0)\)
+            </div>
+          </li>
+          
+          <li>
+            <strong>Punto de acumulación:</strong> \(x \in X\;\) es <strong>punto de acumulación</strong> (o punto límite) de \(A\) si
+            \[
+            \exists \; (a_n)_{n \in \mathbb{N}} \subseteq A \; \text{tal que} \\[0.5em]
+            \forall \; n \in \mathbb{N}, \quad 0<d(a_n,x)<\frac{1}{n}
+            \]
+            <div class="example-block">
+              <em>Ejemplo:</em>
+              <ul class="math-list">
+                <li>\(0\) es el único punto de acumulación del conjunto \(A=\left\{\frac{1}{n}\right\}_{n=1}^{\infty}\)</li>
+                <li>Para \(\mathbb{N} \subseteq \mathbb{R}\) sus puntos de acumulación son: \(\emptyset\)</li>
+              </ul>
+            </div>
+          </li>
+
+          <li>
+            <strong>Punto exterior:</strong> \(x \in X\;\) es <strong>punto exterior</strong> de \(A\;\) si
+            \[
+              \exists \; r>0 \; \text{tal que} \; B_r(x) \subseteq A^c
+            \]
+          </li>
+
+          <li>
+            <strong>Punto frontera:</strong> \(x \in X\;\) se llama <strong>punto frontera</strong> de \(A\;\) si
+            \[
+              \big(\forall \; r>0,\;B_r(x) \cap A \neq \emptyset\big) \land \big(B_r(x) \cap A^c \neq \emptyset \big)
+            \]
+          </li>
+
+          <li>
+            <strong>Punto aislado:</strong> \(x \in X\) es <strong>punto aislado</strong> de \(A\) si
+            \[
+              \big(x \in A\big) \; \land \big(\exists \; r>0 \; \text{tal que} \; B_r(x) \cap A = \{x\}\big)
+            \]
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 6.9 -->
+    <section class="section-block" id="sec-6-9">
+      <div class="section-header">
+        <span class="section-num">6.9</span>
+        <h2>Teorema</h2>
+      </div>
+
+      <div class="math-card card-thm">
+        <div class="card-label label-thm">Teorema 6.9 · Caracterización de Abiertos por Puntos Interiores</div>
+        <p>Sea \((X,d)\) un espacio métrico, \(A \subseteq X\). Son equivalentes:</p>
+        <ol class="math-list">
+          <li>\(A\) es abierto.</li>
+          <li>Todo punto de \(A\) es un punto interior de \(A\).</li>
+        </ol>
+      </div>
+
+      <!-- Short Proof Teorema 6.9 -->
+      <div class="proof-short">
+        <div class="proof-title">Demostración</div>
+        <p>\(A\) abierto</p>
+        \[
+        \begin{array}{rc}
+            \iff \; & \forall \; x \in A \; \exists \; r>0 \; \text{tal que} \; B_r(x) \subseteq A \\[0.5em]
+            \iff \; & x \; \text{es punto interior de} \; A
+        \end{array}
+        \]
+        <div style="text-align: right;"><span class="qed">\(\blacksquare\)</span></div>
+      </div>
+    </section>
+
+    <!-- SECTION 6.10 -->
+    <section class="section-block" id="sec-6-10">
+      <div class="section-header">
+        <span class="section-num">6.10</span>
+        <h2>Teorema</h2>
+      </div>
+
+      <div class="math-card card-thm">
+        <div class="card-label label-thm">Teorema 6.10 · Caracterización de Cerrados por Puntos de Acumulación</div>
+        <p>Sea \((X,d)\) un espacio métrico y \(B \subseteq X\). Son equivalentes:</p>
+        <ol class="math-list">
+          <li>\(\textbf{B}\) es cerrado.</li>
+          <li>\(\textbf{B}\) contiene a todos sus puntos de acumulación.</li>
+        </ol>
+      </div>
+
+      <!-- Long Proof Teorema 6.10: Collapsible -->
+      <details class="proof-collapsible">
+        <summary class="proof-summary">
+          <div class="summary-left">
+            <span class="summary-title">Demostración</span>
+            <span class="summary-tag">Larga · Desplegar</span>
+          </div>
+          <div class="summary-icon">▾</div>
+        </summary>
+        <div class="proof-content">
+          <div class="proof-step">
+            <div class="proof-inclusion">\(1 \implies 2:\) (Por contrarrecíproca, \(\neg 2 \implies \neg 1\))</div>
+            <p>
+              \(\neg 2 \;: \; \exists \; x \in X\;\) punto de acumulación de \(B, \; x \notin B\).
+            </p>
+            <p>
+              \(x\) punto de acumulación:
+            </p>
+            \[
+              \implies \exists \, (b_n)_{n=1}^{\infty} \subseteq B \setminus \{x\}\;\; \text{con}\;\; 0 < d(b_n, x) \leq \dfrac{1}{n}
+            \]
+            <p>Si \(B\) fuese cerrado:</p>
+            \[
+            \begin{array}{rc}
+            \implies & B^c \; \text{abierto y como} \;\; x \in B^c \\[0.5em]
+            \implies & \exists \, r > 0, \; B_r(x) \subseteq B^c    
+            \end{array}
+            \]
+            <p>Sea \(n_0\) tal que \(\dfrac{1}{n_0} < r\):</p>
+            \[
+            \begin{array}{rc}
+            \implies & d(b_{n_0}, x) \leq \dfrac{1}{n_0} < r \\[0.8em]
+            \implies & b_{n_0} \in B_r(x) \subseteq B^c \\[0.5em]
+            \implies & b_{n_0} \in B^c \;\; \textbf{!}
+            \end{array}
+            \]
+            <p>
+              \(\text{Ya que} \;\; \forall \; n, \; b_n \in B\). Por lo tanto, \(B\) no es cerrado, es decir, \(\neg 1\).
+            </p>
+          </div>
+
+          <div class="proof-step">
+            <div class="proof-inclusion">\(2 \implies 1:\) (Por contrarrecíproca, \(\neg 1 \implies \neg 2\))</div>
+            <p>\(\neg 1\): \(B\) no es cerrado</p>
+            \[
+            \begin{array}{rc}
+            \implies & B^c \;\; \text{no es abierto} \\[0.5em]
+            \implies & \exists \; x \in B^c \; \text{tal que} \;\; \forall \; r > 0, \; B_r(x) \not\subseteq B^c
+            \end{array}
+            \]
+            <p>
+              Tomando \(r = \dfrac{1}{n}\), \(\;\exists \; b_n \in B_{\frac{1}{n}}(x)\), \(b_n \in B\)
+            </p>
+            \[
+              \implies 0 < d(b_n, x) \leq \dfrac{1}{n} \quad \forall \; n
+            \]
+            <p>
+              (ya que \(x \in B^c\) y \(b_n \in B\), de modo que \(b_n \neq x\)).
+            </p>
+            <p>
+              Así, \(x\) es punto de acumulación de \(B\) y \(x \notin B\), es decir, \(\neg 2\). <span class="qed">\(\blacksquare\)</span>
+            </p>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- SECTION 6.13 -->
+    <section class="section-block" id="sec-6-13">
+      <div class="section-header">
+        <span class="section-num">6.13</span>
+        <h2>Definición</h2>
+      </div>
+
+      <div class="math-card card-def">
+        <div class="card-label label-def">Definición 6.13 · Interior y Cerradura</div>
+        <p>Sea \((X,d)\) un espacio métrico y \(A \subseteq X\).</p>
+        
+        <p>El <strong>interior de \(A\)</strong> se define:</p>
+        \[
+        \begin{aligned}
+            \operatorname{int}(A) &= A^{\circ} \\
+            &= \bigcup\,\{U \subseteq X \;:\; U \; \text{abierto,} \; U \subseteq A \}
+        \end{aligned}
+        \]
+
+        <p>La <strong>cerradura de \(A\)</strong> se define:</p>
+        \[
+        \begin{aligned}
+            \operatorname{Cer}(A) &= \bar{A} \\
+            &= \bigcap\,\{F \subseteq X \; : \; F \; \text{cerrado,} \; A \subseteq F\}
+        \end{aligned}
+        \]
+      </div>
+
+      <div class="note-box">
+        <strong>Consecuencias inmediatas por las propiedades de abiertos y cerrados:</strong>
+        <ol class="math-list">
+          <li>\(A^{\circ}\) es abierto.</li>
+          <li>\(\bar{A}\) es cerrado.</li>
+          <li>
+            \[
+            \begin{aligned}
+            A\;\text{cerrado} &\implies A = \bar{A} \\
+            A\;\text{abierto} &\implies A = A^{\circ}
+            \end{aligned}
+            \]
+          </li>
+          <li>\(\bar{A}\) es el cerrado más chico que contiene a \(A,\) es decir, si \(F\) es cerrado y \(A \subseteq F \implies \bar{A} \subseteq F\).</li>
+          <li>\(A^{\circ}\) es el abierto más grande contenido en \(A\).</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- SECTION 6.14 -->
+    <section class="section-block" id="sec-6-14">
+      <div class="section-header">
+        <span class="section-num">6.14</span>
+        <h2>Lema</h2>
+      </div>
+
+      <div class="math-card card-lem">
+        <div class="card-label label-lem">Lema 6.14 · Caracterizaciones de la Cerradura y el Interior</div>
+        <p>Sea \((X,d)\) un espacio métrico, \(A \subseteq X\).</p>
+        <ol class="math-list">
+          <li>\(x \in \bar{A} \; \iff \; \forall \; r>0, B_r(x) \; \cap \; A \neq \emptyset\)</li>
+          <li>\(x \in A^{\circ} \; \iff \; \exists \; r > 0, B_r(x) \subseteq A\)</li>
+        </ol>
+      </div>
+
+      <!-- Long Proof Lema 6.14.1: Collapsible -->
+      <details class="proof-collapsible">
+        <summary class="proof-summary">
+          <div class="summary-left">
+            <span class="summary-title">Demostración Parte 1 (\(x \in \bar{A} \iff \forall r>0, B_r(x) \cap A \neq \emptyset\))</span>
+            <span class="summary-tag">Larga · Desplegar</span>
+          </div>
+          <div class="summary-icon">▾</div>
+        </summary>
+        <div class="proof-content">
+          <div class="proof-step">
+            <div class="proof-inclusion">\(\mathbf{\implies \big]}:\)</div>
+            <p>Sea \(x \in \bar{A}\)</p>
+            \[
+            \text{Suponga que} \; \exists \; r > 0 \; \text{tal que} \; B_r(x) \cap A = \emptyset \\[0.5em]
+            \implies \; A \subseteq X \setminus B_r(x)
+            \]
+
+            <figure class="math-figure">
+              <div class="math-img-wrapper" style="max-width: 550px;">
+                <img class="math-img" src="__IMG_LEMA_6_14__" alt="Ilustración Lema 6.14" />
+              </div>
+              <figcaption class="figure-caption">Figura 6.14.1: Si una bola fuera ajena a \(A\), el complemento sería un cerrado menor que contiene a \(A\).</figcaption>
+            </figure>
+
+            \[
+            \text{Sea} \; F:= X \setminus B_r(x) \\[0.5em]
+            \text{es cerrado (pues } B_r(x) \text{ es abierto)} \;\; \text{y} \;\; A \subseteq F
+            \]
+            <p>
+              Por definición de cerradura (el menor cerrado que contiene a \(A\)): \(\bar{A} \subseteq F\).
+            </p>
+            <p>Pero</p>
+            \[
+              x \in \bar{A} \subseteq F = X \setminus B_r(x)
+            \]
+            \[
+              \implies \; x \notin B_r(x)
+            \]
+            <p>
+              Sin embargo, \(d(x,x)=0<r\), es decir, \(x \in B_r(x)\). \(\textbf{!}\)
+            </p>
+            \[
+              \therefore \; \forall \; r>0, \; B_r(x) \cap A \neq \emptyset
+            \]
+          </div>
+
+          <div class="proof-step">
+            <div class="proof-inclusion">\(\mathbf{\Longleftarrow \big]}:\)</div>
+            <p>Hipótesis:</p>
+            \[
+              \forall \; r>0, B_r(x) \; \cap \; A \neq \emptyset
+            \]
+            <p>\(\text{p.d.} \; x \in \bar{A}\)</p>
+            <p>Sea \(F \subseteq X \; \text{cerrado,} \; A \subseteq F\)</p>
+            <p>\(\text{p.d.} \; x \in F\)</p>
+            <p>Suponga que \(x \notin F\):</p>
+            \[
+            \begin{aligned}
+            x \notin F &\implies \; x \in X \setminus F \;\; \text{y} \;\; X \setminus F \; \text{es abierto} \\
+            &\implies \; \exists \; r_0 > 0 \; \text{tal que} \; B_{r_0}(x) \subseteq X \setminus F \\
+            &\implies \; B_{r_0}(x) \subseteq X \setminus A \;\;\; \big(\text{pues } A \subseteq F \implies X \setminus F \subseteq X \setminus A\big) \\
+            &\implies \; B_{r_0}(x) \cap A = \emptyset \; \textbf{!}
+            \end{aligned}
+            \]
+            <p>Esto contradice la hipótesis con \(r = r_0\).</p>
+            \[
+              \therefore \; x \in F
+            \]
+            <p>Como \(F\) era un cerrado arbitrario que contiene a \(A\):</p>
+            \[
+              x \in \bigcap \{F \subseteq X : F \text{ cerrado},\; A \subseteq F\} = \bar{A} \quad \blacksquare
+            \]
+          </div>
+        </div>
+      </details>
+
+      <!-- Short Proof Lema 6.14.2 -->
+      <div class="proof-short">
+        <div class="proof-title">Demostración Parte 2 (\(x \in A^{\circ} \iff \exists r > 0, B_r(x) \subseteq A\))</div>
+        <div class="proof-step">
+          <div class="proof-inclusion">\(\mathbf{\implies \big]}:\)</div>
+          \[
+          x \in A^{\circ}=\bigcup \big\{U\;:\; U \; \text{es abierto},\; U \subseteq A\big\} \\[0.5em]
+          \implies \; \exists \; U_0 \; \text{abierto con} \; x \in U_0 \subseteq A
+          \]
+          \[
+          \begin{aligned}
+          U_0 \; \text{abierto} \; &\implies \; \exists \; r > 0 \; \text{tal que} \; B_r(x) \subseteq U_0 \subseteq A \\
+          &\implies \; B_r(x) \subseteq A
+          \end{aligned}
+          \]
+        </div>
+
+        <div class="proof-step">
+          <div class="proof-inclusion">\(\mathbf{\Longleftarrow \big]}:\)</div>
+          <p>Hipótesis: \(\exists \; r > 0 \; \text{tal que} \; B_r(x) \subseteq A\)</p>
+          \[
+          U:=B_r(x) \; \text{es abierta y} \; U \subseteq A \\[0.5em]
+          x \in B_r(x) \;\; \big(\text{pues } d(x,x)=0<r\big) \\[0.5em]
+          \implies \; x \in U \subseteq \bigcup \big\{V\;:\; V \; \text{es abierto},\; V \subseteq A\big\} = A^{\circ} \;\; \blacksquare
+          \]
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6.15 -->
+    <section class="section-block" id="sec-6-15">
+      <div class="section-header">
+        <span class="section-num">6.15</span>
+        <h2>Lema</h2>
+      </div>
+
+      <div class="math-card card-lem">
+        <div class="card-label label-lem">Lema 6.15 · Cerradura y Límites de Sucesiones</div>
+        <p>Sea \((X,d)\) un espacio métrico y \(A \subseteq X\):</p>
+        \[
+        x \in \bar{A} \; \iff \; \exists \; (a_n)_{n=1}^{\infty}, \; a_n \in A \;\; \forall \; n, \;\;\text{tal que}\\[0.5em]
+        \lim_{n \to \infty}a_n = x
+        \]
+      </div>
+
+      <!-- Long Proof Lema 6.15: Collapsible -->
+      <details class="proof-collapsible">
+        <summary class="proof-summary">
+          <div class="summary-left">
+            <span class="summary-title">Demostración</span>
+            <span class="summary-tag">Larga · Desplegar</span>
+          </div>
+          <div class="summary-icon">▾</div>
+        </summary>
+        <div class="proof-content">
+          <div class="proof-step">
+            <div class="proof-inclusion">\(\mathbf{\implies \big]}:\)</div>
+            \[
+              x \in \bar{A} \; \implies \; \forall \; r>0, \; B_r(x) \cap A \neq \emptyset
+            \]
+            <p>
+              Tomando \(r=\frac{1}{n}, \; \exists \; a_n \in B_{\frac{1}{n}}(x) \cap A\)
+            </p>
+            \[
+            \implies \; \big((a_n)_{n=1}^{\infty} \subseteq A\big) \; \land \left(d(a_n,x) < \frac{1}{n},\;\forall \; n\right) \\[0.5em]
+            \therefore \; \lim_{n \to \infty}a_n=x
+            \]
+          </div>
+
+          <div class="proof-step">
+            <div class="proof-inclusion">\(\mathbf{\Longleftarrow \big]}:\)</div>
+            <p>Hipótesis:</p>
+            \[
+            \exists \; (a_n)_{n=1}^{\infty} \subseteq A \; \text{con} \\[0.5em]
+            \lim_{n \to \infty}a_n=x
+            \]
+            <p>
+              Sea \(r > 0\). Como \(a_n \to x\), \(\exists \; n_0 \in \mathbb{N}\) tal que:
+            </p>
+            \[
+            d(a_{n_0},x)<r \\[0.5em]
+            \implies \; a_{n_0} \in B_r(x) \cap A \\[0.5em]
+            \therefore \; B_r(x) \cap A \neq \emptyset
+            \]
+            <p>
+              Como \(r>0\) es arbitrario, el Lema 6.14 asegura que \(x \in \bar{A}\). <span class="qed">\(\blacksquare\)</span>
+            </p>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- SECTION 6.11 -->
+    <section class="section-block" id="sec-6-11">
+      <div class="section-header">
+        <span class="section-num">6.11</span>
+        <h2>Lema</h2>
+      </div>
+
+      <div class="box-highlight">
+        <strong>Ejercicio 5.23 · Definición</strong><br>
+        Sea \(X \neq \emptyset\) un conjunto. Las métricas \(d_1, d_2\) en \(X\) son <strong>equivalentes</strong> si tienen las mismas sucesiones convergentes, es decir:
+        \[
+          \lim_{n \to \infty} d_1(x_n,x)=0 \iff \lim_{n \to \infty} d_2(x_n,x)=0
+        \]
+      </div>
+
+      <div class="math-card card-lem">
+        <div class="card-label label-lem">Lema 6.11 · Equivalencia de Métricas y Abiertos</div>
+        <p>Sean \(\emptyset \neq X\), \(d_1,d_2\) métricas en \(X\):</p>
+        \[
+          d_1,d_2\;\;\text{son equivalentes} \; \iff \; \text{generan los mismos abiertos.}
+        \]
+        <p>
+          <strong>Notación:</strong> \(\overline{A}^{d_i}\) denota la cerradura de \(A\) en el espacio métrico \((X,d_i)\).
+        </p>
+      </div>
+
+      <!-- Long Proof Lema 6.11: Collapsible -->
+      <details class="proof-collapsible">
+        <summary class="proof-summary">
+          <div class="summary-left">
+            <span class="summary-title">Demostración</span>
+            <span class="summary-tag">Larga · Desplegar</span>
+          </div>
+          <div class="summary-icon">▾</div>
+        </summary>
+        <div class="proof-content">
+          <div class="proof-step">
+            <div class="proof-inclusion">\(\mathbf{\implies \big]}:\)</div>
+            <p>Hipótesis: \(d_1,d_2\) equivalentes.</p>
+            <p>Sea \(U\) abierto en \((X,d_1)\).</p>
+            <p>\(\text{p.d.} \; U \; \text{es abierto en} \; (X,d_2)\)</p>
+            <p>Sea \(F:=X \setminus U\), que es cerrado en \((X,d_1)\).</p>
+            <p>\(\text{p.d.} \; F \; \text{es cerrado en} \; (X,d_2)\)</p>
+            <p>Sea \(x \in \overline{F}^{d_2}\). Por el Lema 6.15,</p>
+            \[
+              \exists \; (a_n)_{n=1}^{\infty} \subseteq F \;\; \text{tal que} \;\; \lim_{n \to \infty}d_2(a_n,x)=0
+            \]
+            <p>Como \(d_1,d_2\) son equivalentes,</p>
+            \[
+              \lim_{n \to \infty}d_1(a_n,x)=0
+            \]
+            <p>
+              Por el Lema 6.15, \(x \in \overline{F}^{d_1}=F\) (pues \(F\) es cerrado en \((X,d_1)\)).
+            </p>
+            <p>
+              Entonces \(\overline{F}^{d_2} \subseteq F\), y como siempre \(F \subseteq \overline{F}^{d_2}\),
+            </p>
+            \[
+              F=\overline{F}^{d_2}
+            \]
+            <p>
+              Como \(\overline{F}^{d_2}\) es cerrado en \((X,d_2)\), \(F\) es cerrado en \((X,d_2)\).
+            </p>
+            \[
+              \implies \; U=X \setminus F \; \text{es abierto en} \; (X,d_2)
+            \]
+            <p>Similarmente (intercambiando los papeles de \(d_1\) y \(d_2\)),</p>
+            \[
+              U \; \text{abierto en} \; (X,d_2) \implies U \; \text{abierto en} \; (X,d_1)
+            \]
+            \[
+              \therefore \; (X,d_1) \; \text{y} \; (X,d_2) \; \text{generan los mismos abiertos.}
+            \]
+          </div>
+
+          <div class="proof-step">
+            <div class="proof-inclusion">\(\mathbf{\Longleftarrow \big]}:\)</div>
+            <p>Hipótesis: \((X,d_1)\) y \((X,d_2)\) generan los mismos abiertos.</p>
+            <p>\(\text{p.d.} \; d_1,d_2 \; \text{son equivalentes}\)</p>
+            <div class="note-box">
+              <strong>Observación:</strong> como generan los mismos abiertos, generan los mismos cerrados (los complementos de los abiertos). Como
+              \[
+                \overline{A}^{d_i}=\bigcap\{F \subseteq X : F \; \text{cerrado en} \; (X,d_i), \; A \subseteq F\}
+              \]
+              solo depende de la familia de cerrados, entonces
+              \[
+                \overline{A}^{d_1}=\overline{A}^{d_2} \quad \forall \; A \subseteq X
+              \]
+            </div>
+            <p>
+              Sean \((x_n)_{n=1}^{\infty} \subseteq X\) y \(x \in X\) con
+            </p>
+            \[
+              \lim_{n \to \infty}d_1(x_n,x)=0
+            \]
+            <p>\(\text{p.d.} \; \lim_{n \to \infty}d_2(x_n,x)=0\)</p>
+            <p>Suponga que no. Entonces</p>
+            \[
+              \exists \; \varepsilon>0 \; \text{y una subsucesión} \; (x_{n_k})_{k=1}^{\infty} \; \text{tal que} \; d_2(x_{n_k},x) \geq \varepsilon \;\; \forall \; k
+            \]
+            <p>Sea \(A:=\{x_{n_k} : k \in \mathbb{N}\}\).</p>
+            <p>
+              Como \((x_{n_k})\) es subsucesión de \((x_n)\), \(\lim_{k \to \infty}d_1(x_{n_k},x)=0\).
+            </p>
+            <p>Por el Lema 6.15,</p>
+            \[
+              x \in \overline{A}^{d_1}=\overline{A}^{d_2}
+            \]
+            <p>Por el Lema 6.14 (en \((X,d_2)\)), para \(\varepsilon>0\),</p>
+            \[
+              B^{d_2}_{\varepsilon}(x) \cap A \neq \emptyset
+            \]
+            <p>es decir,</p>
+            \[
+              \exists \; k \; \text{tal que} \; d_2(x_{n_k},x)<\varepsilon \; \textbf{!}
+            \]
+            <p>
+              lo cual contradice \(d_2(x_{n_k},x) \geq \varepsilon\) para todo \(k\).
+            </p>
+            \[
+              \therefore \; \lim_{n \to \infty}d_2(x_n,x)=0
+            \]
+            <p>
+              La otra implicación (\(d_2 \to d_1\)) es análoga. <span class="qed">\(\blacksquare\)</span>
+            </p>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- SECTION 6.12 -->
+    <section class="section-block" id="sec-6-12">
+      <div class="section-header">
+        <span class="section-num">6.12</span>
+        <h2>Definición</h2>
+      </div>
+
+      <div class="math-card card-def">
+        <div class="card-label label-def">Definición 6.12 · Producto de Espacios Métricos</div>
+        <p>
+          Sean \((X, d_X)\) y \((Y, d_Y)\) dos espacios métricos. Recordemos que por el ejercicio 4.22 sabemos que las siguientes funciones son métricas en \(X \times Y\):
+        </p>
+        \[
+          d((x_1, y_1), (x_2, y_2)) = d_X(x_1, x_2) + d_Y(y_1, y_2)
+        \]
+        \[
+          \rho((x_1, y_1), (x_2, y_2)) = \max\{d_X(x_1, x_2),\, d_Y(y_1, y_2)\}
+        \]
+        \[
+          \sigma((x_1, y_1), (x_2, y_2)) = \sqrt{d_X(x_1, x_2)^2 + d_Y(y_1, y_2)^2}
+        \]
+        <p>
+          Además, por el ejercicio 5.24 sabemos que son métricas equivalentes y por el Lema 6.11 tenemos que generan los mismos conjuntos abiertos en \(X \times Y\). Entonces:
+        </p>
+        <p>
+          Definimos el <strong>producto de los espacios métricos</strong> \((X, d_X)\) y \((Y, d_Y)\) como el espacio métrico \(X \times Y\) equipado con cualquiera de las métricas anteriores.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION 6.16 -->
+    <section class="section-block" id="sec-6-16">
+      <div class="section-header">
+        <span class="section-num">6.16</span>
+        <h2>Lema</h2>
+      </div>
+
+      <div class="math-card card-lem">
+        <div class="card-label label-lem">Lema 6.16 · Diámetro de la Cerradura</div>
+        <p>
+          Sea \((X, d)\) un espacio métrico y sea \(A \subseteq X\) un subconjunto no vacío. Entonces
+        </p>
+        \[
+          \operatorname{diam}(A) = \operatorname{diam}(\bar{A}).
+        \]
+      </div>
+
+      <!-- Long Proof Lema 6.16: Collapsible -->
+      <details class="proof-collapsible">
+        <summary class="proof-summary">
+          <div class="summary-left">
+            <span class="summary-title">Demostración</span>
+            <span class="summary-tag">Larga · Desplegar</span>
+          </div>
+          <div class="summary-icon">▾</div>
+        </summary>
+        <div class="proof-content">
+          <p>Recordemos que</p>
+          \[
+            \operatorname{diam}(A) = \sup_{a, b \in A} \{d(a, b)\}.
+          \]
+          <p>
+            Para ver que \(\operatorname{diam}(A) = \operatorname{diam}(\bar{A})\) probaremos que \(\operatorname{diam}(A) \leq \operatorname{diam}(\bar{A})\) y \(\operatorname{diam}(\bar{A}) \leq \operatorname{diam}(A)\).
+          </p>
+
+          <div class="proof-step">
+            <p><strong>- P.d. \(\operatorname{diam}(A) \leq \operatorname{diam}(\bar{A})\):</strong></p>
+            <p>
+              Como \(A \subseteq \bar{A}\) tenemos que
+            </p>
+            \[
+              \{d(a, b) : a, b \in A\} \subseteq \{d(x, y) : x, y \in \bar{A}\}
+            \]
+            \[
+              \Rightarrow \sup\{d(a, b) : a, b \in A\} \leq \sup\{d(x, y) : x, y \in \bar{A}\}
+            \]
+            \[
+              \Rightarrow \sup_{a, b \in A} \{d(a, b)\} \leq \sup_{x, y \in \bar{A}} \{d(x, y)\}
+            \]
+            \[
+              \Rightarrow \operatorname{diam}(A) \leq \operatorname{diam}(\bar{A}) \quad \dots \; \text{(i)}
+            \]
+          </div>
+
+          <div class="proof-step">
+            <p><strong>- P.d. \(\operatorname{diam}(\bar{A}) \leq \operatorname{diam}(A)\):</strong></p>
+            <p>
+              Si \(\operatorname{diam}(A) = +\infty\), como por \(\dots\) (i) sabemos que \(\operatorname{diam}(A) \leq \operatorname{diam}(\bar{A}) \Rightarrow \operatorname{diam}(\bar{A}) = +\infty\)
+            </p>
+            \[
+              \Rightarrow \operatorname{diam}(\bar{A}) = \operatorname{diam}(A).
+            \]
+            <p>Supongamos que \(\operatorname{diam}(A) < \infty\).</p>
+            <p>
+              Sean \(x, y \in \bar{A}\). Por el Lema 6.15 existen sucesiones \((x_n)_{n \in \mathbb{N}}, (y_n)_{n \in \mathbb{N}} \subseteq A\) de elementos de \(A\) respectivamente tales que
+            </p>
+            \[
+              \lim_{n \to \infty} x_n = x \quad \text{y} \quad \lim_{n \to \infty} y_n = y \quad \text{en } (X, d).
+            \]
+            <p>
+              Como \(x_n, y_n \in A\) \(\forall n \in \mathbb{N}\) sabemos que
+            </p>
+            \[
+              d(x_n, y_n) \leq \sup_{a, b \in A} \{d(a, b)\} = \operatorname{diam}(A) \quad \forall n \in \mathbb{N}
+            \]
+            \[
+              \Rightarrow d(x_n, y_n) \leq \operatorname{diam}(A) \quad \forall n \in \mathbb{N}
+            \]
+            \[
+              \Rightarrow \lim_{n \to \infty} d(x_n, y_n) \leq \lim_{n \to \infty} \operatorname{diam}(A)
+            \]
+            \[
+              \Rightarrow d(x, y) \leq \operatorname{diam}(A) \quad \forall x, y \in \bar{A}
+            \]
+            \[
+              \Rightarrow \sup_{x, y \in \bar{A}} d(x, y) \leq \operatorname{diam}(A)
+            \]
+            \[
+              \Rightarrow \operatorname{diam}(\bar{A}) \leq \operatorname{diam}(A) \quad \dots \; \text{(ii)}
+            \]
+            <p>
+              Por \(\dots\) (i) y \(\dots\) (ii) tenemos que
+            </p>
+            \[
+              \operatorname{diam}(\bar{A}) \leq \operatorname{diam}(A) \leq \operatorname{diam}(\bar{A})
+            \]
+            \[
+              \Rightarrow \operatorname{diam}(A) = \operatorname{diam}(\bar{A}) \;\blacksquare.
+            \]
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- SECTION 6.17 -->
+    <section class="section-block" id="sec-6-17">
+      <div class="section-header">
+        <span class="section-num">6.17</span>
+        <h2>Lema</h2>
+      </div>
+
+      <div class="math-card card-def">
+        <div class="card-label label-def">Definición · Distancia de un Punto a un Subconjunto</div>
+        <p>
+          Sea \((X,d)\) un espacio métrico y \(A \subseteq X\) un subconjunto no vacío. Dado un punto \(x \in X\) se define la <strong>distancia de \(x\) al subconjunto \(A\)</strong> como
+        </p>
+        \[
+        \begin{aligned}
+        d(x,A) &= \inf_{a \in A}\{d(x,a)\} \\
+        &= \inf\{d(x,a)\;:\;a \in A\}
+        \end{aligned}
+        \]
+      </div>
+
+      <div class="example-block">
+        <div class="example-title">Ejemplo en \(\mathbb{R}^2\) con su métrica usual (\(A \subseteq \mathbb{R}^2\))</div>
+        <figure class="math-figure">
+          <div class="math-img-wrapper" style="max-width: 600px;">
+            <img class="math-img" src="__IMG_DIST_A__" alt="Distancia de un punto a un conjunto A" />
+          </div>
+          <figcaption class="figure-caption">Figura 6.17.1: Representación geométrica de la distancia \(d(x,A)\) como el ínfimo de distancias a los puntos de \(A\).</figcaption>
+        </figure>
+      </div>
+
+      <div class="math-card card-lem">
+        <div class="card-label label-lem">Lema 6.17 · Distancia Cero y Puntos de la Cerradura</div>
+        <p>
+          Sean \((X, d)\) un espacio métrico, \(A \subseteq X\) un subconjunto no vacío y \(x \in X\). Entonces
+        </p>
+        \[
+          x \in \bar{A} \iff d(x, A) = 0.
+        \]
+      </div>
+
+      <!-- Long Proof Lema 6.17: Collapsible -->
+      <details class="proof-collapsible">
+        <summary class="proof-summary">
+          <div class="summary-left">
+            <span class="summary-title">Demostración</span>
+            <span class="summary-tag">Larga · Desplegar</span>
+          </div>
+          <div class="summary-icon">▾</div>
+        </summary>
+        <div class="proof-content">
+          <div class="box-highlight">
+            <strong>Recordatorio: Caracterización del ínfimo</strong><br>
+            Sea \(B \subseteq \mathbb{R}\) no vacío y acotado inferiormente. \(\beta = \inf B\) si y sólo si:
+            <ol class="math-list" style="text-align: left; display: inline-block;">
+              <li>\(\beta\) es cota inferior de \(B\).</li>
+              <li>\(\forall \varepsilon > 0\) existe \(b_\varepsilon \in B\) tal que \(b_\varepsilon < \beta + \varepsilon\).</li>
+            </ol>
+          </div>
+
+          <div class="proof-step">
+            <div class="proof-inclusion">\(\mathbf{\implies \big]}:\)</div>
+            <p>Supongamos que \(x \in \bar{A}\).</p>
+            <p>
+              Por el Lema 6.15 existe una sucesión \((a_n)_{n \in \mathbb{N}} \subseteq A\) tal que
+            </p>
+            \[
+              \lim_{n \to \infty} a_n = x \text{ en } (X, d) \;\Rightarrow\; \lim_{n \to \infty} d(a_n, x) = 0.
+            \]
+            <p>
+              Como \(d(x, A) = \inf_{a \in A} \{d(x, a)\}\) sabemos que
+            </p>
+            \[
+              0 \leq d(x, A) \leq d(x, a_n) \quad \forall n \in \mathbb{N}
+            \]
+            <p>
+              Tomando el límite \(\lim_{n \to \infty}\), como \(\lim_{n \to \infty} d(x, a_n) = 0\) tenemos que
+            </p>
+            \[
+              0 \leq d(x, A) \leq 0
+            \]
+            \[
+              \Rightarrow d(x, A) = 0.
+            \]
+          </div>
+
+          <div class="proof-step">
+            <div class="proof-inclusion">\(\mathbf{\Longleftarrow \big]}:\)</div>
+            <p>Supongamos que \(d(x, A) = 0\). P.d. \(x \in \bar{A}\).</p>
+            <p>
+              Para eso veamos que existe una sucesión \((a_n)_{n \in \mathbb{N}} \subseteq A\) tal que \(\lim_{n \to \infty} a_n = x\) en \((X, d)\).
+            </p>
+            <p>Como \(d(x, A) = 0\) entonces</p>
+            \[
+              \inf\{d(x, a) : a \in A\} = 0.
+            \]
+            <p>
+              Por la <strong>caracterización del ínfimo</strong> sabemos que \(\forall n \in \mathbb{N}\) existe \(a_n \in A\) tal que
+            </p>
+            \[
+              d(x, a_n) < 0 + \frac{1}{n} = \frac{1}{n}
+            \]
+            \[
+              \Rightarrow 0 \leq d(x, a_n) < \frac{1}{n} \quad \forall n \in \mathbb{N}.
+            \]
+            <p>
+              Como \(\lim_{n \to \infty} 0 = 0\) y \(\lim_{n \to \infty} \frac{1}{n} = 0\), por la regla del sándwich (o compresión) tenemos que
+            </p>
+            \[
+              \lim_{n \to \infty} d(x, a_n) = 0 \;\Rightarrow\; \lim_{n \to \infty} a_n = x \text{ en } (X, d).
+            \]
+            <p>
+              Entonces tenemos una sucesión \((a_n)_{n \in \mathbb{N}} \subseteq A\) tal que
+            </p>
+            \[
+              \lim_{n \to \infty} a_n = x \text{ en } (X, d).
+            \]
+            <p>
+              Por el Lema 6.15 tenemos que \(x \in \bar{A} \;\blacksquare.\)
+            </p>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- Footer -->
+    <footer class="doc-footer">
+      <p>Curso de Análisis Matemático (2027-1) · Facultad de Ciencias, UNAM</p>
+      <p>Profesor: Francisco Javier Torres · Documento compilado con KaTeX</p>
+    </footer>
+
+  </main>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="back-to-top" title="Volver arriba" aria-label="Volver arriba">↑</button>
+
+  <!-- Image Lightbox Modal -->
+  <div class="lightbox-modal" id="lightbox-modal" aria-hidden="true">
+    <img class="lightbox-img" id="lightbox-img" src="" alt="Vista ampliada">
+  </div>
+
+  <!-- Scripts: KaTeX auto-render & Dynamic UI -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // 1. KaTeX Auto-render
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+          ],
+          throwOnError: false,
+          macros: {
+            "\\empty": "\\emptyset"
+          }
+        });
+      }
+
+      // 2. Reading Progress Bar
+      window.addEventListener("scroll", function() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrollTop / docHeight) * 100;
+        document.getElementById("progress-bar").style.width = progress + "%";
+        
+        // Back to top button visibility
+        const backToTop = document.getElementById("back-to-top");
+        if (scrollTop > 450) {
+          backToTop.classList.add("show");
+        } else {
+          backToTop.classList.remove("show");
+        }
+      });
+
+      document.getElementById("back-to-top").addEventListener("click", function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // 3. Hamburger Menu & Drawer
+      const toggleBtn = document.getElementById("sidebar-toggle");
+      const closeBtn = document.getElementById("sidebar-close");
+      const drawer = document.getElementById("sidebar-drawer");
+      const overlay = document.getElementById("sidebar-overlay");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      function openSidebar() {
+        drawer.classList.add("open");
+        overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeSidebar() {
+        drawer.classList.remove("open");
+        overlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      toggleBtn.addEventListener("click", openSidebar);
+      closeBtn.addEventListener("click", closeSidebar);
+      overlay.addEventListener("click", closeSidebar);
+
+      navLinks.forEach(link => {
+        link.addEventListener("click", function() {
+          closeSidebar();
+        });
+      });
+
+      // 4. ScrollSpy for Table of Contents
+      const sections = document.querySelectorAll(".section-block");
+      window.addEventListener("scroll", function() {
+        let current = "";
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - 120;
+          if (window.scrollY >= sectionTop) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === "#" + current) {
+            link.classList.add("active");
+          }
+        });
+      });
+
+      // 5. Lightbox Modal for Images
+      const modal = document.getElementById("lightbox-modal");
+      const modalImg = document.getElementById("lightbox-img");
+      const images = document.querySelectorAll(".math-img");
+
+      images.forEach(img => {
+        img.addEventListener("click", function(e) {
+          e.stopPropagation();
+          modalImg.src = this.src;
+          modal.classList.add("active");
+          modal.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+        });
+      });
+
+      modal.addEventListener("click", function() {
+        modal.classList.remove("active");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      });
+
+      document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") {
+          closeSidebar();
+          if (modal.classList.contains("active")) {
+            modal.classList.remove("active");
+            modal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+          }
+        }
+      });
+
+      // 6. Theme Toggle (Light / Dark)
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeIcon = document.getElementById("theme-icon");
+      const htmlEl = document.documentElement;
+
+      // Check saved theme
+      const savedTheme = localStorage.getItem("math-doc-theme") || "light";
+      htmlEl.setAttribute("data-theme", savedTheme);
+      themeIcon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+
+      themeToggle.addEventListener("click", function() {
+        const currentTheme = htmlEl.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        htmlEl.setAttribute("data-theme", newTheme);
+        localStorage.setItem("math-doc-theme", newTheme);
+        themeIcon.textContent = newTheme === "dark" ? "☀️" : "🌙";
+      });
+
+      // 7. Toggle All Proofs Button
+      const toggleAllBtn = document.getElementById("toggle-all-proofs");
+      const toggleAllText = document.getElementById("proofs-toggle-text");
+      let allExpanded = false;
+
+      toggleAllBtn.addEventListener("click", function() {
+        const collapsibles = document.querySelectorAll(".proof-collapsible");
+        allExpanded = !allExpanded;
+        collapsibles.forEach(c => {
+          c.open = allExpanded;
+        });
+        toggleAllText.textContent = allExpanded ? "Plegar demostraciones" : "Desplegar demostraciones";
+      });
+    });
+  </script>
+</body>
+</html>
