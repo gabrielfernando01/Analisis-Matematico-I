@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "description": "Curso de Análisis Matemático I",
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
