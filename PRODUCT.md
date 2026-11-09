@@ -47,3 +47,30 @@ No images are present yet despite markdown references to `.png` files.
 3. **Growing content** — the architecture must accommodate new sections and exercises without restructuring.
 4. **Distraction-free reading** — the interface recedes behind the mathematics; no clutter, no marketing, no identity signaling.
 5. **Works everywhere** — responsive, fast on mobile, no login or paywall.
+
+## Theme System
+
+The site must support two themes switchable via a persistent toggle button in the header:
+
+### Light (default)
+- Background: `hsl(42, 30%, 97%)` — warm paper
+- Text: `hsl(42, 12%, 12%)`
+- Accent: `hsl(215, 55%, 38%)` — academic blue
+
+### Dark — Tokyo Night
+- Background: `#1a1b26` — deep navy
+- Surface: `#24283b`
+- Text primary: `#c0caf5`
+- Text secondary: `#a9b1d6`
+- Text muted: `#565f89`
+- Accent blue: `#7aa2f7`
+- Accent purple: `#bb9af7`
+- Border: `#292e42`
+- Proof/theorem backgrounds: `#1f2335`
+
+The toggle button must:
+- Sit in the top-right of every page header (home and section pages)
+- Use a moon 🌙 icon for dark mode and a sun ☀️ icon for light mode
+- Persist the selection in `localStorage` across page navigations
+- Respect `prefers-color-scheme` as the initial default
+- Never display a label text — icon only

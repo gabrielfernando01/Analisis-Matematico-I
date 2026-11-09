@@ -238,7 +238,7 @@
 
 #section-layout {
   display: grid;
-  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-columns: auto 1fr;
   max-width: var(--page-max);
   margin: 0 auto;
   min-height: calc(100vh - var(--header-h) - var(--progress-h));
@@ -251,8 +251,14 @@
   top: calc(var(--header-h) + var(--progress-h));
   height: calc(100vh - var(--header-h) - var(--progress-h));
   overflow-y: auto;
-  padding: var(--sp-xl) var(--sp-md) var(--sp-xl) var(--sp-xl);
+  overflow-x: hidden;
+  padding: var(--sp-xl) var(--sp-sm) var(--sp-xl) var(--sp-md);
   border-right: 1px solid var(--border-light);
+  /* Resizable sidebar */
+  width: var(--sidebar-w);
+  min-width: 160px;
+  max-width: 320px;
+  resize: horizontal;
 }
 
 #sidebar-nav {

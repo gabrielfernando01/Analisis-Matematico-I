@@ -64,7 +64,7 @@ ul, ol { list-style: none; }
   /* Sizing */
   --content-max:   68ch;
   --page-max:      1200px;
-  --sidebar-w:     260px;
+  --sidebar-w:     220px;
   --header-h:      56px;
   --progress-h:    2px;
 
