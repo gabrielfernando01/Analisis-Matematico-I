@@ -60,30 +60,49 @@
 
   /* Section page — sidebar hidden by default */
   #section-layout {
-    grid-template-columns: 1fr;
+    display: block;
   }
 
-  #sidebar {
+  #sidebar-shell {
     position: fixed;
     top: calc(var(--header-h) + var(--progress-h));
     left: 0;
-    width: 280px;
+    width: 280px !important;
+    min-width: 0;
+    max-width: none;
     height: calc(100vh - var(--header-h) - var(--progress-h));
     background: var(--bg-elevated);
     box-shadow: 4px 0 20px hsla(42, 20%, 20%, 0.1);
     transform: translateX(-100%);
     transition: transform var(--dur-normal) var(--ease-out);
     z-index: 90;
-    padding: var(--sp-lg) var(--sp-md);
     border-right: 1px solid var(--border);
+    opacity: 1;
   }
 
-  #sidebar.sidebar-open {
+  #sidebar-shell.sidebar-open {
     transform: translateX(0);
   }
 
+  [data-theme="dark"] #sidebar-shell {
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.45);
+  }
+
+  #sidebar {
+    padding: var(--sp-lg) var(--sp-md);
+  }
+
+  #sidebar-resizer {
+    display: none;
+  }
+
   #sidebar-toggle {
-    display: flex;
+    width: 40px;
+    height: 40px;
+  }
+
+  body.drawer-open {
+    overflow: hidden;
   }
 
   #sidebar-overlay {
@@ -97,6 +116,10 @@
 
   #sidebar-overlay.visible {
     display: block;
+  }
+
+  [data-theme="dark"] #sidebar-overlay {
+    background: hsla(230, 25%, 4%, 0.55);
   }
 
   /* Content */
@@ -176,7 +199,7 @@
 
 @media print {
   #section-header,
-  #sidebar,
+  #sidebar-shell,
   #content-tabs,
   #section-footer-nav,
   #progress-bar {

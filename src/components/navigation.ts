@@ -1,17 +1,30 @@
 import type { Heading } from './section-loader';
 
+const HEADER_OFFSET = 80;
+const ACTIVE_MARGIN = 24;
+
 let activeObserver: IntersectionObserver | null = null;
+
+function prefersReducedMotion(): boolean {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
 
 export function initSidebar(headings: Heading[]): void {
   const nav = document.getElementById('sidebar-nav');
   if (!nav) return;
 
-  // Clear previous
+  teardownTracking();
   nav.innerHTML = '';
+  nav.scrollTop = 0;
 
-  if (headings.length === 0) return;
+  if (headings.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'sidebar-empty';
+    empty.textContent = 'Esta sección no tiene apartados.';
+    nav.appendChild(empty);
+    return;
+  }
 
-  // Build links
   const fragment = document.createDocumentFragment();
 
   headings.forEach((heading) => {
@@ -19,17 +32,13 @@ export function initSidebar(headings: Heading[]): void {
     link.className = 'sidebar-link';
     link.href = `#${heading.id}`;
     link.textContent = heading.text;
+    link.title = heading.text;
     link.dataset.level = String(heading.level);
     link.dataset.target = heading.id;
 
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = document.getElementById(heading.id);
-      if (target) {
-        const headerOffset = 70; // header height + padding
-        const top = target.getBoundingClientRect().top + window.scrollY - headerOffset;
-        window.scrollTo({ top, behavior: 'smooth' });
-      }
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      scrollToHeading(heading.id);
     });
 
     fragment.appendChild(link);
@@ -37,56 +46,95 @@ export function initSidebar(headings: Heading[]): void {
 
   nav.appendChild(fragment);
 
-  // Set up scroll-linked active tracking
-  setupScrollTracking(headings);
+  setupScrollTracking(headings, nav);
 }
 
-function setupScrollTracking(headings: Heading[]): void {
-  // Clean up previous observer
+export function scrollToHeading(id: string): void {
+  const target = document.getElementById(id);
+  if (!target) return;
+
+  const top = target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+  window.scrollTo({ top, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+
+  // Llevar el foco al destino: útil con teclado y evita dejar el foco
+  // dentro del drawer cuando se cierra en móvil.
+  target.setAttribute('tabindex', '-1');
+  target.focus({ preventScroll: true });
+}
+
+function teardownTracking(): void {
   if (activeObserver) {
     activeObserver.disconnect();
     activeObserver = null;
   }
+}
 
-  const links = document.querySelectorAll<HTMLAnchorElement>('.sidebar-link');
+function setupScrollTracking(headings: Heading[], nav: HTMLElement): void {
+  const links = nav.querySelectorAll<HTMLAnchorElement>('.sidebar-link');
   if (links.length === 0) return;
-
-  const headerHeight = 80;
 
   activeObserver = new IntersectionObserver(
     (entries) => {
-      // Find the topmost visible heading
       let topEntry: IntersectionObserverEntry | null = null;
 
       for (const entry of entries) {
-        if (entry.isIntersecting) {
-          if (!topEntry || entry.boundingClientRect.top < topEntry.boundingClientRect.top) {
-            topEntry = entry;
-          }
+        if (!entry.isIntersecting) continue;
+        if (!topEntry || entry.boundingClientRect.top < topEntry.boundingClientRect.top) {
+          topEntry = entry;
         }
       }
 
-      if (topEntry) {
-        const activeId = topEntry.target.id;
-        links.forEach((link) => {
-          link.classList.toggle('sidebar-link-active', link.dataset.target === activeId);
-        });
-
-        // Scroll the active link into view in the sidebar
-        const activeLink = document.querySelector('.sidebar-link-active');
-        if (activeLink) {
-          activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-        }
-      }
+      if (topEntry) setActiveLink(nav, topEntry.target.id);
     },
     {
-      rootMargin: `-${headerHeight}px 0px -60% 0px`,
+      rootMargin: `-${HEADER_OFFSET}px 0px -60% 0px`,
       threshold: 0,
     }
   );
 
   headings.forEach((heading) => {
-    const el = document.getElementById(heading.id);
-    if (el) activeObserver!.observe(el);
+    const element = document.getElementById(heading.id);
+    if (element) activeObserver!.observe(element);
+  });
+}
+
+function setActiveLink(nav: HTMLElement, id: string): void {
+  const links = nav.querySelectorAll<HTMLAnchorElement>('.sidebar-link');
+
+  links.forEach((link) => {
+    const isActive = link.dataset.target === id;
+    link.classList.toggle('sidebar-link-active', isActive);
+
+    if (isActive) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+
+  const activeLink = nav.querySelector<HTMLAnchorElement>('.sidebar-link-active');
+  if (activeLink) keepLinkVisible(nav, activeLink);
+}
+
+/**
+ * Desplaza el índice solo cuando el enlace activo queda fuera de su área
+ * visible, y lo hace dentro del propio sidebar para no mover la página.
+ */
+function keepLinkVisible(nav: HTMLElement, link: HTMLElement): void {
+  const navRect = nav.getBoundingClientRect();
+  const linkRect = link.getBoundingClientRect();
+
+  const fullyVisible =
+    linkRect.top >= navRect.top + ACTIVE_MARGIN &&
+    linkRect.bottom <= navRect.bottom - ACTIVE_MARGIN;
+
+  if (fullyVisible) return;
+
+  const targetTop =
+    nav.scrollTop +
+    (linkRect.top - navRect.top) -
+    navRect.height / 2 +
+    linkRect.height / 2;
+
+  nav.scrollTo({
+    top: Math.max(0, targetTop),
+    behavior: prefersReducedMotion() ? 'auto' : 'smooth',
   });
 }

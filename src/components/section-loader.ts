@@ -211,7 +211,15 @@ export async function loadSection(basePath: string, filename: string): Promise<s
     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
   }
 
+  const contentType = response.headers.get('content-type') ?? '';
   const markdown = await response.text();
+
+  // Algunos servidores devuelven el index.html como fallback (200) para
+  // archivos inexistentes. Sin esta comprobación, update/ se "cargaría"
+  // con el HTML del sitio y nunca se usaría el archivo original.
+  if (contentType.includes('text/html') || /^\s*<!doctype html/i.test(markdown)) {
+    throw new Error(`Contenido no disponible: ${url}`);
+  }
 
   // Pipeline: extract math → parse markdown → restore math → fix paths → add classes
   const { text, blocks } = extractMath(markdown);

@@ -3,6 +3,7 @@ import { sections, getSectionById, getAdjacentSections } from './data/sections';
 import type { Section, SectionContent } from './data/sections';
 import { loadSection, extractHeadings, wrapProofs } from './components/section-loader';
 import { initSidebar } from './components/navigation';
+import { initSidebarChrome } from './components/sidebar';
 import { initParallax } from './components/image-parallax';
 import { initProgress } from './components/progress';
 import { initTheme } from './components/theme';
@@ -22,9 +23,6 @@ const tabEjercicios = document.getElementById('tab-ejercicios') as HTMLButtonEle
 const contentBody  = document.getElementById('content-body')!;
 const footerPrev   = document.getElementById('footer-prev') as HTMLAnchorElement;
 const footerNext   = document.getElementById('footer-next') as HTMLAnchorElement;
-const sidebar      = document.getElementById('sidebar')!;
-const sidebarToggle = document.getElementById('sidebar-toggle')!;
-const sidebarOverlay = document.getElementById('sidebar-overlay')!;
 
 // ── URL Parsing ────────────────────────────────
 
@@ -164,37 +162,6 @@ async function loadContent(section: Section, tab: 'teoria' | 'ejercicios'): Prom
   }
 }
 
-// ── Sidebar Toggle (mobile) ────────────────────
-
-function setupSidebarToggle(): void {
-  function openSidebar() {
-    sidebar.classList.add('sidebar-open');
-    sidebarOverlay.classList.add('visible');
-  }
-
-  function closeSidebar() {
-    sidebar.classList.remove('sidebar-open');
-    sidebarOverlay.classList.remove('visible');
-  }
-
-  sidebarToggle.addEventListener('click', () => {
-    if (sidebar.classList.contains('sidebar-open')) {
-      closeSidebar();
-    } else {
-      openSidebar();
-    }
-  });
-
-  sidebarOverlay.addEventListener('click', closeSidebar);
-
-  // Close sidebar when a link is clicked (mobile)
-  document.getElementById('sidebar-nav')?.addEventListener('click', (e) => {
-    if ((e.target as HTMLElement).classList.contains('sidebar-link')) {
-      closeSidebar();
-    }
-  });
-}
-
 // ── Boot ───────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -212,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setupNavigation(section);
   setupTabs(section);
-  setupSidebarToggle();
+  initSidebarChrome();
   initProgress();
 
   // Load initial content

@@ -249,8 +249,8 @@
    ══════════════════════════════════════════════ */
 
 #section-layout {
-  display: grid;
-  grid-template-columns: auto 1fr;
+  display: flex;
+  align-items: stretch;
   max-width: var(--page-max);
   margin: 0 auto;
   min-height: calc(100vh - var(--header-h) - var(--progress-h));
@@ -258,19 +258,78 @@
 
 /* ─── Sidebar ─── */
 
-#sidebar {
+#sidebar-shell {
   position: sticky;
   top: calc(var(--header-h) + var(--progress-h));
-  height: calc(100vh - var(--header-h) - var(--progress-h));
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: var(--sp-xl) var(--sp-sm) var(--sp-xl) var(--sp-md);
-  border-right: 1px solid var(--border-light);
-  /* Resizable sidebar */
+  flex: 0 0 auto;
   width: var(--sidebar-w);
   min-width: 160px;
-  max-width: 320px;
-  resize: horizontal;
+  max-width: 380px;
+  height: calc(100vh - var(--header-h) - var(--progress-h));
+  border-right: 1px solid var(--border-light);
+  transition: width var(--dur-normal) var(--ease-out),
+              opacity var(--dur-fast) ease,
+              border-color var(--dur-fast) ease;
+}
+
+#section-layout.sidebar-collapsed #sidebar-shell {
+  width: 0;
+  min-width: 0;
+  opacity: 0;
+  border-right-color: transparent;
+  pointer-events: none;
+}
+
+#section-layout.sidebar-collapsed #sidebar {
+  overflow: hidden;
+}
+
+#sidebar {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--sp-xl) var(--sp-md) var(--sp-xl) var(--sp-md);
+  scrollbar-gutter: stable;
+}
+
+/* Divisor del índice — arrastrar para ajustar, doble clic para restablecer */
+#sidebar-resizer {
+  position: absolute;
+  top: 0;
+  right: -4px;
+  width: 9px;
+  height: 100%;
+  z-index: 2;
+  cursor: col-resize;
+  touch-action: none;
+  outline-offset: -2px;
+}
+
+#sidebar-resizer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 4px;
+  width: 1px;
+  height: 100%;
+  background: transparent;
+  transition: background var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+}
+
+#sidebar-resizer:hover::after,
+#sidebar-resizer:focus-visible::after,
+body.resizing-sidebar #sidebar-resizer::after {
+  background: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-light);
+}
+
+body.resizing-sidebar {
+  cursor: col-resize;
+  user-select: none;
+}
+
+body.resizing-sidebar #sidebar-shell {
+  transition: none;
 }
 
 #sidebar-nav {
@@ -294,6 +353,10 @@
   white-space: nowrap;
 }
 
+.sidebar-link:focus-visible {
+  outline-offset: -2px;
+}
+
 .sidebar-link:hover {
   background: var(--bg-alt);
   color: var(--text);
@@ -315,9 +378,18 @@
   font-size: 0.75rem;
 }
 
+.sidebar-empty {
+  padding: var(--sp-xs) var(--sp-sm);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
 /* ─── Main Content ─── */
 
 #section-content {
+  flex: 1;
   padding: var(--sp-2xl) var(--sp-2xl) var(--sp-4xl);
   min-width: 0;
 }
@@ -399,12 +471,19 @@
 /* ─── Sidebar Toggle (mobile) ─── */
 
 #sidebar-toggle {
-  display: none;
-  width: 40px;
-  height: 40px;
+  display: flex;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   border-radius: 6px;
   font-size: 1.2rem;
   color: var(--text-secondary);
+  transition: background var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+
+#sidebar-toggle:hover {
+  background: var(--bg-alt);
+  color: var(--text);
 }
