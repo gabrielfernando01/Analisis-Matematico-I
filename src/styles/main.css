@@ -84,6 +84,57 @@ ul, ol { list-style: none; }
 }
 
 /* ══════════════════════════════════════════
+   Dark Theme — Tokyo Night
+   ══════════════════════════════════════════ */
+
+[data-theme="dark"] {
+  --bg:               #1a1b26;
+  --bg-alt:           #24283b;
+  --bg-elevated:      #24283b;
+  --text:             #c0caf5;
+  --text-secondary:   #a9b1d6;
+  --text-muted:       #565f89;
+  --accent:           #7aa2f7;
+  --accent-light:     rgba(122, 162, 247, 0.12);
+  --accent-hover:     #89b4fa;
+  --accent-text:      #7aa2f7;
+  --border:           #292e42;
+  --border-light:     #292e42;
+  --selection-bg:     rgba(122, 162, 247, 0.25);
+  --selection-text:   #c0caf5;
+  --theorem-bg:       #1f2335;
+  --definition-bg:    #1f2335;
+  --proof-bg:         #1f2335;
+  --shadow-sm:        0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md:        0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ══════════════════════════════════════════
+   Theme Toggle Button
+   ══════════════════════════════════════════ */
+
+#theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  transition: background var(--dur-fast) ease,
+              color var(--dur-fast) ease,
+              transform var(--dur-fast) ease;
+  flex-shrink: 0;
+}
+
+#theme-toggle:hover {
+  background: var(--bg-alt);
+  color: var(--text);
+  transform: rotate(15deg);
+}
+
+/* ══════════════════════════════════════════
    Body
    ══════════════════════════════════════════ */
 

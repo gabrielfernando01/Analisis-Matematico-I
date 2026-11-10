@@ -1,5 +1,6 @@
 import './styles/main.css';
 import { sections } from './data/sections';
+import { initTheme } from './components/theme';
 
 function renderIndex(): void {
   const container = document.getElementById('course-index');
@@ -80,4 +81,5 @@ function renderIndex(): void {
 }
 
 // Boot
+initTheme();
 document.addEventListener('DOMContentLoaded', renderIndex);

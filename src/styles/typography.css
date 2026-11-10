@@ -130,6 +130,11 @@ em { font-style: italic; }
   max-width: var(--content-max);
 }
 
+[data-theme="dark"] #content-body pre {
+  background: #16161e;
+  color: #c0caf5;
+}
+
 #content-body pre code {
   background: none;
   padding: 0;

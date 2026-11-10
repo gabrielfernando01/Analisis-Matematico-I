@@ -9,6 +9,13 @@
   padding: var(--sp-4xl) var(--sp-xl) var(--sp-2xl);
   max-width: var(--page-max);
   margin: 0 auto;
+  position: relative;
+}
+
+#site-header-top {
+  position: absolute;
+  top: var(--sp-lg);
+  right: var(--sp-xl);
 }
 
 #course-title {
@@ -135,8 +142,13 @@
 }
 
 .badge-ejercicios {
-  background: hsl(160, 25%, 92%);
+  background: color-mix(in srgb, hsl(160, 25%, 92%) 100%, transparent);
   color: hsl(160, 40%, 28%);
+}
+
+[data-theme="dark"] .badge-ejercicios {
+  background: rgba(115, 218, 202, 0.12);
+  color: hsl(166, 55%, 68%);
 }
 
 .badge-empty {
@@ -152,7 +164,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: hsla(42, 30%, 97%, 0.92);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-light);

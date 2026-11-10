@@ -5,6 +5,7 @@ import { loadSection, extractHeadings, wrapProofs } from './components/section-l
 import { initSidebar } from './components/navigation';
 import { initParallax } from './components/image-parallax';
 import { initProgress } from './components/progress';
+import { initTheme } from './components/theme';
 
 // ── State ──────────────────────────────────────
 
@@ -197,6 +198,7 @@ function setupSidebarToggle(): void {
 // ── Boot ───────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   const { id, tab } = parseURL();
   const section = getSectionById(id);
 
