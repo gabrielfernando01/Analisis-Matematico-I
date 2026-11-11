@@ -40,6 +40,8 @@ ul, ol { list-style: none; }
   --accent-light:     hsl(215, 35%, 93%);
   --accent-hover:     hsl(215, 55%, 28%);
   --accent-text:      hsl(215, 55%, 32%);
+  --accent-ejercicios:       hsl(160, 40%, 28%);
+  --accent-ejercicios-light: hsl(160, 25%, 92%);
   --border:           hsl(42, 15%, 85%);
   --border-light:     hsl(42, 12%, 91%);
   --selection-bg:     hsl(215, 50%, 85%);
@@ -98,6 +100,8 @@ ul, ol { list-style: none; }
   --accent-light:     rgba(122, 162, 247, 0.12);
   --accent-hover:     #89b4fa;
   --accent-text:      #7aa2f7;
+  --accent-ejercicios:       hsl(166, 55%, 68%);
+  --accent-ejercicios-light: rgba(115, 218, 202, 0.12);
   --border:           #292e42;
   --border-light:     #292e42;
   --selection-bg:     rgba(122, 162, 247, 0.25);

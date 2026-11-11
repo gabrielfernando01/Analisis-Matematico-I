@@ -169,13 +169,8 @@
 }
 
 .badge-ejercicios {
-  background: color-mix(in srgb, hsl(160, 25%, 92%) 100%, transparent);
-  color: hsl(160, 40%, 28%);
-}
-
-[data-theme="dark"] .badge-ejercicios {
-  background: rgba(115, 218, 202, 0.12);
-  color: hsl(166, 55%, 68%);
+  background: var(--accent-ejercicios-light);
+  color: var(--accent-ejercicios);
 }
 
 .badge-empty {
@@ -489,6 +484,15 @@ body.resizing-sidebar #sidebar-shell {
 .tab.active {
   color: var(--accent);
   border-bottom-color: var(--accent);
+}
+
+#tab-ejercicios:hover {
+  color: var(--accent-ejercicios);
+}
+
+#tab-ejercicios.active {
+  color: var(--accent-ejercicios);
+  border-bottom-color: var(--accent-ejercicios);
 }
 
 .tab:disabled {
