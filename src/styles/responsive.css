@@ -15,7 +15,7 @@
   }
 
   #section-content {
-    padding: var(--sp-xl) var(--sp-xl) var(--sp-3xl);
+    padding: var(--sp-xl) var(--sp-xl) var(--sp-3xl) calc(var(--sp-3xl) + var(--sp-xs));
   }
 
   h1 { font-size: 2rem; }

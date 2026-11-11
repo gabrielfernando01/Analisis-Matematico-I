@@ -51,6 +51,13 @@ p {
   max-width: var(--content-max);
 }
 
+/* ─── Ancho de la columna de lectura ───
+   Más cerca del borde derecho; el tope sigue evitando líneas
+   demasiado largas en pantallas grandes. */
+#content-body {
+  --content-max: 82ch;
+}
+
 /* ─── Prosa justificada (solo teoría) ───
    La alineación del código LaTeX (entornos aligned/array con &) la
    controla MathJax y no se ve afectada por text-align. */

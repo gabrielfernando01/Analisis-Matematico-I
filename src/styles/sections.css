@@ -453,7 +453,9 @@ body.resizing-sidebar #sidebar-shell {
 
 #section-content {
   flex: 1;
-  padding: var(--sp-2xl) var(--sp-2xl) var(--sp-4xl);
+  /* Columna de lectura: desplazada del índice a la izquierda y
+     extendida hacia el borde derecho */
+  padding: var(--sp-2xl) var(--sp-xl) var(--sp-4xl) calc(var(--sp-3xl) + var(--sp-xs));
   min-width: 0;
 }
 
