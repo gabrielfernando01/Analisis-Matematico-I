@@ -106,6 +106,10 @@ function setupTabs(section: Section): void {
 async function loadContent(section: Section, tab: 'teoria' | 'ejercicios'): Promise<void> {
   const content: SectionContent | null = tab === 'teoria' ? section.teoria : section.ejercicios;
 
+  // La prosa de teoría va justificada; las fórmulas conservan la alineación
+  // propia de MathJax (entornos aligned/array con &).
+  contentBody.classList.toggle('content-teoria', tab === 'teoria');
+
   if (!content) {
     contentBody.innerHTML = `
       <div class="content-error">

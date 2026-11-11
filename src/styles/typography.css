@@ -51,6 +51,18 @@ p {
   max-width: var(--content-max);
 }
 
+/* ─── Prosa justificada (solo teoría) ───
+   La alineación del código LaTeX (entornos aligned/array con &) la
+   controla MathJax y no se ve afectada por text-align. */
+#content-body.content-teoria p,
+#content-body.content-teoria li,
+#content-body.content-teoria blockquote {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
 strong { font-weight: 700; }
 
 em { font-style: italic; }
