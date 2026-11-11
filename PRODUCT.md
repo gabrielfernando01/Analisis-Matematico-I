@@ -21,7 +21,7 @@ Sitio de estudio para un curso universitario de Análisis Matemático I. Present
 ## Product Principles
 
 1. **Fidelidad matemática primero** — cada fórmula, demostración y símbolo debe renderizar exactamente como está escrito.
-2. **Profundidad navegable** — del índice a cualquier teorema o ejercicio en dos clics o menos.
+2. **Profundidad navegable** — del índice a cualquier teorema o ejercicio en dos clics o menos. Los badges Teoría/Ejercicios del índice son enlaces directos a su pestaña.
 3. **Lectura sin fricción** — la interfaz retrocede detrás de las matemáticas; sin ruido visual, sin marketing.
 4. **Funciona en cualquier lugar** — responsive, rápido en móvil, sin login.
 
@@ -37,6 +37,7 @@ Dos temas persistentes con toggle en el header (🌙/☀️), guardados en `loca
 - Background: `hsl(42, 30%, 97%)`
 - Text: `hsl(42, 12%, 12%)`
 - Accent: `hsl(215, 55%, 38%)`
+- Ejercicios (verde): `hsl(160, 40%, 28%)` sobre `hsl(160, 25%, 92%)`
 
 ### Dark — Tokyo Night
 - Background: `#1a1b26`
@@ -46,6 +47,7 @@ Dos temas persistentes con toggle en el header (🌙/☀️), guardados en `loca
 - Text muted: `#565f89`
 - Accent blue: `#7aa2f7`
 - Accent purple: `#bb9af7`
+- Ejercicios (verde): `hsl(166, 55%, 68%)` sobre `rgba(115, 218, 202, 0.12)`
 - Border: `#292e42`
 - Proof/theorem backgrounds: `#1f2335`
 
@@ -61,7 +63,7 @@ Dos temas persistentes con toggle en el header (🌙/☀️), guardados en `loca
 - **Sin fotografías** ni imágenes decorativas. Las únicas imágenes son las del contenido matemático (diagramas, gráficas de funciones).
 - **Sin gradientes llamativos**. Gradientes solo si son sutiles y sirven a la jerarquía.
 - **Sin sombras pesadas**. `--shadow-sm` y `--shadow-md` son el límite.
-- **Animaciones**: solo si refuerzan la comprensión o el contexto (reveal staggered del índice, fade-in de contenido, expand de demostraciones). Nada decorativo puro.
+- **Animaciones**: solo si refuerzan la comprensión o el contexto (reveal staggered del índice, fade-in de contenido, expand de demostraciones). Nada decorativo puro. El feedback de interacción en controles — contorno en su color, realce breve al pasar el cursor y respuesta al pulsar — sí es funcional y permitido.
 
 ## Constraints
 

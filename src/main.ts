@@ -1,6 +1,19 @@
 import './styles/main.css';
 import { sections } from './data/sections';
+import type { Section } from './data/sections';
 import { initTheme } from './components/theme';
+
+function createBadge(section: Section, tab: 'teoria' | 'ejercicios'): HTMLAnchorElement {
+  const badge = document.createElement('a');
+  badge.className = `badge badge-${tab}`;
+  badge.href = `/seccion.html?id=${section.id}&tab=${tab}`;
+  badge.textContent = tab === 'teoria' ? 'Teoría' : 'Ejercicios';
+  badge.setAttribute(
+    'aria-label',
+    `Ver ${tab === 'teoria' ? 'teoría' : 'ejercicios'} de §\u2009${section.id} — ${section.title}`,
+  );
+  return badge;
+}
 
 function renderIndex(): void {
   const container = document.getElementById('course-index');
@@ -10,18 +23,22 @@ function renderIndex(): void {
 
   sections.forEach((section, index) => {
     const hasContent = section.teoria || section.ejercicios;
-    const link = document.createElement('a');
-    link.className = 'section-entry';
-    link.id = `section-entry-${section.id}`;
-    link.style.setProperty('--delay', `${0.4 + index * 0.06}s`);
+    const entry = document.createElement('div');
+    entry.className = 'section-entry';
+    entry.id = `section-entry-${section.id}`;
+    entry.style.setProperty('--delay', `${0.4 + index * 0.06}s`);
+
+    const defaultTab = section.teoria ? 'teoria' : 'ejercicios';
+
+    // Main link — number and title
+    const main = document.createElement('a');
+    main.className = 'section-entry-main';
 
     if (hasContent) {
-      const defaultTab = section.teoria ? 'teoria' : 'ejercicios';
-      link.href = `/seccion.html?id=${section.id}&tab=${defaultTab}`;
+      main.href = `/seccion.html?id=${section.id}&tab=${defaultTab}`;
     } else {
-      link.style.opacity = '0.45';
-      link.style.pointerEvents = 'none';
-      link.setAttribute('aria-disabled', 'true');
+      entry.classList.add('section-entry--empty');
+      entry.setAttribute('aria-disabled', 'true');
     }
 
     // Section number
@@ -46,22 +63,19 @@ function renderIndex(): void {
       info.appendChild(desc);
     }
 
-    // Badges
+    main.appendChild(number);
+    main.appendChild(info);
+
+    // Badges — direct links to each tab
     const badges = document.createElement('div');
     badges.className = 'section-badges';
 
     if (section.teoria) {
-      const t = document.createElement('span');
-      t.className = 'badge badge-teoria';
-      t.textContent = 'Teoría';
-      badges.appendChild(t);
+      badges.appendChild(createBadge(section, 'teoria'));
     }
 
     if (section.ejercicios) {
-      const e = document.createElement('span');
-      e.className = 'badge badge-ejercicios';
-      e.textContent = 'Ejercicios';
-      badges.appendChild(e);
+      badges.appendChild(createBadge(section, 'ejercicios'));
     }
 
     if (!hasContent) {
@@ -71,10 +85,9 @@ function renderIndex(): void {
       badges.appendChild(empty);
     }
 
-    link.appendChild(number);
-    link.appendChild(info);
-    link.appendChild(badges);
-    fragment.appendChild(link);
+    entry.appendChild(main);
+    entry.appendChild(badges);
+    fragment.appendChild(entry);
   });
 
   container.appendChild(fragment);

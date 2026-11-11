@@ -62,17 +62,16 @@
 /* ─── Section Entries ─── */
 
 .section-entry {
+  --entry-opacity: 1;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 1fr auto;
   gap: var(--sp-sm) var(--sp-lg);
-  align-items: baseline;
+  align-items: center;
   padding: var(--sp-lg) var(--sp-lg);
   margin-bottom: 1px;
   border-bottom: 1px solid var(--border-light);
-  text-decoration: none;
   color: var(--text);
-  transition: background 300ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background 300ms cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: 4px;
   opacity: 0;
   animation: entryReveal 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -83,13 +82,28 @@
   background: var(--bg-alt);
 }
 
-.section-entry:active {
+.section-entry--empty {
+  --entry-opacity: 0.45;
+  pointer-events: none;
+}
+
+.section-entry-main {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-lg);
+  min-width: 0;
+  color: var(--text);
+  text-decoration: none;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-entry-main:active {
   transform: scale(0.995);
 }
 
 @keyframes entryReveal {
   from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: var(--entry-opacity, 1); transform: translateY(0); }
 }
 
 
@@ -100,10 +114,11 @@
   color: var(--accent);
   font-variant-numeric: tabular-nums;
   min-width: 2.5ch;
+  flex-shrink: 0;
 }
 
 .section-info {
-  grid-column: 2;
+  min-width: 0;
 }
 
 .section-title {
@@ -121,11 +136,15 @@
 
 .section-badges {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--sp-xs);
   align-self: center;
+  justify-content: flex-end;
 }
 
 .badge {
+  display: inline-flex;
+  align-items: center;
   font-size: 0.72rem;
   font-family: var(--font-sans);
   font-weight: 500;
@@ -134,6 +153,14 @@
   padding: 0.2em 0.6em;
   border-radius: 3px;
   white-space: nowrap;
+  text-decoration: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-fast) var(--ease-out),
+              outline-color var(--dur-fast) ease,
+              background var(--dur-fast) ease,
+              color var(--dur-fast) ease;
 }
 
 .badge-teoria {
@@ -154,6 +181,47 @@
 .badge-empty {
   background: var(--bg-alt);
   color: var(--text-muted);
+  cursor: default;
+}
+
+/* Señal de que Teoría / Ejercicios son accesibles */
+
+.badge-teoria,
+.badge-ejercicios {
+  cursor: pointer;
+}
+
+.badge:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.badge:active {
+  animation: none;
+  transform: translateY(0.5px) scale(0.96);
+}
+
+@media (hover: hover) {
+  .badge-teoria:hover,
+  .badge-ejercicios:hover {
+    outline-color: currentColor;
+    transform: translateY(-1px);
+    animation: badgeHop 320ms var(--ease-out);
+  }
+}
+
+@keyframes badgeHop {
+  0%   { transform: translateY(0); }
+  45%  { transform: translateY(-4px); }
+  100% { transform: translateY(-1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge:hover,
+  .badge:active {
+    animation: none;
+    transform: none;
+  }
 }
 
 /* ══════════════════════════════════════════════
