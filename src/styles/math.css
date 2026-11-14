@@ -160,8 +160,10 @@ mjx-container[jax="CHTML"] mjx-mtable {
 /* ─── Proof body ─── */
 
 .proof-inner {
-  padding: var(--sp-xs) var(--sp-lg) var(--sp-md);
-  /* Smooth height animation via grid trick */
+  /* Smooth height animation via grid trick.
+     The single child (.proof-content) is the animated track; the proof
+     body lives inside it so it keeps a normal block flow and its
+     margins collapse as usual. */
   display: grid;
   grid-template-rows: 0fr;
   overflow: hidden;
@@ -170,6 +172,12 @@ mjx-container[jax="CHTML"] mjx-mtable {
 
 .proof-block[open] .proof-inner {
   grid-template-rows: 1fr;
+}
+
+/* ─── Proof content ─── */
+
+.proof-content {
+  padding: var(--sp-xs) var(--sp-lg) var(--sp-md);
 }
 
 .proof-inner > * {

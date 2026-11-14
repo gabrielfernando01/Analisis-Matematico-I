@@ -153,14 +153,23 @@ export function wrapProofs(container: HTMLElement): void {
       const inner = document.createElement('div');
       inner.className = 'proof-inner';
 
+      // A single child holds the whole proof. This keeps the grid height
+      // animation working *and* lets the proof body use normal block flow,
+      // so its vertical margins collapse just like in the theory tab
+      // (without the wrapper every paragraph became its own grid row and
+      // the margins added up, producing an oversized line spacing).
+      const content = document.createElement('div');
+      content.className = 'proof-content';
+
       // ⚠ Capture the reference node BEFORE moving proof elements out of the
       // container.  After appendChild(pe), those elements leave the container,
       // so children[startIdx] would no longer be a child of container and
       // insertBefore would throw a DOMException.
       const referenceNode = children[endIdx + 1] ?? null;
 
-      // Move all proof elements into the inner div
-      proofElements.forEach(pe => inner.appendChild(pe));
+      // Move all proof elements into the content wrapper
+      proofElements.forEach(pe => content.appendChild(pe));
+      inner.appendChild(content);
       details.appendChild(inner);
 
       // referenceNode is still a child of container (it was not in proofElements)

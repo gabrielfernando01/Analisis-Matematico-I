@@ -194,7 +194,7 @@ Así, $\{U_{i_1},\dots,U_{i_n},U_j\}$ es una subcubierta finita de $[a,b]$. Como
 
 Sea $(X,d)$ un espacio métrico y $K \subseteq X$.
 
-1. Si $K$ es compacto entonces toda subsucesión de elementos de $K$ admite una subsucesión que converge a un punto de $K$.
+1. Si $K$ es compacto entonces toda sucesión de elementos de $K$ admite una subsucesión que converge a un punto de $K$.
 
    Es decir, si $(x_n)_{n=1}^{\infty} \subseteq K$ entonces existe una subsucesión $(x_{n_k})_{k=1}^{\infty}$ y $x \in K$ tal que
    
