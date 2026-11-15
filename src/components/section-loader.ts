@@ -100,6 +100,9 @@ function addSemanticClasses(html: string): string {
 const PROOF_START_RE = /^\s*(Dem\.|Demostración\.?|Demostraci[oó]n\.?|Prueba\.?|Proof\.?)\s*$/i;
 // Minimum child-element count to trigger collapsing
 const PROOF_LONG_THRESHOLD = 8;
+// HTML comment that keeps a proof expanded:
+//   **Demostración** <!-- proof: no-collapse -->
+const PROOF_NO_COLLAPSE = 'proof: no-collapse';
 
 /**
  * Walk the direct children of `container`, detect proof blocks, and
@@ -121,6 +124,14 @@ export function wrapProofs(container: HTMLElement): void {
       continue;
     }
 
+    // Opt-out marker: the proof stays inline even if it is long
+    if (el.innerHTML.includes(PROOF_NO_COLLAPSE)) {
+      removeMarkerComments(el, PROOF_NO_COLLAPSE);
+      el.classList.add('proof-inline');
+      i++;
+      continue;
+    }
+
     // Collect the proof: from el (inclusive) up to and including the QED element
     const startIdx = i;
     let endIdx = i; // at minimum the start paragraph itself
@@ -129,9 +140,15 @@ export function wrapProofs(container: HTMLElement): void {
     for (let j = i; j < children.length; j++) {
       endIdx = j;
       if (hasQED(children[j])) break;
-      // Stop if we hit the next theorem/section heading before finding QED
-      // (some proofs lack an explicit QED)
+      // Stop if we hit the next theorem/section heading or an <hr> before
+      // finding QED (some proofs lack an explicit QED)
       if (j > i && isProofStart(children[j])) {
+        endIdx = j - 1;
+        break;
+      }
+      // A proof never crosses a structural boundary: separator rule or a
+      // section-level heading.
+      if (j > i && isBoundary(children[j])) {
         endIdx = j - 1;
         break;
       }
@@ -195,6 +212,21 @@ function isProofStart(el: HTMLElement): boolean {
   const strong = el.querySelector('strong');
   if (!strong) return false;
   return PROOF_START_RE.test(strong.textContent ?? '');
+}
+
+/** True if el closes an open proof block (separator rule or section heading) */
+function isBoundary(el: HTMLElement): boolean {
+  return el.tagName === 'HR' || el.tagName === 'H1' || el.tagName === 'H2';
+}
+
+/** Remove the HTML comments that carry the given inline marker */
+function removeMarkerComments(root: HTMLElement, marker: string): void {
+  const COMMENT_NODE = 8;
+  for (const node of Array.from(root.childNodes)) {
+    if (node.nodeType === COMMENT_NODE && (node.nodeValue ?? '').includes(marker)) {
+      node.remove();
+    }
+  }
 }
 
 /** True if the element contains a QED marker (■, ▪, or \blacksquare placeholder) */

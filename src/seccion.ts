@@ -122,12 +122,28 @@ async function loadContent(section: Section, tab: 'teoria' | 'ejercicios'): Prom
   contentBody.innerHTML = '<div class="content-loading">Cargando contenido…</div>';
 
   try {
-    // Try update/ directory first, then original
-    let html: string;
-    try {
-      html = await loadSection(`SECCION_${section.id}/update`, content.filename);
-    } catch {
-      html = await loadSection(content.path, content.filename);
+    // Try update/ first, then original. El layout plano
+    // (SECCION_x/update/<archivo>) tiene prioridad; también se admite el
+    // layout espejo (SECCION_x/update/teoria|ejercicios/<archivo>).
+    const updateMirror = content.path.replace(/^(SECCION_\d+)\//, '$1/update/');
+    const candidates = [
+      { basePath: `SECCION_${section.id}/update`, filename: content.filename },
+      { basePath: updateMirror, filename: content.filename },
+      { basePath: content.path, filename: content.filename },
+    ];
+
+    let html: string | null = null;
+    for (const candidate of candidates) {
+      try {
+        html = await loadSection(candidate.basePath, candidate.filename);
+        break;
+      } catch {
+        // Prueba el siguiente candidato
+      }
+    }
+
+    if (html === null) {
+      throw new Error(`Contenido no disponible: ${content.filename}`);
     }
 
     contentBody.innerHTML = html;

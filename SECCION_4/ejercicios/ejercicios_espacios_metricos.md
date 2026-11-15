@@ -528,8 +528,9 @@ donde
 $$
 \begin{aligned}
    \|(u,v)+(u',v')\|&=\|(u+u',v+v')\| \\
-   &\overset{\text{def}}{=}\left(\|u+u'\|_U^2+\|v+v'\|_V^2\right)^{\frac{1}{2}}  \tag{1}
+   &\overset{\text{def}}{=}\left(\|u+u'\|_U^2+\|v+v'\|_V^2\right)^{\frac{1}{2}}
 \end{aligned}
+\tag{1}
 $$
 
 **Paso 2.** Usamos la desigualdad del triángulo en la norma de cada espacio:
@@ -853,7 +854,7 @@ $$
 \end{aligned}
 $$
 
-$$\therefore \;d(x,y)=\left|\frac{1}{x} - \frac{1}{y}\right|\;\text{\;es una métrica en\;} (0, \infty)$$
+$$\therefore \;d(x,y)=\left|\frac{1}{x} - \frac{1}{y}\right|\;\text{es una métrica en} (0, \infty)$$
 
 ---
 
@@ -865,7 +866,7 @@ Sea $(X,d)$ un espacio métrico. Prueba que para todos $x,y,z \in X$
 
 $$|d(x,z)-d(y,z)| \leq d(x,y)$$
 
-**Demostración**
+**Demostración** <!-- proof: no-collapse -->
 
 Sean $x,y,z \in X$. Recordemos que para $a,b \in \mathbb{R}$:
 
