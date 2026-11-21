@@ -361,9 +361,9 @@ Sean $A$ y $B$ dos conjuntos y supon que exsisten funciones inyectivas $f:\;A \l
 p.d. $\exist\;h:\; A \longrightarrow B$ biyectiva.
 
 Idea: $h \backslash S = f, \quad h \backslash A|S = g^{-1}$
-Encontrar un $S \subseteq tal que:
+Encontrar un $S \subseteq A$ tal que:
 
-$$g(B \backslash f(S)) = A\S$$
+$$g(B \backslash f(S)) = A \setminus S$$
 
 ---
 
@@ -439,7 +439,7 @@ $$|a + s - x| = |t_2 - x| \leq t_3 - t_2 = \frac{b-a}{3}$$
 
 y $x \in [t_2, t_3) = [a+s, a+s+(b-a)/3)$.
 
-![Conjunto Cantor](conjunto_cantor.png)
+![Conjunto Cantor](conjunto_cantor.webp)
 
 ---
 

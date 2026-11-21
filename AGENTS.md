@@ -10,7 +10,7 @@
 
 ```
 SECCION_x/
-├── teoria/       ← .md con teoría + imágenes .png
+├── teoria/       ← .md con teoría + imágenes .webp
 ├── ejercicios/   ← .md con ejercicios
 └── update/       ← Versión actualizada (prioridad sobre teoria/ y ejercicios/)
 ```
@@ -38,3 +38,20 @@ Secciones 1–7 tienen contenido. Secciones 8–11 son marcadores vacíos.
 8. **Deploy en Vercel free tier** desde el repo `gabrielfernando01/Analisis-Matematico-I`. La build debe pasar `tsc && vite build` sin errores antes de cualquier push.
 
 9. **MathJax es inamovible.** El renderizador LaTeX es MathJax v3 (CDN). No sustituir por KaTeX ni otro renderizador.
+
+---
+
+## Reglas de renderizado
+
+Fallos ya corregidos; no reintroducirlos. Aplican a **todo** contenido nuevo, incluido el que llegue como captura de pantalla.
+
+10. **El LaTeX reinsertado debe escaparse.** `src/components/section-loader.ts` extrae las fórmulas antes de `marked` y las restaura después. Al restaurar hay que escapar `&` → `&amp;`, `<` → `&lt;`, `>` → `&gt;`. Sin esto, `$\|x-x_0\|<r\}$` produce una etiqueta HTML falsa (`<r\}`), corta el nodo de texto, MathJax pierde el delimitador de cierre y además se come el `</p>`. Nunca insertar LaTeX crudo en el HTML.
+
+11. **`\empty` → `\emptyset`.** `\empty` es un primitivo de TeX, no un símbolo: MathJax lo pinta en rojo. La normalización vive en el macro `macros: { empty: '\\emptyset' }` de `seccion.html`. Si una captura trae `\empty`, se resuelve con ese macro, **nunca** editando el `.md`.
+
+12. **Esperar a MathJax antes de tipografiar.** El bundle del CDN se carga con `async`; `window.MathJax` existe desde la config pero `typesetPromise` no. Hay que esperar `MathJax.startup.promise` (helper `typesetMath()` en `src/seccion.ts`). Comprobar solo `window.MathJax?.typesetPromise` deja la página entera en LaTeX crudo.
+
+13. **Solo imágenes WebP, sin respaldo.** Ninguna imagen `.png` en el repo ni en `public/`. Cualquier imagen nueva (o captura que comparta el usuario) se convierte a WebP con `convert entrada.png -resize '1400x>' -quality 85 -define webp:method=6 salida.webp`, se **borra el original** y se actualiza la referencia (`src="..."` o `![...](...)`) en el `.md`. 1400 px cubre retina en móvil full-bleed; no bajar de ahí sin motivo.
+
+14. **Imágenes ligeras por defecto.** `addSemanticClasses()` añade `loading="lazy"` y `decoding="async"` a todo `<img>`. No quitar esos atributos.
+

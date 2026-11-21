@@ -26,7 +26,7 @@ $$\forall \; \varepsilon > 0 \; \exists \; N \in \mathbb{N}\; \text{tal que\;}|x
 <br>
 
 <p align="center">
-  <img src="vecindad.png" alt="Descripción" width="650">
+  <img src="vecindad.webp" alt="Descripción" width="650">
 </p>
 
 Ya que el valor absoluto induce la distancia usual en los reales, podemos generalizar la definición anterior reemplazando $|x_n-x|$ por $d(x_n,x)$, donde $d$ es una métrica y los $x_n$ y $x$ son puntos de un espacio métrico $(X,d)$. El objetivo del material que sigue es presentar estas generalizaciones en espacios métricos, ver ejemplos, similitudes al caso real y diferencias.
@@ -197,7 +197,7 @@ $$
 <br>
 
 <p align="center">
-  <img src="sucesion_raiz_n_esima.png" alt="Descripción" width="420">
+  <img src="sucesion_raiz_n_esima.webp" alt="Descripción" width="420">
 </p>
 
 **p.d.** $\lim_{n \to \infty}x_n=0$
@@ -295,7 +295,7 @@ Geométricamente la idea es muy parecida al caso real sólo que ahora $\varepsil
 <br>
 
 <p align="center">
-  <img src="(a_n).png" alt="Descripción" width="550">
+  <img src="(a_n).webp" alt="Descripción" width="550">
 </p>
 
 Notas:
@@ -358,7 +358,7 @@ $$\varphi:\;\mathbb{N} \longrightarrow \mathbb{N} \; \text{ es estrictamente cre
 <br>
 
 <p align="center">
-<img src="subsucesiones_(1).png" alt="Diagrama de la composición x ∘ φ: ℕ → ℕ → X" width="550">
+<img src="subsucesiones_(1).webp" alt="Diagrama de la composición x ∘ φ: ℕ → ℕ → X" width="550">
 </p>
 
 <br>
@@ -454,7 +454,7 @@ $\varphi\;$ es creciente $\implies \exists \; \ell, \; \varphi(\ell) > N$
 <br>
 
 <p align="center">
-<img src="5_6_Lema.png" alt="Diagrama de la composición x ∘ φ: ℕ → ℕ → X" width="550">
+<img src="5_6_Lema.webp" alt="Diagrama de la composición x ∘ φ: ℕ → ℕ → X" width="550">
 </p>
 
 <br>

@@ -28,7 +28,7 @@ $$
 <br>
 
 <p align="center">
-  <img src="B_r_esp_normado.png" alt="Descripción" width="550">
+  <img src="B_r_esp_normado.webp" alt="Descripción" width="550">
 </p>
 
 <br>
@@ -82,7 +82,7 @@ La forma de la bola depende del espcio métrico, como se ve en los siguientes ej
     <br>
 
     <p align="center">
-    <img src="norma-p.png" alt="Descripción" width="480">
+    <img src="norma-p.webp" alt="Descripción" width="480">
     </p>
 
     <br>
@@ -104,7 +104,7 @@ La forma de la bola depende del espcio métrico, como se ve en los siguientes ej
     <br>
 
     <p align="center">
-    <img src="norma_uniforme.png" alt="Descripción" width="550">
+    <img src="norma_uniforme.webp" alt="Descripción" width="550">
     </p>
 
     <br>
@@ -128,7 +128,7 @@ $$\forall \; p \in U \; \exists \; r>0\;\text{tal que}\;B_r(p) \subseteq U$$
 <br>
 
 <p align="center">
-<img src="abierto.png" alt="Descripción" width="550">
+<img src="abierto.webp" alt="Descripción" width="550">
 </p>
 
 <br>
@@ -147,7 +147,7 @@ Notas:
 <br>
 
 <p align="center">
-<img src="intervalo.png" alt="Descripción" width="550">
+<img src="intervalo.webp" alt="Descripción" width="550">
 </p>
 
 <br>
@@ -161,7 +161,7 @@ Notas:
 <br>
 
 <p align="center">
-<img src="no_contenido.png" alt="Descripción" width="550">
+<img src="no_contenido.webp" alt="Descripción" width="550">
 </p>
 
 <br>
@@ -181,7 +181,7 @@ i.e., tiene que cumplier la Definicion 6.3.
 <br>
 
 <p align="center">
-<img src="B_r_es_abierto.png" alt="Descripción" width="550">
+<img src="B_r_es_abierto.webp" alt="Descripción" width="550">
 </p>
 
 <br>
@@ -573,7 +573,7 @@ Sea $(X,d)$ un espacio métrico, $A \subseteq X$.
     <br>
 
     <p align="center">
-    <img src="lema_6_14.png" alt="Descripción" width="550">
+    <img src="lema_6_14.webp" alt="Descripción" width="550">
     </p>
 
     <br>
@@ -899,7 +899,7 @@ Ejemplo en $\mathbb{R}^2\;$ con su métrica usual. $A \subseteq \mathbb{R}^2$
 <br>
 
 <p align="center">
-  <img src="dist_A.png" alt="Descripción" width="600">
+  <img src="dist_A.webp" alt="Descripción" width="600">
 </p>
 
 <br>

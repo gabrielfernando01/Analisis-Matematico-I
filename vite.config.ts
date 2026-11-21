@@ -10,7 +10,14 @@ function copySections(): Plugin {
         const src = resolve(__dirname, `SECCION_${i}`)
         const dest = resolve(__dirname, `dist/SECCION_${i}`)
         if (existsSync(src)) {
-          cpSync(src, dest, { recursive: true })
+          // Se copia solo lo que consume el sitio: .md e imágenes.
+          // Los .html y .py de las carpetas son artefactos de autoría
+          // (p. ej. una exportación autónoma de 16 MB) y no deben
+          // inflar el deploy.
+          cpSync(src, dest, {
+            recursive: true,
+            filter: (path) => !/\.(html|py)$/i.test(path),
+          })
         }
       }
     }

@@ -101,6 +101,45 @@ function setupTabs(section: Section): void {
   tabEjercicios.onclick = () => { if (section.ejercicios) setActive('ejercicios'); };
 }
 
+// ── MathJax ────────────────────────────────────
+// El bundle de MathJax (~1 MB) se carga con `async` desde el CDN. Si el
+// contenido llega antes de que termine, `window.MathJax` ya existe (es el
+// objeto de configuración) pero `typesetPromise` todavía no, y sin esta espera
+// toda la página se queda mostrando el LaTeX en crudo.
+
+const MATHJAX_TIMEOUT_MS = 20000;
+
+function waitForMathJax(): Promise<any> {
+  const current = (window as any).MathJax;
+  if (current?.startup?.promise) {
+    return current.startup.promise.then(() => current);
+  }
+
+  return new Promise((resolve) => {
+    const started = Date.now();
+    const timer = window.setInterval(() => {
+      const mj = (window as any).MathJax;
+      if (mj?.startup?.promise) {
+        window.clearInterval(timer);
+        mj.startup.promise.then(() => resolve(mj));
+      } else if (Date.now() - started > MATHJAX_TIMEOUT_MS) {
+        window.clearInterval(timer);
+        resolve(null);
+      }
+    }, 50);
+  });
+}
+
+async function typesetMath(el: HTMLElement): Promise<void> {
+  const mj = await waitForMathJax();
+  if (!mj?.typesetPromise) return;
+  try {
+    await mj.typesetPromise([el]);
+  } catch (err) {
+    console.error('MathJax no pudo tipografiar el contenido:', err);
+  }
+}
+
 // ── Content Loading ────────────────────────────
 
 async function loadContent(section: Section, tab: 'teoria' | 'ejercicios'): Promise<void> {
@@ -157,10 +196,8 @@ async function loadContent(section: Section, tab: 'teoria' | 'ejercicios'): Prom
     contentBody.offsetHeight; // reflow
     contentBody.style.animation = '';
 
-    // Typeset math with MathJax
-    if ((window as any).MathJax?.typesetPromise) {
-      await (window as any).MathJax.typesetPromise([contentBody]);
-    }
+    // Typeset math with MathJax (espera a que el bundle del CDN esté listo)
+    await typesetMath(contentBody);
 
     // Build sidebar from headings
     const headings = extractHeadings(contentBody);

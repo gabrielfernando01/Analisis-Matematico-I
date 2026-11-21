@@ -24,8 +24,8 @@ $$\lim_{n \to \infty} \left(1 - \frac{x}{n}\right)^{-n} = e^x$$
 
   Por lo tanto las sucesiones de funciones $(f_n : \mathbb{R} \to \mathbb{R})_{n=1}^{\infty}$, $(g_n : \mathbb{R} \to \mathbb{R})_{n=1}^{\infty}$, dadas por $f_n(x) = \left(1 + \frac{x}{n}\right)^n$, $g_n(x) = \left(1 - \frac{x}{n}\right)^{-n}$ convergen puntualmente a la función exponencial para todo punto de $\mathbb{R}$.
 
-![conv_puntual](conv_punt_exp^x.png)
-![conv_puntual_tabla](conv_punt_exp^x_tabla.png)
+![conv_puntual](conv_punt_exp^x.webp)
+![conv_puntual_tabla](conv_punt_exp^x_tabla.webp)
 
 - Definamos la sucesión de funciones $f_n : [-1,1] \to \mathbb{R}$ por $f_n(x) = x^n$. Usando que $\lim_{n \to \infty} r^n = 0$ para $r \in \mathbb{R}$ con $|r| < 1$ tenemos que
 
@@ -102,7 +102,7 @@ Una de las partes más importantes de la definición es que la $N$ que aparece s
 
 5. La convergencia uniforme tiene una interpretación geométrica. Si copiamos la gráfica de $f$, epsilon arriba y epsilon abajo de la gráfica de $f$ obtenemos una franja de radio $\varepsilon$ centrada en la gráfica de $f$. Si $f_n \subset [a,b] \to f$ uniformemente en $[a,b]$ entonces las gráficas de las $f_n$ eventualmente caen dentro de ésta franja.
 
-![Convergencia Uniforme](def_conv_unif.png)
+![Convergencia Uniforme](def_conv_unif.webp)
 
 ## 2.5 Nota
 

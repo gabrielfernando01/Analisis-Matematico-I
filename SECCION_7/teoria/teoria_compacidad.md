@@ -93,7 +93,7 @@ $$
 <br>
 
 <p align="center">
-  <img src="heine.png" alt="Descripción" width="500">
+  <img src="heine.webp" alt="Descripción" width="500">
 </p>
 
 <br>
@@ -156,7 +156,7 @@ $$
 <br>
 
 <p align="center">
-  <img src="heine_(1).png" alt="Descripción" width="500">
+  <img src="heine_(1).webp" alt="Descripción" width="500">
 </p>
 
 <br>
@@ -469,7 +469,7 @@ $$V = \{x \in X : \{x\} \times B \subseteq \mathcal{O}\}.$$
 <br>
 
 <p align="center">
-  <img src="lema_7_8.png" alt="Descripción" width="500">
+  <img src="lema_7_8.webp" alt="Descripción" width="500">
 </p>
 
 <br>
@@ -489,7 +489,7 @@ $$B \subseteq \bigcup_{i=1}^{n} B_{r_{b_i}/2}(b_i).$$
 <br>
 
 <p align="center">
-  <img src="lema_7_8_(1).png" alt="Descripción" width="380">
+  <img src="lema_7_8_(1).webp" alt="Descripción" width="380">
 </p>
 
 <br>

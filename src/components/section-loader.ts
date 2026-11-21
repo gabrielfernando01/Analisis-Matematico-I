@@ -31,10 +31,22 @@ function extractMath(text: string): MathExtraction {
   return { text, blocks };
 }
 
+// El LaTeX se reinserta DESPUÉS de parsear el markdown, así que no pasa por el
+// escapado de marked. Si no se escapa aquí, un `<` seguido de letra (p. ej.
+// `$\|x-x_0\|<r\}$`) se interpreta como una etiqueta HTML, corta el nodo de
+// texto y MathJax deja de ver el delimitador de cierre. MathJax lee el
+// textContent del DOM, por lo que escapar no altera la fórmula.
+function escapeMathHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 function restoreMath(html: string, blocks: Map<string, string>): string {
   for (const [key, value] of blocks) {
     // The key may appear inside HTML-escaped text, restore it
-    html = html.split(key).join(value);
+    html = html.split(key).join(escapeMathHtml(value));
   }
   return html;
 }
@@ -80,10 +92,11 @@ function addSemanticClasses(html: string): string {
     '<h1 class="heading-theorem">$1'
   );
 
-  // Add parallax class to images
+  // Add parallax class to images. `loading="lazy"` + `decoding="async"` evitan
+  // descargar/decodificar las figuras que aún no están en pantalla.
   html = html.replace(
     /<img /g,
-    '<img class="parallax-image parallax-hidden" '
+    '<img class="parallax-image parallax-hidden" loading="lazy" decoding="async" '
   );
 
   return html;

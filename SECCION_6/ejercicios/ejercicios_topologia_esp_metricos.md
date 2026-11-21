@@ -1549,7 +1549,7 @@ $$\lim_{n \to \infty} t_n = 1$$
 <br>
 
 <p align="center">
-  <img src="bolas.png" alt="Descripción" width="600">
+  <img src="bolas.webp" alt="Descripción" width="600">
 </p>
 
 <br>

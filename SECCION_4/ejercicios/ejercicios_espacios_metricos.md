@@ -566,7 +566,7 @@ $$(a,b) + (a',b')=(a+a',\, b+b') \in \mathbb{R}^2$$
 <br>
 
 <p align="center">
-  <img src="vectores.png" alt="Descripción" width="700">
+  <img src="vectores.webp" alt="Descripción" width="700">
 </p>
 
 <br>

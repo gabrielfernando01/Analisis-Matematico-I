@@ -326,7 +326,7 @@ $$d(v,w) \leq d(v, z) + d(z, w).$$
 <br>
 
 <p align="center">
-  <img src="grafica_convexa.png" alt="Ejemplo de una gráfica conexa">
+  <img src="grafica_convexa.webp" alt="Ejemplo de una gráfica conexa">
 </p>
 
 ---
@@ -365,7 +365,7 @@ $$S_{\|\cdot\|_2} = \{(x,y) \in \mathbb{R}^2: \|(x,y)\|_2=1\}$$
 <br>
 
 <p align="center">
-  <img src="norma_euclidiana.png" alt="Esfera unitaria de la norma euclidiana">
+  <img src="norma_euclidiana.webp" alt="Esfera unitaria de la norma euclidiana">
 </p>
 
 $$
@@ -468,7 +468,7 @@ $$
 <br>
 
 <p align="center">
-  <img src="norma_taxista.png" alt="Esfera unitaria de la norma del taxista">
+  <img src="norma_taxista.webp" alt="Esfera unitaria de la norma del taxista">
 </p>
 
 $$
@@ -557,7 +557,7 @@ Es decir, es el borde del cuadrado $[-1,1]\times[-1,1]$. (La condición $|x|\leq
 <br>
 
 <p align="center">
-  <img src="norma_infinito.png" alt="Esfera unitaria de la norma infinito">
+  <img src="norma_infinito.webp" alt="Esfera unitaria de la norma infinito">
 </p>
 
 **Comparación**
@@ -569,7 +569,7 @@ Es decir, es el borde del cuadrado $[-1,1]\times[-1,1]$. (La condición $|x|\leq
 <br>
 
 <p align="center">
-  <img src="comparacion.png" alt="Comparación de las tres esferas unitarias">
+  <img src="comparacion.webp" alt="Comparación de las tres esferas unitarias">
 </p>
 
 ---
@@ -761,7 +761,7 @@ c &= \max\{a, b\} \\
 &\Longrightarrow \; a+b \leq c+c \\
 t\mapsto t^p \text{ creciente en } [0,\infty) &\Longrightarrow (a + b)^p \leq (c + c)^p \\
 &= (2c)^p \\
-&= 2^p c^p \tag{*} \\
+&= 2^p c^p \qquad (*) \\
 \\
 c=a \text{ o } c=b, \text{ ambos} \geq 0 &\Longrightarrow c^p \leq a^p + b^p \\
 &\Longrightarrow 2^p c^p \leq 2^p (a^p + b^p) \\
@@ -821,7 +821,7 @@ $$
 <br>
 
 <p align="center">
-  <img src="des_minkowski.png" alt="Convexidad de t^p">
+  <img src="des_minkowski.webp" alt="Convexidad de t^p">
 </p>
 
 Como $1 \leq p$, $f$ es convexa:
