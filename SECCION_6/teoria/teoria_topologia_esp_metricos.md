@@ -543,8 +543,10 @@ Consecuencias inmediatas por las propiedades de abiertos y cerrados.
 2. $\;\bar{A}\;$ es cerrado.
 3. 
    $$
-   A\;\text{cerrado} \; \implies \; A = \bar{A} \\
-   A\;\text{abierto} \; \implies \; A=A^{\circ}
+   \begin{aligned}
+   A\;\text{cerrado} \; &\implies \; A = \bar{A} \\
+   A\;\text{abierto} \; &\implies \; A=A^{\circ}
+   \end{aligned}
    $$
 
 4. $\bar{A}\;$ es el cerrado más chico que contiene a $A,\;$ es decir, si $F$ es cerrado y $A \subseteq F \; \implies \bar{A} \subseteq F$

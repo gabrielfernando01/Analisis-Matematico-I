@@ -34,7 +34,7 @@ index.html                      ← Home: título + índice de las 11 secciones
 seccion.html                    ← Página de sección (?id=N&tab=teoria|ejercicios)
 vercel.json                     ← Rutas y rewrites para Vercel
 public/
-└── norma.png                   ← Favicon del sitio (Vite lo sirve en /norma.png)
+└── norma.webp                  ← Favicon del sitio (Vite lo sirve en /norma.webp)
 src/
 ├── main.ts                     ← Lógica del Home (renderIndex)
 ├── seccion.ts                  ← Orquestador de sección: URL, tabs, MathJax, sidebar
@@ -61,7 +61,7 @@ src/
 
 ```
 SECCION_x/
-├── teoria/       ← .md con teoría + imágenes .png
+├── teoria/       ← .md con teoría + imágenes .webp
 ├── ejercicios/   ← .md con ejercicios
 └── update/       ← Versión actualizada (prioridad sobre teoria/ y ejercicios/)
 ```
@@ -88,7 +88,8 @@ Los directorios `update/` existen en las 11 secciones pero hoy solo contienen `.
 ### Lectura y contenido
 
 - **Temas**: Light (papel cálido) y Dark (Tokyo Night), toggle 🌙/☀️ persistente en `localStorage`, respeta `prefers-color-scheme`, sin flash al cargar.
-- **Pipeline de contenido**: el Markdown se carga vía fetch, se protege el LaTeX antes de parsear con marked, se restaura después y MathJax tipografía todo.
+- **Pipeline de contenido**: el Markdown se carga vía fetch, se protege el LaTeX antes de parsear con marked, se restaura después (escapando `&`, `<`, `>` para que el LaTeX no rompa el HTML) y MathJax tipografía todo cuando el bundle del CDN está listo (`MathJax.startup.promise`).
+- **Imágenes**: todas en WebP (1400 px, calidad 85), sin respaldo PNG, y con `loading="lazy"` + `decoding="async"`.
 - **Detección de fallback HTML**: si un servidor devuelve `index.html` con estado 200 para un archivo inexistente (caso típico de `update/`), el loader lo rechaza y usa el archivo original. Sin esta comprobación, `update/` se “cargaba” con el HTML del sitio.
 - **Demostraciones colapsables**: los bloques largos se envuelven en `<details>`; los cortos se muestran directamente.
 - **Barra de progreso** de lectura en la parte superior.
@@ -112,7 +113,7 @@ Los directorios `update/` existen en las 11 secciones pero hoy solo contienen `.
 ### Detalles de diseño
 
 - Tipografía Computer Modern Unicode; estilos solo con las dos paletas de `PRODUCT.md`.
-- Favicon `‖·‖` en `public/norma.png`, enlazado como `icon` y `apple-touch-icon` en ambas páginas.
+- Favicon `‖·‖` en `public/norma.webp`, enlazado como `icon` y `apple-touch-icon` en ambas páginas.
 - Scrollbars finas tematizadas, selección de texto y caret alineados a la paleta.
 - Títulos largos del índice con elipsis y `title` para leerlos completos.
 - Estado vacío del índice: «Esta sección no tiene apartados.»

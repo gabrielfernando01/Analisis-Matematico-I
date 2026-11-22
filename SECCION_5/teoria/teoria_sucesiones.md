@@ -21,7 +21,7 @@ $$x_1,x_2=x_1r,x_3=x_2r=x_1r^2,\ldots,x_n=x_1r^{n-1}.$$
 ### Convergencia
 
 $$(x_n)_{n=1}^\infty \longrightarrow x$$
-$$\forall \; \varepsilon > 0 \; \exists \; N \in \mathbb{N}\; \text{tal que\;}|x_n-x|<\varepsilon, \; \forall \; n\geq N$$
+$$\forall \; \varepsilon > 0 \; \exists \; N \in \mathbb{N}\; \text{tal que }|x_n-x|<\varepsilon, \; \forall \; n\geq N$$
 
 <br>
 
@@ -92,7 +92,7 @@ $$L := \sup A = \sup_{n \in \mathbb{N}}\{x_n\}.$$
 **p.d.** $\lim_{n \to \infty}x_n = L$, es decir, 
 
 $$
-\forall \; \varepsilon > 0 \; \exists \; N \in \mathbb{N} \; \text{\; tal que \; } \forall \; n \geq N \\[0.5em]
+\forall \; \varepsilon > 0 \; \exists \; N \in \mathbb{N} \; \text{ tal que } \forall \; n \geq N \\[0.5em]
 \implies |x_n -L| < \varepsilon
 $$
 
@@ -146,7 +146,7 @@ $$L := \inf A = \inf_{n \in \mathbb{N}}\{x_n\}.$$
 **p.d.** $\lim_{n \to \infty}x_n = L$, es decir, 
 
 $$
-\forall \; \varepsilon > 0 \; \exists \; N \in \mathbb{N} \; \text{\; tal que \; } \forall \; n \geq N \\
+\forall \; \varepsilon > 0 \; \exists \; N \in \mathbb{N} \; \text{ tal que } \forall \; n \geq N \\
 \implies |x_n -L| < \varepsilon
 $$
 
@@ -286,7 +286,7 @@ $$f_n(x) = \frac{x^n}{1 + x^n},\ n = 1, 2, \ldots$$
 
 Sea $(X,d)$ un espacio métrico y $(x_n)_{n \in \mathbb{N}}$ una sucesión en $X$. Decimos que la sucesión es convergente en $X$ si existe un $x \in X$ que satisface:
 
-$$\forall \; \varepsilon > 0 \; \exists \; N \in \mathbb{N} \; \text{tal que \;} \forall \; n \geq N,\;d(x_n,x) < \varepsilon$$
+$$\forall \; \varepsilon > 0 \; \exists \; N \in \mathbb{N} \; \text{tal que } \forall \; n \geq N,\;d(x_n,x) < \varepsilon$$
 
 Por simplicidad, si $(x_n)_{n \in \mathbb{N}}$ converge a $x$, escribimos $\lim_{n \to \infty}x_n=x.$
 

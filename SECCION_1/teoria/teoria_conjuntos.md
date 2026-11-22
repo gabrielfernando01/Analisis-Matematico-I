@@ -352,18 +352,18 @@ Ya que $y$ no tiene cola de 0's ni cola de 9's, $y \in A$. Además por construcc
 
 ---
 
-## 1.8 Teorema (Cantor - Bersntein)
+## 1.8 Teorema (Cantor - Bernstein)
 
-Sean $A$ y $B$ dos conjuntos y supon que exsisten funciones inyectivas $f:\;A \longleftarrow B$ y $f:\;B \longleftarrow A$. Entonces $A$ y $B$ son equivalentes.
+Sean $A$ y $B$ dos conjuntos y supón que existen funciones inyectivas $f:\;A \longleftarrow B$ y $f:\;B \longleftarrow A$. Entonces $A$ y $B$ son equivalentes.
 
 **Demostración**
 
-p.d. $\exist\;h:\; A \longrightarrow B$ biyectiva.
+p.d. $\exists\;h:\; A \longrightarrow B$ biyectiva.
 
-Idea: $h \backslash S = f, \quad h \backslash A|S = g^{-1}$
+Idea: $h \setminus S = f, \quad h \setminus A|S = g^{-1}$
 Encontrar un $S \subseteq A$ tal que:
 
-$$g(B \backslash f(S)) = A \setminus S$$
+$$g(B \setminus f(S)) = A \setminus S$$
 
 ---
 

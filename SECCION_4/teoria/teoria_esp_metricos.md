@@ -944,7 +944,7 @@ Los $\ell_p$, $p \in [1, \infty]$, son espacios vectoriales.
 
 ---
 
-$$\underbrace{(\ell_p, \|\cdot\|_p)}_{\text{dimensión infinita}} \xleftrightarrow{\text{pasamos de}} \underbrace{(\mathbb{R}^n, \|\cdot\|)}_{\text{dimensión finita}}$$
+$$\underbrace{(\ell_p, \|\cdot\|_p)}_{\text{dimensión infinita}} \overset{\text{pasamos de}}{\longleftrightarrow} \underbrace{(\mathbb{R}^n, \|\cdot\|)}_{\text{dimensión finita}}$$
 
 **Advertencia**: muchos teoremas de $\mathbb{R}^n$ no se cumplen en $\ell_p$, en particular «Bolzano-Weierstrass».
 

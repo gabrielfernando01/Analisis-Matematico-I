@@ -9,3 +9,4 @@ dist/
 *.local
 .env
 .DS_Store
+.directory
