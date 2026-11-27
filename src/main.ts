@@ -2,6 +2,7 @@ import './styles/main.css';
 import { sections } from './data/sections';
 import type { Section } from './data/sections';
 import { initTheme } from './components/theme';
+import { initCarousel } from './components/carousel';
 
 function createBadge(section: Section, tab: 'teoria' | 'ejercicios'): HTMLAnchorElement {
   const badge = document.createElement('a');
@@ -95,4 +96,5 @@ function renderIndex(): void {
 
 // Boot
 initTheme();
+initCarousel();
 document.addEventListener('DOMContentLoaded', renderIndex);

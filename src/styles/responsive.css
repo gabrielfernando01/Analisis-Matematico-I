@@ -35,6 +35,20 @@
     padding: var(--sp-2xl) var(--sp-md) var(--sp-xl);
   }
 
+  #hero-marquee {
+    margin: var(--sp-sm) calc(-1 * var(--sp-md));
+    padding: var(--sp-md) 0;
+  }
+
+  .marquee-portrait {
+    width: 140px;
+    height: 140px;
+  }
+
+  #marquee-track {
+    gap: var(--sp-md);
+  }
+
   #index-content {
     padding: 0 var(--sp-md) var(--sp-2xl);
   }
@@ -190,6 +204,11 @@
 
   .badge {
     font-size: 0.65rem;
+  }
+
+  .marquee-portrait {
+    width: 110px;
+    height: 110px;
   }
 }
 

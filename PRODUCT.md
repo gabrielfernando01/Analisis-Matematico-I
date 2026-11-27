@@ -60,10 +60,13 @@ Dos temas persistentes con toggle en el header (🌙/☀️), guardados en `loca
 ## Visual Identity
 
 - **Paleta**: solo las dos paletas definidas arriba. Sin colores arbitrarios externos.
-- **Sin fotografías** ni imágenes decorativas. Las únicas imágenes son las del contenido matemático (diagramas, gráficas de funciones).
-- **Sin gradientes llamativos**. Gradientes solo si son sutiles y sirven a la jerarquía.
+- **Estilo general**: vintage, elegante y matemático. Evoca un gabinete de estudio del siglo XIX — pergamino, retratos formales, tipografía de libro — con la precisión técnica de un documento LaTeX moderno.
+- **Home — carrusel hero**: los 8 retratos de matemáticos del curso (`public/home/mathematicians/`) se muestran en una marquesina CSS infinita al inicio de la página. Filtro sepia sutil (light) o desaturado (dark) para armonizar con la paleta del sitio. Los retratos están duplicados en el DOM para loop infinito sin cortes. Se pausa al hover; se desactiva con `prefers-reduced-motion`. Las imágenes ya incluyen nombre y fechas como texto sobreimpuesto.
+- **Home — fondo manuscrito**: `background_home.webp` como marca de agua sutil (opacity ~7% light, ~3.5% dark) fija detrás del índice. Solo en la home (condicionado por `.page-home`).
+- **Secciones (lectura)**: Sin fotografías ni imágenes decorativas. Las únicas imágenes son las del contenido matemático (diagramas, gráficas de funciones). El fondo es sólido para lectura concentrada.
+- **Sin gradientes llamativos**. Gradientes solo si son sutiles y sirven a la jerarquía (el fade lateral de la marquesina usa `mask-image` con gradiente, no un degradado visible).
 - **Sin sombras pesadas**. `--shadow-sm` y `--shadow-md` son el límite.
-- **Animaciones**: solo si refuerzan la comprensión o el contexto (reveal staggered del índice, fade-in de contenido, expand de demostraciones). Nada decorativo puro. El feedback de interacción en controles — contorno en su color, realce breve al pasar el cursor y respuesta al pulsar — sí es funcional y permitido.
+- **Animaciones**: marquesina CSS infinita en la home (pausa al hover, desactivada con `prefers-reduced-motion`). Reveal staggered del índice. En secciones, solo fade-in y expand de demostraciones. Nada decorativo puro. El feedback de interacción en controles — contorno en su color, realce breve al pasar el cursor y respuesta al pulsar — sí es funcional y permitido.
 
 ## Constraints
 

@@ -6,7 +6,7 @@ Sitio de estudio para el curso de Análisis Matemático I. Presenta teoría y ej
 
 ## Estado actual
 
-**Fecha de corte:** 9 de noviembre de 2026.
+**Fecha de corte:** 27 de noviembre de 2026.
 
 - **Contenido:** secciones 1–6 con teoría y ejercicios; sección 7 solo con teoría; secciones 8–11 pendientes del curso.
 - **Código:** sin tareas pendientes. El build `tsc && vite build` pasa y el detector de diseño no reporta hallazgos.
