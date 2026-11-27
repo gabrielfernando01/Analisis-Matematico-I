@@ -1,6 +1,6 @@
 # Análisis Matemático I
 
-Sitio de estudio para el curso universitario de Análisis Matemático I (Licenciatura en Matemáticas, 2027). Presenta teoría rigurosa y ejercicios resueltos con notación matemática completa. Desplegado en Vercel desde `gabrielfernando01/Analisis-Matematico-I`.
+Sitio de estudio para el curso de Análisis Matemático I. Presenta teoría y ejercicios resueltos con notación matemática completa. Desplegado en Vercel desde `gabrielfernando01/Analisis-Matematico-I`.
 
 ---
 
