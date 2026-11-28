@@ -12,11 +12,11 @@ delegated: Vite + TypeScript — MathJax v3 para LaTeX (CDN), marked para Markdo
 
 ## Users
 
-Estudiantes de Licenciatura en Matemáticas cursando Análisis Matemático I. Estudian en laptop o teléfono, en sesiones de lectura profunda o repaso previo a examen.
+Estudiantes universitarios de matemáticas. Estudian en laptop o teléfono, en sesiones de lectura profunda o repaso previo a examen.
 
 ## Product Purpose
 
-Sitio de estudio para un curso universitario de Análisis Matemático I. Presenta teoría rigurosa (teoría de conjuntos, cardinalidad, conjunto de Cantor, convergencia puntual y uniforme, criterio M de Weierstrass, teorema de Dini) y ejercicios resueltos. El éxito es que un estudiante pueda encontrar, leer y comprender cualquier sección con notación matemática correcta y legible.
+Sitio de estudio de Análisis Matemático I. Presenta teoría rigurosa (teoría de conjuntos, cardinalidad, conjunto de Cantor, convergencia puntual y uniforme, criterio M de Weierstrass, teorema de Dini) y ejercicios resueltos. El éxito es que un estudiante pueda encontrar, leer y comprender cualquier sección con notación matemática correcta y legible.
 
 ## Product Principles
 
@@ -61,7 +61,7 @@ Dos temas persistentes con toggle en el header (🌙/☀️), guardados en `loca
 
 - **Paleta**: solo las dos paletas definidas arriba. Sin colores arbitrarios externos.
 - **Estilo general**: vintage, elegante y matemático. Evoca un gabinete de estudio del siglo XIX — pergamino, retratos formales, tipografía de libro — con la precisión técnica de un documento LaTeX moderno.
-- **Home — carrusel hero**: los 8 retratos de matemáticos del curso (`public/home/mathematicians/`) se muestran en una marquesina CSS infinita al inicio de la página, **por encima del título**. Filtro sepia sutil para armonizar con la paleta del sitio. Los retratos están duplicados en el DOM para loop infinito sin cortes. Se pausa al hover; se desactiva con `prefers-reduced-motion`. Las imágenes ya incluyen nombre y fechas como texto sobreimpuesto.
+- **Home — carrusel hero**: los 8 retratos de matemáticos (`public/home/mathematicians/`) se muestran en una marquesina CSS infinita al inicio de la página, **por encima del título**. Filtro sepia sutil para armonizar con la paleta del sitio. Los retratos están duplicados en el DOM para loop infinito sin cortes. Se pausa al hover; se desactiva con `prefers-reduced-motion`. Las imágenes ya incluyen nombre y fechas como texto sobreimpuesto.
 - **Home — fondo manuscrito**: `background_home.webp` como fondo visible (opacity ~35%) fijo detrás de todo el contenido. No es una marca de agua sutil: el pergamino debe verse y sentirse. Solo en la home (condicionado por `.page-home`).
 - **Home — tema fijo cálido**: la home page **siempre** muestra la paleta cálida beige/crema envejecida, incluso si el toggle de tema está en dark. El toggle en la home solo guarda la preferencia para las secciones de lectura. Las custom properties se fuerzan a sus valores light dentro de `.page-home` vía override de `[data-theme="dark"]`.
 - **Secciones (lectura)**: Sin fotografías ni imágenes decorativas. Las únicas imágenes son las del contenido matemático (diagramas, gráficas de funciones). El fondo es sólido para lectura concentrada. Aquí sí aplica el toggle dark/light completo.

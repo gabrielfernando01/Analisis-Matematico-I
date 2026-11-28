@@ -1,11 +1,5 @@
 # AGENTS.md
 
-## Workspace
-
-```
-/home/gabriel/fciencias/2027-1/analisis_matematico/Fco_Javier_Torres/curso_javier_torres/
-```
-
 ## Estructura de contenido
 
 ```
