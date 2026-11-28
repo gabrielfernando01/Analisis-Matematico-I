@@ -2,7 +2,7 @@
 
 ## 1.1 Definición
 
-Decimos que dos conjuntos, $A$ y $B$, son equivalentes si existe una biyección entre entre ellos, es decir, existe una función $f:\,A \longleftarrow B$ que es inyectiva y suprayectiva.
+Decimos que dos conjuntos, $A$ y $B$, son equivalentes si existe una biyección entre entre ellos, es decir, existe una función $f:\,A \longrightarrow B$ que es inyectiva y suprayectiva.
 
 Si $A$ y $B$ son equivalentes escribimos $A \sim B$. Se puede probar que la relación $\sim$ es una relación de equivalencia. LLamamos cardinalidad de $A$ a la clase de equivalencia de $A$ y si $A \sim B$ decimos que $A$ y $B$ tienen la misma cardinalidad.
 

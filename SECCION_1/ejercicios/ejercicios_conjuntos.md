@@ -217,7 +217,7 @@ Como $F$ es inyectiva y sobreyectiva, $F$ es biyectiva. Por lo tanto,
 
 $$A_1 \times B_1 \sim A_2 \times B_2 \; \blacksquare$$
 
-## 1.18 Ejercicio (NO VIENE)
+## 1.18 Ejercicio
 
 Sea $A$ un conjunto contable y sean $C$, $B$ dos conjuntos.
 
@@ -361,7 +361,7 @@ $$\Rightarrow (0,1)\sim(0,1].\qquad\blacksquare$$
 
 ---
 
-## 1.20 Ejercicio (NO VIENE)
+## 1.20 Ejercicio
 
 Prueba que $\mathbb{Q}$ es numerable.
 
@@ -790,7 +790,7 @@ $$\mathbb{N}\sim\mathbb{N}^r. \qquad\blacksquare$$
 
 ---
 
-## 1.26 Ejercicio (NO VIENE)
+## 1.26 Ejercicio
 
 1. Encuentra dos representaciones ternarias distintas de los siguientes números: $1/3, 2/3, 1/9$.
 2. Encuentra la representación ternaria de $1/2$ y prueba que es única.
@@ -983,7 +983,7 @@ es decir, la longitud total del complemento de $\Delta$ en $[0,1]$ es exactament
 
 ---
 
-## 1.28 Ejercicio (NO VIENE)
+## 1.28 Ejercicio
 
 Prueba que toda familia de intervalos abiertos de la forma $(a,b)$, que contiene un punto de $\Delta$, también contiene un subintervalo "de en medio", de los que se removieron para formar $\Delta$.
 

@@ -1,6 +1,6 @@
 # Ejercicios Sección Convergencia Puntual y Uniforme.
 
-## 2.12 Ejercicio (NO VIENE).
+## 2.12 Ejercicio.
 
 Encuentra el límite puntual (si existe) de las siguientes sucesiones de funciones.
 
@@ -1290,7 +1290,7 @@ $\blacksquare$
 
 ---
 
-## 2.22 Ejercicio (NO VIENE).
+## 2.22 Ejercicio.
 
 Prueba
 
@@ -1444,7 +1444,7 @@ $$\lim_{n\to\infty} \int_a^b \left( \int_a^x f_n(t)\,dt \right) dx = \int_a^b \l
 
 ---
 
-## 2.26 Ejercicio (NO VIENE).
+## 2.26 Ejercicio.
 
 Sea $(f_n : [a,b] \to \mathbb{R})_{n=1}^{\infty}$ una sucesión de funciones continuas que converge uniformemente en $[a,b]$ a una función $f$.
 
@@ -1561,7 +1561,7 @@ $$\therefore \ \sum_{n=1}^{\infty} x^n \ \text{converge uniformemente en } [a,b]
 
 ---
 
-## 2.28 Ejercicio (NO VIENE).
+## 2.28 Ejercicio.
 
 1. Sea $X$ un conjunto no vacío y considera dos sucesiones de funciones $(f_n : X \to \mathbb{R})_{n=1}^{\infty}$, $(g_n : X \to \mathbb{R})_{n=1}^{\infty}$ tal que $f_n \to f$ y $g_n \to g$ uniformemente en $X$.
 

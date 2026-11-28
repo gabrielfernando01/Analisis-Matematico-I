@@ -1,4 +1,4 @@
-# Ejerciocios Teorema de Weierstrass
+# Ejercicios Sección 3 - Teorema de Weierstrass
 
 ## 3.10 Ejercicio
 
@@ -1159,7 +1159,7 @@ $$\Rightarrow \; \left|f(x)-p\!\left(\frac{1}{x}\right)\right| < \varepsilon \qu
 
 ---
 
-## 3.20 Ejercicio (NO VIENE)
+## 3.20 Ejercicio
 
 1. Sea $f : [0, 1] \to \mathbb{R}$ una función con $f(0) = 0$. Prueba que para toda $n$, $B_n(f)(0) = 0$.
 2. Si $f : [0, 1] \to \mathbb{R}$ es una función tal que existen constantes, $m, M$, tal que $m \leq f(x) \leq M$, para toda $x \in [a, b]$, prueba que $m \leq B_n(f)(x) \leq M$, para todo $x \in [0, 1]$.
