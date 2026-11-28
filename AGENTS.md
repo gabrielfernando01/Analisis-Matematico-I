@@ -21,7 +21,7 @@ Secciones 1–7 tienen contenido. Secciones 8–11 son marcadores vacíos.
 
 ## Reglas duras
 
-1. **No modificar contenido matemático.** Los archivos `.md` contienen demostraciones, teoremas y ejercicios. Solo leer y renderizar. Nunca reescribir, reformatear ni corregir su contenido.
+1. **No modificar contenido matemático.** Los archivos `.md` contienen demostraciones, teoremas y ejercicios. Solo leer y renderizar; nunca reescribir, reformatear ni corregir su contenido, salvo las erratas puntuales registradas en `docs/ERRATAS.md` (ver regla 6).
 
 2. **No agregar identidad.** Ningún nombre de profesor, autor ni etiqueta de audiencia en la UI.
 

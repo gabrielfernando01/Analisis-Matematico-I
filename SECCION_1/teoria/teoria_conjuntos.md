@@ -354,7 +354,7 @@ Ya que $y$ no tiene cola de 0's ni cola de 9's, $y \in A$. Además por construcc
 
 ## 1.8 Teorema (Cantor - Bernstein)
 
-Sean $A$ y $B$ dos conjuntos y supón que existen funciones inyectivas $f:\;A \longleftarrow B$ y $f:\;B \longleftarrow A$. Entonces $A$ y $B$ son equivalentes.
+Sean $A$ y $B$ dos conjuntos y supón que existen funciones inyectivas $f:\;A \longrightarrow B$ y $f:\;B \longrightarrow A$. Entonces $A$ y $B$ son equivalentes.
 
 **Demostración**
 
