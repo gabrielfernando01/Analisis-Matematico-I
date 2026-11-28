@@ -1,4 +1,4 @@
-# Ejercicios Sección 3 - Teorema de Weierstrass
+# Ejercicios Sección 3 - Teorema de Weierstrass.
 
 ## 3.10 Ejercicio
 
@@ -825,7 +825,7 @@ Por lo tanto, la condición $f(x_0)=0$ es necesaria para poder cambiar el punto 
 
 ---
 
-## 3.16 Ejercicio (NO VIENE)
+## 3.16 Ejercicio
 
 Sea $f \in \mathcal{C}[a,b]$ que no sea un polinomio. Supón que $(p_n)_{n=1}^\infty$ es una sucesión de polinomios tal que $p_n \longrightarrow f$ uniformemente en $[a,b]$. Si $m_n$ es el grado de $p_n$ prueba que $\lim_{n \to \infty}m_n = \infty$
 
@@ -1348,7 +1348,7 @@ es decir, $\big(q_n(x)\big)_{n=1}^{\infty} = \big(p_n(x^2)\big)_{n=1}^{\infty}$ 
 
 ---
 
-## 3.22 Ejercicio (NO VIENE)
+## 3.22 Ejercicio
 
 Una función $g : [a, b] \to \mathbb{R}$ se llama poligonal o lineal a trozos si es continua y existe $\{a = t_0 < \cdots < t_n = n\}$, una partición de $[a, b]$, tal que la gráfica de $g$ restringida a cada $[t_{i-1}, t_i]$ es un segmento de recta.
 
@@ -1594,7 +1594,7 @@ Como $\varepsilon>0$ era arbitrario, concluimos que el conjunto de polinomios es
 
 ---
 
-## 3.24 Ejercicio (NO VIENE)
+## 3.24 Ejercicio
 
 1. Sea $f \in C[a, b]$ tal que $f(x) \geq 1$ para todo $x \in [a, b]$. Prueba que existe un polinomio $p(x)$ que satisface
    1. $\|f - p\|_{[a,b]} < \frac{1}{2}$,

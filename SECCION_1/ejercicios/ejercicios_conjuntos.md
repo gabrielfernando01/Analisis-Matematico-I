@@ -1147,7 +1147,7 @@ Por lo tanto, $\Delta$ es no numerable. $\blacksquare$
 
 ---
 
-## 1.30 Ejercicio (NO VIENE).
+## 1.30 Ejercicio
 
 Para $x \in [0,1]$, toma una representación ternaria
 

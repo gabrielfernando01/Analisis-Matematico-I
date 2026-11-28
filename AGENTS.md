@@ -31,7 +31,7 @@ Secciones 1–7 tienen contenido. Secciones 8–11 son marcadores vacíos.
 
 5. **Tipografía inamovible.** Computer Modern Unicode es la fuente principal. No sustituir por otra serif ni por sans-serif del sistema.
 
-6. **`update/` tiene prioridad.** Si existe `SECCION_x/update/<archivo>`, ese archivo reemplaza al original en `teoria/` o `ejercicios/`. La lógica de carga ya lo implementa en `src/components/section-loader.ts`.
+6. **`update/` tiene prioridad.** Si existe `SECCION_x/update/<archivo>`, ese archivo reemplaza al original en `teoria/` o `ejercicios/`. La lógica de carga ya lo implementa en `src/components/section-loader.ts`. Las erratas y correcciones puntuales (ver `docs/ERRATAS.md`) pueden aplicarse directamente sobre el original o mediante `update/`; ambos caminos son válidos. Si se corrige el original, no debe quedar en `update/` una copia anterior que lo tape.
 
 7. **Responsive obligatorio.** El sitio debe funcionar idénticamente en desktop y Android. Ningún cambio de layout puede romper el modo móvil.
 

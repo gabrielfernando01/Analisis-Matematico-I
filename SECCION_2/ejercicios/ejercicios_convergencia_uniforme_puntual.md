@@ -1,6 +1,6 @@
-# Ejercicios Sección Convergencia Puntual y Uniforme.
+# Ejercicios. Sección 2 - Convergencia Puntual y Uniforme.
 
-## 2.12 Ejercicio.
+## 2.12 Ejercicio
 
 Encuentra el límite puntual (si existe) de las siguientes sucesiones de funciones.
 
@@ -359,7 +359,7 @@ $$
 Como $x \in \mathbb{R}$ fue arbitraria, concluimos que $(f_n)_{n \in \mathbb{N}}$ converge puntualmente a la función $0$, que denotaremos como $f$. Así,
 
 $$
-\forall x \in \mathbb{R}, \qquad \lim_{n \to \infty} f_n(x) = f(x) \quad \text{donde} \quad f(x) = 0 \quad \forall x \in \mathbb{R}.
+\forall \; x \in \mathbb{R}, \qquad \lim_{n \to \infty} f_n(x) = f(x) \quad \text{donde} \quad f(x) = 0 \quad \forall x \in \mathbb{R}.
 $$
 
 **Ahora veamos que el límite puntual de la sucesión $(f_n')_{n \in \mathbb{N}}$ no existe.**
@@ -1290,7 +1290,7 @@ $\blacksquare$
 
 ---
 
-## 2.22 Ejercicio.
+## 2.22 Ejercicio
 
 Prueba
 
@@ -1444,7 +1444,7 @@ $$\lim_{n\to\infty} \int_a^b \left( \int_a^x f_n(t)\,dt \right) dx = \int_a^b \l
 
 ---
 
-## 2.26 Ejercicio.
+## 2.26 Ejercicio
 
 Sea $(f_n : [a,b] \to \mathbb{R})_{n=1}^{\infty}$ una sucesión de funciones continuas que converge uniformemente en $[a,b]$ a una función $f$.
 
@@ -1561,7 +1561,7 @@ $$\therefore \ \sum_{n=1}^{\infty} x^n \ \text{converge uniformemente en } [a,b]
 
 ---
 
-## 2.28 Ejercicio.
+## 2.28 Ejercicio
 
 1. Sea $X$ un conjunto no vacío y considera dos sucesiones de funciones $(f_n : X \to \mathbb{R})_{n=1}^{\infty}$, $(g_n : X \to \mathbb{R})_{n=1}^{\infty}$ tal que $f_n \to f$ y $g_n \to g$ uniformemente en $X$.
 
