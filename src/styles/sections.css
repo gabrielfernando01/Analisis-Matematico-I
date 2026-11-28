@@ -14,21 +14,44 @@
   position: fixed;
   inset: 0;
   background: url('/home/background_home.webp') center / cover no-repeat;
-  opacity: 0.07;
+  opacity: 0.35;
   pointer-events: none;
   z-index: -1;
 }
 
-[data-theme="dark"] .page-home #app::before {
-  opacity: 0.035;
+/*
+ * Home page — always warm parchment regardless of theme.
+ * The dark/light toggle saves the preference for section pages
+ * but the home keeps its vintage paper feel.
+ * Only shadows and portrait borders respond to the theme.
+ */
+[data-theme="dark"] .page-home {
+  --bg:               hsl(42, 30%, 97%);
+  --bg-alt:           hsl(42, 22%, 93%);
+  --bg-elevated:      hsl(0, 0%, 100%);
+  --text:             hsl(42, 12%, 12%);
+  --text-secondary:   hsl(42, 8%, 32%);
+  --text-muted:       hsl(42, 5%, 50%);
+  --accent:           hsl(215, 55%, 38%);
+  --accent-light:     hsl(215, 35%, 93%);
+  --accent-hover:     hsl(215, 55%, 28%);
+  --accent-text:      hsl(215, 55%, 32%);
+  --accent-ejercicios:       hsl(160, 40%, 28%);
+  --accent-ejercicios-light: hsl(160, 25%, 92%);
+  --border:           hsl(42, 15%, 85%);
+  --border-light:     hsl(42, 12%, 91%);
+  --selection-bg:     hsl(215, 50%, 85%);
+  --selection-text:   hsl(215, 60%, 15%);
+  --shadow-sm:        0 1px 3px hsla(42, 20%, 20%, 0.08);
+  --shadow-md:        0 4px 12px hsla(42, 20%, 20%, 0.12);
 }
 
 /* ─── Hero Marquee ─── */
 
 #hero-marquee {
   overflow: hidden;
-  margin: var(--sp-md) calc(-1 * var(--sp-xl));
-  padding: var(--sp-lg) 0;
+  margin: 0 calc(-1 * var(--sp-xl));
+  padding: var(--sp-md) 0;
   position: relative;
   -webkit-mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
   mask-image: linear-gradient(90deg, transparent, black 6%, black 94%, transparent);
@@ -69,17 +92,6 @@
   }
 }
 
-[data-theme="dark"] .marquee-portrait {
-  filter: sepia(0.12) contrast(1.08) brightness(0.9);
-  border-color: var(--border);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
-
-[data-theme="dark"] .marquee-portrait:hover {
-  filter: sepia(0) contrast(1.12) brightness(0.95);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-}
-
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -93,19 +105,26 @@
 
 /* ─── Header ─── */
 
-
 #site-header {
   text-align: center;
-  padding: var(--sp-4xl) var(--sp-xl) var(--sp-2xl);
+  padding: var(--sp-xs) var(--sp-xl) var(--sp-xl);
   max-width: var(--page-max);
   margin: 0 auto;
   position: relative;
 }
 
-#site-header-top {
+/* Title row — title centered, toggle at the right */
+#title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: var(--sp-md);
+}
+
+#title-row #theme-toggle {
   position: absolute;
-  top: var(--sp-lg);
-  right: var(--sp-xl);
+  right: 0;
 }
 
 #course-title {
@@ -237,35 +256,41 @@
   align-items: center;
   font-size: 0.72rem;
   font-family: var(--font-sans);
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.2em 0.6em;
+  letter-spacing: 0.07em;
+  padding: 0.3em 0.75em;
   border-radius: 3px;
   white-space: nowrap;
   text-decoration: none;
   outline: 2px solid transparent;
   outline-offset: 2px;
   -webkit-tap-highlight-color: transparent;
+  border: 1.5px solid transparent;
   transition: transform var(--dur-fast) var(--ease-out),
-              outline-color var(--dur-fast) ease,
               background var(--dur-fast) ease,
-              color var(--dur-fast) ease;
+              box-shadow var(--dur-fast) ease,
+              border-color var(--dur-fast) ease;
 }
 
 .badge-teoria {
-  background: var(--accent-light);
-  color: var(--accent-text);
+  background: hsl(215, 55%, 38%);
+  color: #fff;
+  border-color: hsl(215, 55%, 30%);
+  box-shadow: 0 1px 4px hsla(215, 55%, 25%, 0.25);
 }
 
 .badge-ejercicios {
-  background: var(--accent-ejercicios-light);
-  color: var(--accent-ejercicios);
+  background: hsl(160, 45%, 30%);
+  color: #fff;
+  border-color: hsl(160, 45%, 22%);
+  box-shadow: 0 1px 4px hsla(160, 45%, 20%, 0.25);
 }
 
 .badge-empty {
-  background: var(--bg-alt);
-  color: var(--text-muted);
+  background: hsl(42, 10%, 80%);
+  color: hsl(42, 8%, 40%);
+  border-color: hsl(42, 10%, 72%);
   cursor: default;
 }
 
@@ -287,9 +312,18 @@
 }
 
 @media (hover: hover) {
-  .badge-teoria:hover,
+  .badge-teoria:hover {
+    background: hsl(215, 60%, 28%);
+    border-color: hsl(215, 60%, 20%);
+    box-shadow: 0 4px 10px hsla(215, 55%, 20%, 0.35);
+    transform: translateY(-1px);
+    animation: badgeHop 320ms var(--ease-out);
+  }
+
   .badge-ejercicios:hover {
-    outline-color: currentColor;
+    background: hsl(160, 50%, 22%);
+    border-color: hsl(160, 50%, 15%);
+    box-shadow: 0 4px 10px hsla(160, 45%, 15%, 0.35);
     transform: translateY(-1px);
     animation: badgeHop 320ms var(--ease-out);
   }
@@ -308,6 +342,7 @@
     transform: none;
   }
 }
+
 
 /* ══════════════════════════════════════════════
    SECTION PAGE — Header & Navigation

@@ -32,12 +32,12 @@
 
   /* Home page */
   #site-header {
-    padding: var(--sp-2xl) var(--sp-md) var(--sp-xl);
+    padding: var(--sp-2xs) var(--sp-md) var(--sp-md);
   }
 
   #hero-marquee {
-    margin: var(--sp-sm) calc(-1 * var(--sp-md));
-    padding: var(--sp-md) 0;
+    margin: 0 calc(-1 * var(--sp-md));
+    padding: var(--sp-sm) 0;
   }
 
   .marquee-portrait {
